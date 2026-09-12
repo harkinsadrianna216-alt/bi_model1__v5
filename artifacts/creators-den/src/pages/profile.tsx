@@ -310,9 +310,7 @@ export default function ProfilePage() {
                         const file = event.target.files?.[0];
                         if (!file) return;
                         try {
-                          const url = URL.createObjectURL(file);
-                          await clerk.user?.setProfileImage({ file: url });
-                          URL.revokeObjectURL(url);
+                          await clerk.user?.setProfileImage({ file });
                         } catch {
                           // Upload failed — Clerk-side image stays.
                         }
