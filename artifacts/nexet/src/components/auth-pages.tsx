@@ -33,9 +33,12 @@ export const clerkAppearance = {
     card: '!shadow-none !border-0 !bg-transparent !rounded-none',
     footer: '!shadow-none !border-0 !bg-transparent !rounded-none',
     // The Nexet mark sits above the card's heading (it was hidden while the
-    // AuthFrame lockup carried the brand; the card owns it now).
-    logoBox: 'mb-1 flex justify-center',
-    logoImage: 'h-12 w-12 rounded-full shadow-[0_0_28px_-6px_rgba(59,130,246,0.65)]',
+    // AuthFrame lockup carried the brand; the card owns it now). It is shown
+    // whole — no ring, frame or rounded clipping, matching every other mark.
+    // The art is mostly deep navy, so a soft glow that follows the mark's own
+    // silhouette lifts it off the #111111 card without adding an outline.
+    logoBox: 'mb-2 flex justify-center',
+    logoImage: 'h-12 w-12 object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]',
     headerTitle: 'text-white font-bold tracking-[-0.04em]',
     headerSubtitle: 'text-zinc-500',
     socialButtonsBlockButtonText: 'text-white font-semibold',
