@@ -4,9 +4,11 @@ import { useClerk, useUser } from "@clerk/react";
 import { FileText, FolderOpen, HardDrive, Loader2, Lock, Pencil, Upload, X } from "lucide-react";
 import {
   getGetAccountQuotaQueryKey,
+  getGetUserProfileQueryKey,
   getGetUserCvQueryKey,
   getSubscriptionPlansQueryKey,
   getUserCvFile,
+  getUserProfile,
   useCreateWhopCheckout,
   useDeleteUserCv,
   useGetAccountQuota,
@@ -26,7 +28,9 @@ import { PaymentLoadingOverlay } from "./payment-loading";
 export function ProfilePage({ projectCount }: { projectCount: number }) {
   const { user } = useUser();
   const clerk = useClerk();
+  const queryClient = useQueryClient();
   const [buyOpen, setBuyOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const quota = useGetAccountQuota();
 
   const total = quota.data?.projects.total ?? 5;
@@ -55,24 +59,39 @@ export function ProfilePage({ projectCount }: { projectCount: number }) {
           ) : (
             <span className="profile-page-avatar profile-page-avatar-initial">{initials}</span>
           )}
-          <label className="avatar-edit-btn" title="Update profile photo">
-            <Pencil className="h-3 w-3 text-white drop-shadow" />
-            <input
-              type="file"
-              accept="image/*"
-              className="sr-only"
-              onChange={async (event) => {
-                const file = event.target.files?.[0];
-                if (!file) return;
-                try {
-                  await clerk.user?.setProfileImage({ file });
-                } catch {
-                  // Upload failed — Clerk-side image stays.
-                }
-                event.target.value = '';
-              }}
-            />
-          </label>
+          {uploading ? (
+            <span className="avatar-edit-btn" title="Uploading…" aria-label="Uploading profile photo">
+              <Loader2 className="h-3 w-3 text-white drop-shadow spin" />
+            </span>
+          ) : (
+            <label className="avatar-edit-btn" title="Update profile photo">
+              <Pencil className="h-3 w-3 text-white drop-shadow" />
+              <input
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={async (event) => {
+                  const file = event.target.files?.[0];
+                  if (!file) return;
+                  setUploading(true);
+                  try {
+                    await clerk.user?.setProfileImage({ file });
+                    // Propagate the new image across the app family: refresh the
+                    // shared profile endpoint so nexet / creators-den / any other
+                    // viewer reading GET /api/users/:id/profile sees the new avatar.
+                    if (user?.id) {
+                      void getUserProfile(user.id);
+                      void queryClient.invalidateQueries({ queryKey: getGetUserProfileQueryKey(user.id) });
+                    }
+                  } catch {
+                    // Upload failed — Clerk-side image stays.
+                  }
+                  setUploading(false);
+                  event.target.value = '';
+                }}
+              />
+            </label>
+          )}
         </div>
         <div className="min-w-0">
           <h2>{displayName}</h2>

@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'wouter';
 import { useClerk, useUser } from '@clerk/react';
-import { Activity, ArrowLeft, Check, ChevronRight, Copy, Eye, Film, LockKeyhole, Pencil, UserRound } from 'lucide-react';
+import { Activity, ArrowLeft, Check, ChevronRight, Copy, Eye, Film, LockKeyhole, Loader2, Pencil, UserRound } from 'lucide-react';
 import { nexetUid } from '@/lib/nexet-uid';
 import {
   getGetUserProfileQueryKey,
@@ -10,6 +11,7 @@ import {
   getListPublicVideoProjectsQueryKey,
   getListVideoUserFollowersQueryKey,
   getListVideoUserFollowingQueryKey,
+  getUserProfile,
   useGetUserProfile,
   useGetVideoUserContributions,
   useGetVideoUserSocial,
@@ -210,8 +212,10 @@ function FollowListEntry({ userId, displayName, imageUrl, isFollowing }: { userI
 export default function ProfilePage() {
   const params = useParams<{ userId?: string }>();
   const { user } = useUser();
+  const queryClient = useQueryClient();
   const [followTab, setFollowTab] = useState<'followers' | 'following' | null>(null);
   const [copiedUid, setCopiedUid] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const viewingSelf = !params.userId || params.userId === user?.id;
   const profileUserId = params.userId ?? user?.id ?? '';
@@ -299,7 +303,11 @@ export default function ProfilePage() {
                     <UserRound size={24} />
                   </span>
                 )}
-                {viewingSelf && (
+                {uploading ? (
+                  <span className="avatar-edit-btn" title="Uploading…" aria-label="Uploading profile photo">
+                    <Loader2 className="h-3 w-3 text-white drop-shadow spin" />
+                  </span>
+                ) : viewingSelf ? (
                   <label className="avatar-edit-btn" title="Update profile photo">
                     <Pencil className="h-3 w-3 text-white drop-shadow" />
                     <input
@@ -309,16 +317,24 @@ export default function ProfilePage() {
                       onChange={async (event) => {
                         const file = event.target.files?.[0];
                         if (!file) return;
+                        setUploading(true);
                         try {
                           await clerk.user?.setProfileImage({ file });
+                          // Propagate the new avatar across the app family so nexet,
+                          // authors-den and any other viewer of this profile sees it.
+                          if (user?.id) {
+                            void getUserProfile(user.id);
+                            void queryClient.invalidateQueries({ queryKey: getGetUserProfileQueryKey(user.id) });
+                          }
                         } catch {
                           // Upload failed — Clerk-side image stays.
                         }
+                        setUploading(false);
                         event.target.value = '';
                       }}
                     />
                   </label>
-                )}
+                ) : null}
               </div>
               <div className="profile-hero-id">
                 <h1>{displayName}</h1>
