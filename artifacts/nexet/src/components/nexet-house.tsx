@@ -65,14 +65,14 @@ export function HouseNav() {
         <div className="relative flex h-[72px] items-center justify-between rounded-2xl border border-white/10 bg-[#0d0d0d]/85 px-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_40px_-16px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(59,130,246,0.45)] backdrop-blur-xl sm:px-5">
           <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#3b82f6]/40 to-transparent" />
           <NexetLogo />
-          <nav className="hidden items-center gap-0.5 rounded-full bg-white/5 p-1 md:flex" aria-label="Primary navigation">
-            <button type="button" onClick={goToRooms} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-rooms">
+          <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] md:flex" aria-label="Primary navigation">
+            <button type="button" onClick={goToRooms} className="focus-house rounded-full px-4 py-1.5 text-sm font-medium text-zinc-300 transition-all duration-200 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_-8px_rgba(59,130,246,0.9)] active:scale-[.97]" data-testid="button-nav-rooms">
               Explore rooms
             </button>
-            <button type="button" onClick={goToMethod} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-method">
+            <button type="button" onClick={goToMethod} className="focus-house rounded-full px-4 py-1.5 text-sm font-medium text-zinc-300 transition-all duration-200 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_-8px_rgba(59,130,246,0.9)] active:scale-[.97]" data-testid="button-nav-method">
               The method
             </button>
-            <button type="button" onClick={goToUpcoming} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-upcoming">
+            <button type="button" onClick={goToUpcoming} className="focus-house rounded-full px-4 py-1.5 text-sm font-medium text-zinc-300 transition-all duration-200 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_-8px_rgba(59,130,246,0.9)] active:scale-[.97]" data-testid="button-nav-upcoming">
               Upcoming
             </button>
           </nav>
