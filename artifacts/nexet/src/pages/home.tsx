@@ -1,4 +1,4 @@
-import { PiArrowUpRightDuotone, PiEyeDuotone, PiLinkDuotone, PiMagicWandDuotone, PiSparkleDuotone } from 'react-icons/pi';
+import { PiArrowDownDuotone, PiArrowUpRightDuotone, PiEyeDuotone, PiLinkDuotone, PiMagicWandDuotone, PiSparkleDuotone } from 'react-icons/pi';
 import { Link } from 'wouter';
 import { HouseNav, NexetLogo } from '@/components/nexet-house';
 import { nexetCategories, nexetUpcomingCategories } from '@/data/categories';
@@ -82,13 +82,27 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="reveal reveal-2 mt-9 flex flex-wrap items-center gap-4">
-              <Link href="/sign-up" className="group inline-flex items-center gap-3 rounded-full bg-[#3b82f6] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)]" data-testid="link-home-signup">
+            {/* The pair has to read as a pair: the one you press is lit from
+                the top and lifts, the one that just scrolls shows you which way
+                it goes. Both are pills of the same height. */}
+            <div className="reveal reveal-2 mt-9 flex flex-wrap items-center gap-3">
+              <Link
+                href="/sign-up"
+                className="focus-house group inline-flex items-center gap-3 rounded-full bg-gradient-to-b from-[#4d8bf5] to-[#2563eb] px-7 py-4 text-sm font-semibold text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.28),0_12px_30px_-12px_rgba(59,130,246,0.95)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.34),0_18px_42px_-14px_rgba(59,130,246,1)]"
+                data-testid="link-home-signup"
+              >
                 Get started
-                <PiArrowUpRightDuotone className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                  <PiArrowUpRightDuotone className="h-3.5 w-3.5" />
+                </span>
               </Link>
-              <a href="#how-it-works" className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3.5 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:text-white" data-testid="link-see-method">
+              <a
+                href="#how-it-works"
+                className="focus-house group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 text-sm font-medium text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+                data-testid="link-see-method"
+              >
                 See how it works
+                <PiArrowDownDuotone className="h-4 w-4 text-[#60a5fa] transition-transform duration-200 group-hover:translate-y-0.5" />
               </a>
             </div>
           </div>
