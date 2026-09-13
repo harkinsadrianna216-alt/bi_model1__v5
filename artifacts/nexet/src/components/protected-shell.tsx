@@ -183,7 +183,7 @@ export function EmptyPanel({
 }: {
   icon: IconType;
   title: string;
-  body: ReactNode;
+  body?: ReactNode;
   action?: ReactNode;
   className?: string;
 }) {
@@ -193,7 +193,7 @@ export function EmptyPanel({
         <Icon className="h-7 w-7" />
       </span>
       <p className="mt-8 font-brand text-4xl font-bold leading-[.95] tracking-[-0.04em] text-zinc-100">{title}</p>
-      <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">{body}</p>
+      {body ? <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">{body}</p> : null}
       {action ? <div className="mt-8 flex flex-wrap items-center gap-3">{action}</div> : null}
     </div>
   );
@@ -351,7 +351,7 @@ function PrivateShell({ children }: { children: ReactNode }) {
                 className="focus-house group hidden items-center rounded-full border border-white/10 p-2.5 text-xs font-medium text-zinc-300 transition-colors duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300 sm:flex"
                 data-testid="button-header-logout"
               >
-                <PiSignOutDuotone className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
+                <PiSignOutDuotone className="h-4 w-4 shrink-0 text-red-400 transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:translate-y-0.5 group-hover:text-red-300" />
                 <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:max-w-[5.5rem] group-hover:pl-2 group-hover:opacity-100 group-focus-visible:max-w-[5.5rem] group-focus-visible:pl-2 group-focus-visible:opacity-100">
                   Sign out
                 </span>

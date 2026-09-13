@@ -97,11 +97,14 @@ export default function Dashboard() {
                   <span
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                       available
-                        ? 'border-[#3b82f6]/40 text-[#60a5fa] group-hover:rotate-45 group-hover:border-[#60a5fa]/70 group-hover:bg-[#3b82f6]/15'
-                        : 'border-white/10 text-zinc-600'
+                        ? 'border-[#3b82f6]/40 bg-[#3b82f6]/10 text-[#60a5fa] group-hover:scale-105 group-hover:border-[#60a5fa]/70 group-hover:bg-[#3b82f6] group-hover:text-white group-hover:shadow-[0_0_20px_-4px_rgba(59,130,246,0.9)]'
+                        : 'border-white/10 text-zinc-600 group-hover:border-white/20 group-hover:text-zinc-400'
                     }`}
                   >
-                    <PiArrowUpRightDuotone className="h-4 w-4" />
+                    {/* The arrow heads where the door goes rather than spinning in
+                        place — it steps out on hover, and the handle lights up
+                        behind it. */}
+                    <PiArrowUpRightDuotone className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </span>
                 </div>
               </div>

@@ -1,6 +1,6 @@
-import { PiArrowUpRightDuotone, PiBookOpenDuotone, PiCheckCircleDuotone, PiEyeDuotone, PiGhostDuotone, PiLockKeyDuotone, PiMegaphoneDuotone, PiPencilLineDuotone, PiPenNibDuotone, PiUsersThreeDuotone } from 'react-icons/pi';
+import { PiArrowUpRightDuotone, PiBookOpenDuotone, PiCheckCircleDuotone, PiEyeDuotone, PiGhostDuotone, PiMegaphoneDuotone, PiPencilLineDuotone, PiUsersThreeDuotone } from 'react-icons/pi';
 import { Link } from 'wouter';
-import { useUser } from '@clerk/react';
+import { nexetRoomMarks } from '@/data/categories';
 
 // Each seat opens the Writers' Audition Arena already filtered to the matching
 // writing role — Co-writer → CO_WRITER, and so on down the desk. Same relay
@@ -15,9 +15,6 @@ const SEATS = [
 ];
 
 export default function AuthorsPage() {
-  const { user } = useUser();
-  const firstName = user?.firstName || 'writer';
-
   return (
     <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-5 lg:min-h-[calc(100dvh-170px)]">
       <div>
@@ -35,17 +32,47 @@ export default function AuthorsPage() {
 
           <div className="flex items-center">
             <div className="w-full rounded-[1.5rem] border border-[#3b82f6]/40 bg-gradient-to-br from-[#3b82f6]/15 to-transparent p-7" data-testid="card-open-manuscript-studio">
-              <span className="icon-chip h-12 w-12 text-[#60a5fa]"><PiPenNibDuotone className="h-6 w-6" /></span>
+              {/* The den's own mark — the same file the atrium's Authors card and
+                  the front page wear, shown whole and unframed. */}
+              <img src={nexetRoomMarks.authors} alt="" className="h-14 w-14 object-contain" />
               <h2 className="mt-7 max-w-[12ch] text-3xl font-extrabold leading-[.9] tracking-[-0.05em] sm:text-4xl">Open Manuscript Studio</h2>
               <p className="mt-3 max-w-[24rem] text-sm leading-relaxed text-zinc-100">
                 Manuscripts, characters, world, plots, and scenes.
               </p>
-              <a href="/authors-den/" className="focus-house mt-6 inline-flex items-center gap-3 rounded-full border border-white/20 bg-[#111111]/10 px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors hover:bg-[#111111]/20" data-testid="link-open-manuscript-studio">
-                Open Authors Den
-                <PiBookOpenDuotone className="h-4 w-4" />
+              <a
+                href="/authors-den/"
+                className="brand-ring focus-house group mt-6 shadow-[0_0_30px_-10px_rgba(59,130,246,0.75)] transition-shadow duration-200 hover:shadow-[0_0_44px_-10px_rgba(99,102,241,0.95)]"
+                data-testid="link-open-manuscript-studio"
+              >
+                <span className="inline-flex items-center gap-3 rounded-full bg-[#0d0d0d] px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors duration-200 group-hover:bg-[#15151a]">
+                  Open Authors Den
+                  <PiBookOpenDuotone className="h-4 w-4 text-[#60a5fa]" />
+                </span>
               </a>
             </div>
           </div>
+        </div>
+
+        {/* The collaboration doorway — writers can audition for open writing
+            roles straight from the category page. It opens the room before the
+            seats do, so it sits above them. */}
+        <div className="mt-8">
+          <a
+            href="/authors-den/?arena=1"
+            className="focus-house soft-lift flex flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] border border-[#a78bfa]/40 bg-gradient-to-br from-[#a78bfa]/15 to-transparent p-7 sm:flex-row sm:items-center"
+            data-testid="card-arena-category"
+          >
+            <div className="flex items-start gap-4">
+              <span className="icon-chip h-12 w-12 shrink-0 text-[#c4b5fd]"><PiMegaphoneDuotone className="h-6 w-6" /></span>
+              <div>
+                <h2 className="max-w-[16ch] text-3xl font-extrabold leading-[.95] tracking-[-0.05em] text-white sm:text-4xl">Writers&apos; Audition Arena</h2>
+              </div>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[#a78bfa]/50 bg-[#111111]/20 px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors hover:bg-[#a78bfa]/20">
+              Browse open auditions
+              <PiArrowUpRightDuotone className="h-4 w-4" />
+            </span>
+          </a>
         </div>
 
         <div className="mt-8">
@@ -71,32 +98,6 @@ export default function AuthorsPage() {
               );
             })}
           </div>
-        </div>
-      </div>
-
-      {/* The collaboration doorway — writers can audition for open writing roles
-          straight from the category page. */}
-      <div className="mt-8">
-        <a
-          href="/authors-den/?arena=1"
-          className="focus-house soft-lift mt-4 flex flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] border border-[#a78bfa]/40 bg-gradient-to-br from-[#a78bfa]/15 to-transparent p-7 sm:flex-row sm:items-center"
-          data-testid="card-arena-category"
-        >
-          <div className="flex items-start gap-4">
-            <span className="icon-chip h-12 w-12 shrink-0 text-[#c4b5fd]"><PiMegaphoneDuotone className="h-6 w-6" /></span>
-            <div>
-              <h2 className="max-w-[16ch] text-3xl font-extrabold leading-[.95] tracking-[-0.05em] text-white sm:text-4xl">Writers&apos; Audition Arena</h2>
-            </div>
-          </div>
-          <span className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[#a78bfa]/50 bg-[#111111]/20 px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors hover:bg-[#a78bfa]/20">
-            Browse open auditions
-            <PiArrowUpRightDuotone className="h-4 w-4" />
-          </span>
-        </a>
-
-        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-white/5 pt-4 text-sm text-zinc-500">
-          <PiLockKeyDuotone className="h-4 w-4 text-[#3b82f6]" />
-          <span>Private by design · visible only to the people in the room · welcome, {firstName}</span>
         </div>
       </div>
     </div>
