@@ -39,7 +39,9 @@ export const clerkAppearance = {
     // silhouette lifts it off the #111111 card without adding an outline.
     logoBox: 'mb-2 flex justify-center',
     logoImage: 'h-12 w-12 object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]',
-    headerTitle: 'text-white font-bold tracking-[-0.04em]',
+    // The card's own headings wear the house display face, the same one the
+    // front page's headings use; the form fields stay in Inter for legibility.
+    headerTitle: 'font-brand text-white font-bold tracking-[-0.04em]',
     headerSubtitle: 'text-zinc-500',
     socialButtonsBlockButtonText: 'text-white font-semibold',
     formFieldLabel: 'text-zinc-400 font-medium',
@@ -70,7 +72,7 @@ export function AuthFrame({ children }: { children: React.ReactNode }) {
       </div>
       <div className="grid w-full max-w-[1060px] flex-1 items-center gap-10 py-12 lg:grid-cols-[.78fr_1fr] lg:gap-20">
         <div className="hidden lg:block">
-          <h1 className="mt-6 max-w-[8ch] text-7xl font-bold leading-[.9] tracking-[-0.05em] text-white">Come in, there&apos;s room.</h1>
+          <h1 className="mt-6 max-w-[8ch] font-brand text-[clamp(2.6rem,5.4vw,4.4rem)] font-bold leading-[.92] tracking-[-0.05em] text-white">Come in, there&apos;s room.</h1>
           <p className="mt-7 max-w-[20rem] text-sm leading-[1.8] text-zinc-400">Nexet is where unfinished ideas find the person who can change their shape.</p>
           <div className="mt-10 h-1 w-20 rounded-full bg-gradient-to-r from-[#3b82f6] to-transparent" />
         </div>
