@@ -9,6 +9,7 @@ import {
   getUserProfile,
   useListWaitlistEntries,
 } from '@workspace/api-client-react';
+import { PageHeader } from '@/components/protected-shell';
 import { nexetCategories } from '@/data/categories';
 
 export default function ProfilePage() {
@@ -34,11 +35,14 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-[980px]">
-      <h1 className="mt-5 text-6xl font-bold leading-[.9] tracking-[-0.04em] text-white sm:text-8xl">
-        Your place in the house.
-      </h1>
-      <div className="card-surface mt-14 overflow-hidden rounded-3xl">
+    <div className="mx-auto max-w-[1320px]">
+      <PageHeader
+        icon={PiUserCircleDuotone}
+        kicker="Your account"
+        title="Your place in"
+        accent="the house."
+      />
+      <div className="reveal reveal-1 card-surface mt-12 overflow-hidden rounded-2xl">
         <div className="relative border-b border-white/5 bg-gradient-to-br from-[#3b82f6]/10 to-transparent p-7 sm:p-10">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
             <div className="profile-avatar-wrap">
@@ -83,14 +87,14 @@ export default function ProfilePage() {
               )}
             </div>
             <div>
-              <h2 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
+              <h2 className="mt-2 font-brand text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
               <p className="mt-2 flex items-center gap-2 text-sm text-zinc-400"><PiEnvelopeDuotone className="h-4 w-4 text-zinc-500" />{email}</p>
             </div>
           </div>
         </div>
         <div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-8">
           <div className="card-surface rounded-2xl p-6 sm:col-span-2">
-            <h3 className="mt-3 text-xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
+            <h3 className="mt-3 font-brand text-xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
             {isLoadingWaitlist ? (
               <p className="mt-3 text-sm text-zinc-500">Checking the house plan...</p>
             ) : joinedCategories.length > 0 ? (
@@ -107,19 +111,19 @@ export default function ProfilePage() {
           </div>
           <div className="group rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-6">
             <span className="icon-chip h-11 w-11 text-[#3b82f6]"><PiGearSixDuotone className="h-5 w-5" /></span>
-            <p className="mt-6 font-semibold text-zinc-100">Settings are being set.</p>
+            <p className="mt-6 font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Settings are being set.</p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">Notification controls and account preferences arrive with the next room.</p>
           </div>
           <button type="button" onClick={() => clerk.signOut({ redirectUrl: '/' })} className="focus-house group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left transition-colors hover:border-red-500/30 hover:bg-red-500/5" data-testid="button-profile-logout">
             <PiSignOutDuotone className="mt-0.5 h-5 w-5 text-red-400 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
             <span>
-              <span className="block font-semibold text-zinc-100">Sign out</span>
+              <span className="block font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Sign out</span>
               <span className="mt-2 block text-sm leading-relaxed text-zinc-500">Sign out of this Nexet session.</span>
             </span>
           </button>
         </div>
       </div>
-      <div className="mt-7 flex items-center gap-3 text-xs text-zinc-500">
+      <div className="reveal reveal-2 mt-7 flex items-center gap-3 text-xs text-zinc-500">
         <PiUserCircleDuotone className="h-4 w-4 text-[#3b82f6]" />
         <span>Your identity is managed securely by Nexet authentication.</span>
       </div>

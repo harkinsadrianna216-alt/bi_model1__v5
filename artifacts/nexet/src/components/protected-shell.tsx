@@ -15,6 +15,7 @@ import {
   PiUserCircleDuotone,
   PiXDuotone,
 } from 'react-icons/pi';
+import type { IconType } from 'react-icons';
 import { type ReactNode, useState } from 'react';
 import { Link, Redirect, useLocation } from 'wouter';
 import { NexetLogo } from '@/components/nexet-house';
@@ -33,6 +34,52 @@ const mobileNav = [
   { href: '/subscriptions', label: 'Subscriptions', icon: PiTicketDuotone },
   { href: '/profile', label: 'Profile', icon: PiUserCircleDuotone },
 ];
+
+/**
+ * The header every page behind the sign-in wall opens with. It mirrors the
+ * public page anatomy — a mono kicker under a duotone icon, a Space Grotesk
+ * display line, an optional supporting column on the right — so walking from
+ * the front page into the atrium never feels like changing products.
+ */
+export function PageHeader({
+  kicker,
+  icon: KickerIcon,
+  title,
+  accent,
+  description,
+  aside,
+}: {
+  kicker: string;
+  icon?: IconType;
+  title: string;
+  accent?: string;
+  description?: ReactNode;
+  aside?: ReactNode;
+}) {
+  return (
+    <header className="reveal flex flex-col justify-between gap-7 border-b border-white/5 pb-10 md:flex-row md:items-end">
+      <div className="min-w-0">
+        <span className="inline-flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">
+          {KickerIcon ? <KickerIcon className="h-4 w-4" /> : null}
+          {kicker}
+        </span>
+        <h1 className="mt-5 font-brand text-[clamp(2.3rem,4.4vw,3.9rem)] font-bold leading-[.92] tracking-[-0.05em] text-white">
+          {title}
+          {accent ? (
+            <>
+              <br />
+              <span className="text-gradient-accent">{accent}</span>
+            </>
+          ) : null}
+        </h1>
+        {description ? (
+          <p className="mt-5 max-w-[34rem] text-sm leading-[1.8] text-zinc-400">{description}</p>
+        ) : null}
+      </div>
+      {aside ? <div className="shrink-0">{aside}</div> : null}
+    </header>
+  );
+}
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
   const { isLoaded, isSignedIn } = useAuth();
@@ -124,7 +171,10 @@ function PrivateShell({ children }: { children: ReactNode }) {
   const logout = () => signOut({ redirectUrl: '/' });
 
   return (
-    <div className="min-h-[100dvh] bg-[#0a0a0a] text-zinc-100">
+    <div className="relative min-h-[100dvh] bg-[#0a0a0a] text-zinc-100">
+      {/* The same top glow the public pages open with, so the private house
+          reads as the same place once you are inside it. */}
+      <div className="hero-glow pointer-events-none absolute inset-x-0 top-0 h-[480px]" />
       {/* Floating pill nav — same treatment as the home page's HouseNav: the
           bar is a rounded, blurred, border-lit card floating under the top
           edge instead of a full-width strip. */}
@@ -208,7 +258,7 @@ function PrivateShell({ children }: { children: ReactNode }) {
         </div>
       </nav>
 
-      <main className="mx-auto max-w-[1400px] px-4 py-10 sm:px-5 lg:px-6 lg:pb-14">{children}</main>
+      <main className="relative mx-auto max-w-[1400px] px-4 py-10 sm:px-5 lg:px-6 lg:pb-14">{children}</main>
     </div>
   );
 }

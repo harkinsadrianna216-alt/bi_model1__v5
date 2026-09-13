@@ -1,6 +1,7 @@
-import { PiArrowUpRightDuotone, PiCompassRoseDuotone } from 'react-icons/pi';
+import { PiArrowUpRightDuotone, PiCompassRoseDuotone, PiSquaresFourDuotone } from 'react-icons/pi';
 import { useUser } from '@clerk/react';
 import { Link } from 'wouter';
+import { PageHeader } from '@/components/protected-shell';
 import { nexetDashboardCategories } from '@/data/categories';
 
 // Premium dark theme — Resend/Framer inspired
@@ -21,7 +22,7 @@ const doorIconTone: Record<string, string> = {
   blue: 'text-sky-300',
   coral: 'text-rose-300',
 };
-const doorCardTitleClass = 'mt-6 max-w-[13ch] text-3xl font-bold leading-[.98] tracking-[-0.04em] text-zinc-100';
+const doorCardTitleClass = 'mt-6 max-w-[13ch] font-brand text-3xl font-bold leading-[.98] tracking-[-0.04em] text-zinc-100';
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -29,16 +30,19 @@ export default function Dashboard() {
 
   return (
     <div className="mx-auto max-w-[1320px]">
-      <div className="reveal flex flex-col justify-between gap-6 border-b border-white/5 pb-10 md:flex-row md:items-end">
-        <div>
-          <h1 className="mt-5 max-w-[12ch] text-6xl font-bold leading-[.9] tracking-[-0.05em] text-white sm:text-8xl">Welcome, {name}.</h1>
-        </div>
-        {/* The footer-card treatment, moved up beside the welcome line. */}
-        <div className="grid max-w-md gap-5 sm:grid-cols-[auto_1fr] sm:items-center">
-          <PiCompassRoseDuotone className="h-7 w-7 animate-spin-slow text-[#3b82f6]" />
-          <p className="text-sm leading-relaxed text-zinc-500">Every room starts with two. Nexet keeps the contribution visible, the connection human, and the strange route an idea took intact.</p>
-        </div>
-      </div>
+      <PageHeader
+        icon={PiSquaresFourDuotone}
+        kicker="Your atrium"
+        title="Welcome,"
+        accent={`${name}.`}
+        aside={
+          /* The footer-card treatment, moved up beside the welcome line. */
+          <div className="grid max-w-md gap-5 sm:grid-cols-[auto_1fr] sm:items-center">
+            <PiCompassRoseDuotone className="h-7 w-7 animate-spin-slow text-[#3b82f6]" />
+            <p className="text-sm leading-[1.8] text-zinc-500">Every room starts with two. Nexet keeps the contribution visible, the connection human, and the strange route an idea took intact.</p>
+          </div>
+        }
+      />
 
       <div className="reveal reveal-1 mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {nexetDashboardCategories.map((category, index) => {
@@ -48,7 +52,7 @@ export default function Dashboard() {
             <Link
               key={category.slug}
               href={`/categories/${category.slug}`}
-              className={`soft-lift focus-house group relative min-h-[300px] overflow-hidden rounded-3xl border p-7 ${available ? openDoorClass + ' glow-accent' : doorClass[category.accent] ?? doorClass.ink}`}
+              className={`soft-lift focus-house group relative min-h-[300px] overflow-hidden rounded-2xl border p-7 ${available ? openDoorClass + ' glow-accent' : doorClass[category.accent] ?? doorClass.ink}`}
               data-testid={`card-category-${category.slug}`}
             >
               {/* hover spotlight + shine sweep */}
@@ -80,7 +84,7 @@ export default function Dashboard() {
       </div>
 
       {/* Footer card — a quiet closing note with the way into the foundation. */}
-      <div className="reveal reveal-2 mt-16 overflow-hidden rounded-3xl border border-[#3b82f6]/25 bg-gradient-to-br from-[#3b82f6]/10 to-transparent p-7 sm:p-9">
+      <div className="reveal reveal-2 mt-16 overflow-hidden rounded-2xl border border-[#3b82f6]/25 bg-gradient-to-br from-[#3b82f6]/10 to-transparent p-7 sm:p-9">
         <span className="card-spot" />
         <div className="relative flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
           <div className="flex items-start gap-5">

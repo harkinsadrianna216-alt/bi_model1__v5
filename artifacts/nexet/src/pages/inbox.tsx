@@ -10,6 +10,7 @@ import {
   useMarkVideoNotificationRead,
 } from '@workspace/api-client-react';
 import type { VideoNotification } from '@workspace/api-client-react';
+import { PageHeader } from '@/components/protected-shell';
 import {
   denPageCtaLabel,
   metaFor,
@@ -118,22 +119,22 @@ export default function InboxPage() {
 
   return (
     <div className="mx-auto max-w-[1320px]">
-      <div className="reveal flex flex-col justify-between gap-5 border-b border-white/5 pb-10 md:flex-row md:items-end">
-        <div>
-          <h1 className="mt-5 max-w-[12ch] text-6xl font-bold leading-[.9] tracking-[-0.04em] text-white sm:text-8xl">
-            Your inbox.
-          </h1>
-        </div>
-        <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">
-          {unreadCount > 0
-            ? `${unreadCount} unread ${unreadCount === 1 ? 'item' : 'items'} need your attention across your rooms and workspaces.`
-            : 'Everything here is read and resting. Notices from both dens gather below — each one opens its full page inside the den it came from.'}
-        </p>
-      </div>
+      <PageHeader
+        icon={PiTrayDuotone}
+        kicker="Across your dens"
+        title="Your inbox."
+        aside={
+          <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">
+            {unreadCount > 0
+              ? `${unreadCount} unread ${unreadCount === 1 ? 'item' : 'items'} need your attention across your rooms and workspaces.`
+              : 'Everything here is read and resting. Notices from both dens gather below — each one opens its full page inside the den it came from.'}
+          </p>
+        }
+      />
 
       <section aria-labelledby="notes-heading" className="reveal reveal-1 mt-10">
         <div className="flex items-center justify-between gap-4">
-          <h2 id="notes-heading" className="flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[.2em] text-[#34d399]">
+          <h2 id="notes-heading" className="flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[.18em] text-[#3b82f6]">
             <PiTrayDuotone className="h-4 w-4" /> Notices
           </h2>
           <span className="font-mono-ui text-[10px] uppercase tracking-[.12em] text-zinc-500">
@@ -175,8 +176,9 @@ export default function InboxPage() {
               </span>
             </div>
           )) : (
-            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-6">
-              <p className="text-2xl font-semibold text-zinc-100">Both dens are quiet.</p>
+            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8">
+              <span className="icon-chip h-14 w-14 text-[#3b82f6]"><PiTrayDuotone className="h-6 w-6" /></span>
+              <p className="mt-7 font-brand text-3xl font-bold tracking-[-0.03em] text-zinc-100">Both dens are quiet.</p>
               <p className="mt-2 text-sm leading-relaxed text-zinc-500">Notices from Author Den (submissions, contracts, your-turn passes) and Creators Den (uploads for review, approvals, invites) will appear here when they need you — opening one takes you to its full page in that den.</p>
             </div>
           )}
@@ -184,10 +186,11 @@ export default function InboxPage() {
       </section>
 
       <div className="reveal reveal-2 mt-12 flex flex-wrap items-center gap-3 border-t border-white/5 pt-7 text-sm text-zinc-500">
-        <PiUsersDuotone className="h-4 w-4 text-[#34d399]" />
+        <PiUsersDuotone className="h-4 w-4 shrink-0 text-[#3b82f6]" />
         <span>Everything here is private to you — notices are brief here; urgent work and conversations live on the Author Den notifications page, and each row opens it.</span>
-        <Link href="/categories/authors" className="focus-house ml-auto inline-flex items-center gap-2 rounded-full bg-[#3b82f6] px-4 py-2 text-xs font-semibold text-white">
-          Authors room <PiArrowRightDuotone className="h-3.5 w-3.5" />
+        <Link href="/categories/authors" className="focus-house group ml-auto inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:text-white" data-testid="link-inbox-authors-room">
+          Authors room
+          <PiArrowRightDuotone className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
     </div>

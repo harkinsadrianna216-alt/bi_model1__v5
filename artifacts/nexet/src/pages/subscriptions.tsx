@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { PiArrowLeftDuotone, PiCheckCircleDuotone, PiCheckDuotone, PiCircleNotchDuotone, PiCreditCardDuotone, PiFolderOpenDuotone, PiHardDrivesDuotone, PiLockKeyDuotone, PiSparkleDuotone, PiTicketDuotone, PiWarningCircleDuotone, PiXDuotone } from 'react-icons/pi';
 import type { IconType } from 'react-icons';
 import { Link } from 'wouter';
+import { PageHeader } from '@/components/protected-shell';
 import { PaymentLoadingOverlay } from '@/components/payment-loading';
 import { SuccessCheck } from '@/components/success-check';
 import {
@@ -160,7 +161,7 @@ function ResultOverlayView({ state, onClose }: { state: ResultOverlay; onClose: 
       <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-[#111111]/60 p-4 backdrop-blur-sm" onClick={onClose}>
         <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-[#111111] p-7 text-center text-white shadow-2xl" onClick={(event) => event.stopPropagation()} data-testid="subscription-success">
           <SuccessCheck className="mx-auto" />
-          <h3 className="mt-1 text-2xl font-extrabold tracking-[-0.04em]">Payment confirmed</h3>
+          <h3 className="mt-1 font-brand text-2xl font-extrabold tracking-[-0.04em]">Payment confirmed</h3>
           <p className="mt-3 text-sm text-zinc-400">
             {state.total !== undefined ? (
               <>
@@ -184,7 +185,7 @@ function ResultOverlayView({ state, onClose }: { state: ResultOverlay; onClose: 
         <div className="flex items-center gap-3">
           <span className="icon-chip h-14 w-14 text-[#f87171]"><PiWarningCircleDuotone className="h-7 w-7" /></span>
           <div>
-            <h3 className="text-xl font-extrabold tracking-[-0.04em]">Something went wrong</h3>
+            <h3 className="font-brand text-xl font-extrabold tracking-[-0.04em]">Something went wrong</h3>
           </div>
         </div>
         <p className="mt-4 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs leading-relaxed text-zinc-300">{state.message}</p>
@@ -296,27 +297,31 @@ export default function SubscriptionsPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-[1200px]">
-      <div className="reveal flex flex-col justify-between gap-5 border-b border-white/5 pb-10 md:flex-row md:items-end">
-        <div>
-          <h1 className="mt-5 text-6xl font-bold leading-[.9] tracking-[-0.04em] text-white sm:text-7xl">Yours at a glance.</h1>
-          <p className="mt-5 max-w-[34rem] text-base leading-[1.8] text-zinc-400">
+    <div className="mx-auto max-w-[1320px]">
+      <PageHeader
+        icon={PiTicketDuotone}
+        kicker={'Plans & passes'}
+        title="Yours at a glance."
+        description={
+          <>
             Every subscription on your account — category passes, Creators Den storage, and Author&nbsp;Den projects — in one place. Subscribe here, or on the den itself; your plan follows your account.
-          </p>
-        </div>
-        <Link href="/dashboard" className="focus-house group inline-flex items-center gap-2 rounded-full py-2 text-xs font-semibold text-zinc-500 hover:text-zinc-100" data-testid="link-subscriptions-back">
-          <PiArrowLeftDuotone className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-          Back to the atrium
-        </Link>
-      </div>
+          </>
+        }
+        aside={
+          <Link href="/dashboard" className="focus-house group inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-xs font-semibold text-zinc-300 transition-colors hover:border-white/20 hover:text-white" data-testid="link-subscriptions-back">
+            <PiArrowLeftDuotone className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+            Back to the atrium
+          </Link>
+        }
+      />
 
       {/* Current usage — the live account state. */}
       <div className="reveal reveal-1 mt-12 grid gap-6 lg:grid-cols-3">
-        <div className="soft-lift group card-surface relative overflow-hidden rounded-3xl p-6">
+        <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <span className="card-spot" />
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="mt-1 text-2xl font-semibold text-zinc-100">Passes</p>
+              <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Passes</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#3b82f6]"><PiTicketDuotone className="h-5 w-5" /></span>
           </div>
@@ -334,12 +339,12 @@ export default function SubscriptionsPage() {
           </div>
         </div>
 
-        <div className="soft-lift group card-surface relative overflow-hidden rounded-3xl p-6">
+        <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <span className="card-spot" />
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="font-mono-ui text-[9px] uppercase tracking-[.18em] text-zinc-500">Creator Den · workspace</p>
-              <p className="mt-1 text-2xl font-semibold text-zinc-100">Storage</p>
+              <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Storage</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#34d399]"><PiHardDrivesDuotone className="h-5 w-5" /></span>
           </div>
@@ -353,12 +358,12 @@ export default function SubscriptionsPage() {
           <p className="mt-2 text-xs text-zinc-500">{formatBytes(Math.max(0, storageTotal - storageUsed))} left</p>
         </div>
 
-        <div className="soft-lift group card-surface relative overflow-hidden rounded-3xl p-6">
+        <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <span className="card-spot" />
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="font-mono-ui text-[9px] uppercase tracking-[.18em] text-zinc-500">Author Den · work projects</p>
-              <p className="mt-1 text-2xl font-semibold text-zinc-100">Projects</p>
+              <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Projects</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#fbbf24]"><PiFolderOpenDuotone className="h-5 w-5" /></span>
           </div>
@@ -375,7 +380,7 @@ export default function SubscriptionsPage() {
 
       {/* The plan catalog, grouped by product. */}
       {plansQuery.isLoading ? (
-        <div className="public-card mt-10 rounded-[1.5rem] border border-white/10 bg-[#111111] p-8 text-center text-zinc-500">Opening the price list…</div>
+        <div className="card-surface mt-10 rounded-2xl p-8 text-center text-sm text-zinc-500">Opening the price list…</div>
       ) : (
         groups.map((groupPlans, index) => {
           const kind = groupPlans[0]?.kind as keyof typeof KIND_META;
@@ -390,7 +395,7 @@ export default function SubscriptionsPage() {
               <div className="flex items-center gap-4">
                 <span className="icon-chip h-11 w-11 text-[#3b82f6]"><Icon className="h-5 w-5" /></span>
                 <div>
-                  <h2 className="text-2xl font-semibold text-zinc-100">{meta.label}</h2>
+                  <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{meta.label}</h2>
                 </div>
                 <div className="h-px flex-1 bg-white/5" />
                 <span className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-zinc-600">0{index + 1}</span>
@@ -403,7 +408,7 @@ export default function SubscriptionsPage() {
                   return (
                     <div
                       key={`${plan.kind}:${plan.planId}`}
-                      className={`soft-lift group relative flex flex-col overflow-hidden rounded-3xl p-7 ${popular ? 'card-raised glow-accent border border-[#3b82f6]/40' : 'card-surface border border-white/10'}`}
+                      className={`soft-lift group relative flex flex-col overflow-hidden rounded-2xl p-7 ${popular ? 'card-raised glow-accent border border-[#3b82f6]/40' : 'card-surface border border-white/10'}`}
                       data-testid={`plan-${plan.kind}-${plan.planId}`}
                     >
                       <span className="card-spot" />
@@ -427,7 +432,7 @@ export default function SubscriptionsPage() {
 
                       {/* Price — the focal point, Resend style */}
                       <div className="mt-7 flex items-baseline gap-1.5">
-                        <span className={`font-display text-[3rem] font-extrabold leading-none tracking-[-0.05em] ${popular ? 'text-gradient-accent' : 'text-white'}`}>{price(plan.priceUsd)}</span>
+                        <span className={`font-brand text-[3rem] font-extrabold leading-none tracking-[-0.05em] ${popular ? 'text-gradient-accent' : 'text-white'}`}>{price(plan.priceUsd)}</span>
                         <span className="text-sm text-zinc-500">/ {plan.intervalLabel}</span>
                       </div>
                       <p className="mt-2 min-h-[2.5rem] text-xs leading-relaxed text-zinc-500">{plan.detail}</p>
@@ -477,10 +482,10 @@ export default function SubscriptionsPage() {
       {/* Subscription history */}
       <section className="reveal mt-14">
         <div className="flex items-center gap-4">
-          <h2 className="text-2xl font-semibold text-zinc-100">Every subscription on this account</h2>
+          <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Every subscription on this account</h2>
           <div className="h-px flex-1 bg-white/5" />
         </div>
-        <div className="mt-5 overflow-hidden rounded-[1.5rem] border border-white/10">
+        <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
           {((data?.current ?? []).length === 0) ? (
             <div className="p-8 text-center text-sm text-zinc-500" data-testid="subscriptions-history-empty">
               No subscriptions yet — every pass and extension you buy lands here.
@@ -608,10 +613,10 @@ function PayModal({
                 <PiCreditCardDuotone className="h-5 w-5" />
               </span>
               <div>
-                <h2 className="mt-1 font-display text-2xl font-extrabold tracking-[-0.04em]">{plan.planLabel}</h2>
+                <h2 className="mt-1 font-brand text-2xl font-extrabold tracking-[-0.04em]">{plan.planLabel}</h2>
               </div>
             </div>
-            <span className="font-display text-2xl font-extrabold tracking-[-0.04em]">{price(plan.priceUsd)}</span>
+            <span className="font-brand text-2xl font-extrabold tracking-[-0.04em]">{price(plan.priceUsd)}</span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-zinc-400">{plan.detail} · billed per {plan.intervalLabel}.</p>
           <button type="button" onClick={onClose} disabled={opening} aria-label="Close" className="focus-house absolute right-4 top-4 rounded-full p-1.5 text-zinc-500 hover:bg-white/5 hover:text-white disabled:opacity-40"><PiXDuotone className="h-4 w-4" /></button>
