@@ -258,24 +258,24 @@ function UserChip() {
   return (
     <Link
       href="/profile"
-      className="focus-house group flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-white/5"
+      className="focus-house group flex max-w-[15rem] min-w-0 items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1 pr-3 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.06]"
       data-testid="link-profile-chip"
     >
       {user?.imageUrl ? (
         <img
           src={user.imageUrl}
           alt=""
-          className="h-8 w-8 rounded-full object-cover shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]"
+          className="h-7 w-7 shrink-0 rounded-full object-cover shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]"
           data-testid="link-profile-chip-avatar"
         />
       ) : (
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-[10px] font-medium uppercase text-white shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-[10px] font-medium uppercase text-white shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]">
           {initials}
         </span>
       )}
-      <span className="hidden text-left sm:block">
-        <span className="block text-xs font-semibold text-zinc-100" data-testid="text-user-name">{name}</span>
-        <span className="block max-w-40 truncate text-[10px] text-zinc-500">{user?.primaryEmailAddress?.emailAddress || 'Nexet member'}</span>
+      <span className="hidden min-w-0 text-left sm:block">
+        <span className="block truncate text-xs font-semibold text-zinc-100" data-testid="text-user-name">{name}</span>
+        <span className="block truncate text-[10px] text-zinc-500">{user?.primaryEmailAddress?.emailAddress || 'Nexet member'}</span>
       </span>
     </Link>
   );
@@ -302,32 +302,42 @@ function PrivateShell({ children }: { children: ReactNode }) {
             <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#3b82f6]/40 to-transparent" />
             <NexetLogo />
 
-            {/* Desktop nav — home-style text tabs with the gradient underline */}
-            <nav className="hidden min-w-0 flex-1 items-center gap-1 md:flex" aria-label="Private navigation">
-              {desktopNav.map((item) => {
-                const Icon = item.icon;
-                const active = location === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`focus-house group relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${active ? 'text-white' : 'text-zinc-400 hover:bg-white/5 hover:text-white'}`}
-                    data-testid={`link-nav-${item.label.toLowerCase()}`}
-                  >
-                    <Icon className={`h-4 w-4 ${active ? 'text-[#60a5fa]' : 'text-zinc-500 group-hover:text-zinc-200'}`} />
-                    {item.label}
-                    {item.label === 'Inbox' && <InboxBadge />}
-                    <span className={`absolute inset-x-4 bottom-0.5 h-px bg-gradient-to-r from-[#3b82f6]/80 to-[#8b5cf6]/80 transition-opacity duration-200 ${active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                  </Link>
-                );
-              })}
+            {/* Desktop nav — one segmented control, the same grammar the front
+                page's header uses: a bordered pill group whose current room is
+                lit from inside rather than underlined. */}
+            <nav className="hidden min-w-0 flex-1 items-center justify-center md:flex" aria-label="Private navigation">
+              <div className="flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.04] p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                {desktopNav.map((item) => {
+                  const Icon = item.icon;
+                  const active = location === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={`focus-house group relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200 ${
+                        active
+                          ? 'bg-[#3b82f6]/15 text-white shadow-[inset_0_0_0_1px_rgba(59,130,246,0.35),inset_0_1px_0_0_rgba(255,255,255,0.1),0_0_24px_-10px_rgba(59,130,246,0.9)]'
+                          : 'text-zinc-400 hover:bg-white/[0.07] hover:text-white'
+                      }`}
+                      data-testid={`link-nav-${item.label.toLowerCase()}`}
+                    >
+                      <Icon className={`h-4 w-4 transition-colors ${active ? 'text-[#60a5fa]' : 'text-zinc-500 group-hover:text-zinc-200'}`} />
+                      {item.label}
+                      {item.label === 'Inbox' && <InboxBadge />}
+                    </Link>
+                  );
+                })}
+              </div>
             </nav>
 
-            {/* Right cluster — user chip, sign out */}
-            <div className="ml-auto flex items-center gap-2">
+            {/* Right cluster — the account pill, then the way out. Signing out is
+                neutral until you reach for it, so the header keeps one loud
+                thing at a time. */}
+            <div className="ml-auto flex shrink-0 items-center gap-2">
               <UserChip />
-              <button type="button" onClick={logout} className="focus-house group hidden items-center gap-2 rounded-full border border-red-500/40 px-3 py-2 text-xs font-medium text-red-400 transition-colors hover:border-red-400 hover:bg-red-500/10 hover:text-red-300 sm:flex" data-testid="button-header-logout">
-                <PiSignOutDuotone className="h-3.5 w-3.5 text-red-400 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
+              <button type="button" onClick={logout} className="focus-house group hidden items-center gap-2 rounded-full border border-white/10 px-3.5 py-2 text-xs font-medium text-zinc-300 transition-colors duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300 sm:flex" data-testid="button-header-logout">
+                <PiSignOutDuotone className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
                 Sign out
               </button>
               <button type="button" onClick={() => setMenuOpen((open) => !open)} className="focus-house rounded-lg border border-white/10 p-2 md:hidden" aria-label="Open menu" data-testid="button-mobile-profile-menu">
@@ -342,16 +352,24 @@ function PrivateShell({ children }: { children: ReactNode }) {
               <span className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#3b82f6]/50 to-transparent" />
               {mobileNav.map((item) => {
                 const Icon = item.icon;
+                const active = location === item.href;
                 return (
-                  <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-zinc-300 transition-colors hover:bg-white/5 hover:text-white" data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}>
-                    <Icon className="h-4 w-4 text-zinc-500" />
+                  <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${active ? 'bg-[#3b82f6]/15 text-white' : 'text-zinc-300 hover:bg-white/5 hover:text-white'}`} data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}>
+                    <span className={`icon-chip h-9 w-9 shrink-0 ${active ? 'text-[#60a5fa]' : 'text-zinc-400'}`}>
+                      <Icon className="h-4 w-4" />
+                    </span>
                     {item.label}
                     {item.label === 'Inbox' && <InboxBadge />}
                   </Link>
                 );
               })}
               <div className="my-1 h-px bg-white/5" />
-              <button type="button" onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-red-400 hover:bg-white/5 hover:text-red-300" data-testid="button-mobile-logout"><PiSignOutDuotone className="h-4 w-4 text-red-400" />Sign out</button>
+              <button type="button" onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-medium text-zinc-300 transition-colors hover:bg-red-500/10 hover:text-red-300" data-testid="button-mobile-logout">
+                <span className="icon-chip h-9 w-9 shrink-0 text-red-400">
+                  <PiSignOutDuotone className="h-4 w-4" />
+                </span>
+                Sign out
+              </button>
             </div>
           )}
         </div>
@@ -364,9 +382,9 @@ function PrivateShell({ children }: { children: ReactNode }) {
             const Icon = item.icon;
             const active = location === item.href;
             return (
-              <Link key={item.href} href={item.href} className={`focus-house flex flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-medium ${active ? 'text-[#3b82f6]' : 'text-zinc-500'}`} data-testid={`link-mobile-${item.label.toLowerCase()}`}>
-                <span className="relative">
-                  <Icon className={`h-5 w-5 ${active ? 'text-[#3b82f6]' : 'text-zinc-500'}`} />
+              <Link key={item.href} href={item.href} aria-current={active ? 'page' : undefined} className={`focus-house group flex flex-col items-center gap-1 rounded-xl py-1.5 text-[10px] font-medium transition-colors ${active ? 'text-[#60a5fa]' : 'text-zinc-500'}`} data-testid={`link-mobile-${item.label.toLowerCase()}`}>
+                <span className={`relative flex h-7 w-12 items-center justify-center rounded-full transition-colors ${active ? 'bg-[#3b82f6]/15 shadow-[inset_0_0_0_1px_rgba(59,130,246,0.3)]' : ''}`}>
+                  <Icon className={`h-5 w-5 ${active ? 'text-[#60a5fa]' : 'text-zinc-500 group-hover:text-zinc-300'}`} />
                   {item.label === 'Inbox' && <InboxBadge overlay />}
                 </span>
                 {item.label}
