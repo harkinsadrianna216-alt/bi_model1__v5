@@ -10,9 +10,9 @@ import {
 import { matchesAuthorQuery, matchesSeedQuery } from "@/components/explore";
 import { nexetUid } from "@/lib/nexet-uid";
 
-// The Nexet mark, served from this app's public dir (BASE_URL keeps the URL
-// correct under the /authors-den base path).
-const nexetLogoUrl = `${import.meta.env.BASE_URL}nexet-logo.png`;
+// The Author Den's own mark, served from this app's public dir (BASE_URL keeps
+// the URL correct under the /authors-den base path).
+const brandLogoUrl = `${import.meta.env.BASE_URL}nexet-author-den-logo.png`;
 
 // ---------------------------------------------------------------------------
 // The Author Den top-bar chrome. Same three pieces the Creators Den runs in
@@ -30,7 +30,7 @@ export function TopBrand({ onOpenHome }: { onOpenHome: () => void }) {
   return (
     <button type="button" className="topnav-brand" onClick={onOpenHome} title="Authors Den home" data-testid="nav-home">
       <span className="topnav-brand-mark" aria-hidden>
-        <img src={nexetLogoUrl} alt="" />
+        <img src={brandLogoUrl} alt="" />
       </span>
       <span className="topnav-brand-copy">
         <span className="topnav-brand-name">Authors Den</span>

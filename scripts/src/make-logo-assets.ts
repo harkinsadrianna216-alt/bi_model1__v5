@@ -19,8 +19,20 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(scriptDir, "..", "..");
 const MASTER_DIR = path.join(ROOT, "assets", "brand");
 
-/** The front-end apps that render the Nexet mark, in their artifact folder name. */
-const WEB_APPS = ["nexet", "creators-den", "authors-den", "oracle-admin"] as const;
+/** The desktop agent's mark — Creator Den runs the same one. */
+const AGENT_MASTER = "nexet-agent-logo.png";
+
+/**
+ * Each front end under nexet.co, the master it draws its mark from, and the
+ * filename it serves that mark under. The dens keep their own identities, so
+ * Creator Den runs the desktop agent's mark and Authors Den has its own.
+ */
+const WEB_APPS: { app: string; master: string; served: string; og?: boolean }[] = [
+  { app: "nexet", master: "nexet-logo.png", served: "nexet-logo.png", og: true },
+  { app: "creators-den", master: AGENT_MASTER, served: "nexet-agent-logo.png" },
+  { app: "authors-den", master: "nexet-author-den-logo.png", served: "nexet-author-den-logo.png" },
+  { app: "oracle-admin", master: "nexet-logo.png", served: "nexet-logo.png" },
+];
 
 interface Raster {
   width: number;
@@ -346,33 +358,40 @@ function writePng(target: string, image: Raster): void {
 }
 
 function main(): void {
-  const webMasterPath = path.join(MASTER_DIR, "nexet-logo.png");
-  const agentMasterPath = path.join(MASTER_DIR, "nexet-agent-logo.png");
-  const rawWebMaster = decodePng(fs.readFileSync(webMasterPath));
-  const rawAgentMaster = decodePng(fs.readFileSync(agentMasterPath));
-  const webMaster = trimToSquare(rawWebMaster);
-  const agentMaster = trimToSquare(rawAgentMaster);
+  // Masters are decoded once and trimmed to the mark, then shared by every
+  // app that serves them.
+  const marks = new Map<string, Raster>();
+  const mark = (name: string): Raster => {
+    const cached = marks.get(name);
+    if (cached) return cached;
+    const trimmed = trimToSquare(decodePng(fs.readFileSync(path.join(MASTER_DIR, name))));
+    marks.set(name, trimmed);
+    return trimmed;
+  };
 
-  for (const app of WEB_APPS) {
-    const dir = path.join(ROOT, "artifacts", app, "public");
-    writePng(path.join(dir, "nexet-logo.png"), resize(webMaster, WEB_LOGO));
-    writePng(path.join(dir, "favicon-32.png"), resize(webMaster, FAVICON));
-    writePng(path.join(dir, "apple-touch-icon.png"), resize(webMaster, APPLE_TOUCH));
-    if (app === "nexet") {
-      writePng(path.join(dir, "og-logo.png"), resize(webMaster, OG_IMAGE));
+  for (const target of WEB_APPS) {
+    const art = mark(target.master);
+    const dir = path.join(ROOT, "artifacts", target.app, "public");
+    writePng(path.join(dir, target.served), resize(art, WEB_LOGO));
+    writePng(path.join(dir, "favicon-32.png"), resize(art, FAVICON));
+    writePng(path.join(dir, "apple-touch-icon.png"), resize(art, APPLE_TOUCH));
+    if (target.og) {
+      writePng(path.join(dir, "og-logo.png"), resize(art, OG_IMAGE));
     }
   }
 
   const agentDir = path.join(ROOT, "artifacts", "desktop-agent", "assets");
-  writePng(path.join(agentDir, "nexet-agent-logo.png"), resize(agentMaster, AGENT_LOGO));
-  writePng(path.join(agentDir, "nexet-agent-tray.png"), resize(agentMaster, AGENT_TRAY));
+  const agentArt = mark(AGENT_MASTER);
+  writePng(path.join(agentDir, "nexet-agent-logo.png"), resize(agentArt, AGENT_LOGO));
+  writePng(path.join(agentDir, "nexet-agent-tray.png"), resize(agentArt, AGENT_TRAY));
   // electron-builder reads this for the installer / app icon — keep it at the
   // master resolution (copied verbatim, never re-encoded).
   const iconPath = path.join(agentDir, "nexet-agent-icon.png");
+  const agentMasterPath = path.join(MASTER_DIR, AGENT_MASTER);
   fs.mkdirSync(agentDir, { recursive: true });
   fs.copyFileSync(agentMasterPath, iconPath);
   console.log(
-    `${path.relative(ROOT, iconPath)}  ${rawAgentMaster.width}x${rawAgentMaster.height}  ${(fs.statSync(iconPath).size / 1024).toFixed(1)} KB`,
+    `${path.relative(ROOT, iconPath)}  ${(fs.statSync(iconPath).size / 1024).toFixed(1)} KB  (master, copied verbatim)`,
   );
 }
 

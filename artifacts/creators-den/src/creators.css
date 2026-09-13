@@ -676,14 +676,10 @@ select optgroup {
   margin-bottom: var(--sp-4);
   border-bottom: 1px solid hsl(var(--sidebar-foreground) / .08);
 }
-/* A filled, glowing mark reads as a product identity, not a hollow outline. */
-.brand-mark {
-  width: 30px; height: 30px; flex-basis: 30px;
-  border: 0; border-radius: 9px;
-  color: hsl(var(--sidebar-primary-foreground));
-  background: linear-gradient(150deg, hsl(var(--sidebar-primary)), hsl(var(--sidebar-primary) / .58));
-  box-shadow: 0 0 0 4px hsl(var(--sidebar-primary) / .1), 0 6px 16px hsl(var(--sidebar-primary) / .28);
-}
+/* The brand mark used to be a "filled, glowing" brass tile — that fill, its
+   rounded corners and the glow are gone: the logo image carries the identity
+   whole, with nothing painted behind it. Sizing lives on .cd-brand .brand-mark
+   below. */
 .brand-name { font-size: 16px; letter-spacing: -.03em; }
 .brand-sub { letter-spacing: .16em; color: hsl(var(--sidebar-foreground) / .6); }
 
@@ -6035,6 +6031,7 @@ select optgroup {
 /* The mark is shown whole: no ring, radius or frame around it. The channel
    avatar is the one case that still wants a circular crop. */
 .cd-brand .brand-mark {
+  width: 30px; height: 30px; flex: 0 0 30px;
   display: grid; place-items: center;
 }
 .cd-brand .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
