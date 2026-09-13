@@ -96,9 +96,18 @@ function UserChip() {
       className="focus-house group flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-white/5"
       data-testid="link-profile-chip"
     >
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-[10px] font-medium uppercase text-white shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]">
-        {initials}
-      </span>
+      {user?.imageUrl ? (
+        <img
+          src={user.imageUrl}
+          alt=""
+          className="h-8 w-8 rounded-full object-cover shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]"
+          data-testid="link-profile-chip-avatar"
+        />
+      ) : (
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-[10px] font-medium uppercase text-white shadow-[0_0_18px_-4px_rgba(59,130,246,0.7)]">
+          {initials}
+        </span>
+      )}
       <span className="hidden text-left sm:block">
         <span className="block text-xs font-semibold text-zinc-100" data-testid="text-user-name">{name}</span>
         <span className="block max-w-40 truncate text-[10px] text-zinc-500">{user?.primaryEmailAddress?.emailAddress || 'Nexet member'}</span>
