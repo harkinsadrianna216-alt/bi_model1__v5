@@ -258,7 +258,8 @@ function UserChip() {
   return (
     <Link
       href="/profile"
-      className="focus-house group flex max-w-[15rem] min-w-0 items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1 pr-3 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.06]"
+      aria-label={`Your profile — ${name}`}
+      className="focus-house group flex max-w-[15rem] min-w-0 items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] p-1 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.06] lg:pr-3"
       data-testid="link-profile-chip"
     >
       {user?.imageUrl ? (
@@ -273,7 +274,10 @@ function UserChip() {
           {initials}
         </span>
       )}
-      <span className="hidden min-w-0 text-left sm:block">
+      {/* The name and address only appear once the bar has room for them —
+          below that the chip is the avatar alone, and the label carries what
+          the hidden text would have said. */}
+      <span className="hidden min-w-0 text-left lg:block">
         <span className="block truncate text-xs font-semibold text-zinc-100" data-testid="text-user-name">{name}</span>
         <span className="block truncate text-[10px] text-zinc-500">{user?.primaryEmailAddress?.emailAddress || 'Nexet member'}</span>
       </span>
@@ -336,11 +340,23 @@ function PrivateShell({ children }: { children: ReactNode }) {
                 thing at a time. */}
             <div className="ml-auto flex shrink-0 items-center gap-2">
               <UserChip />
-              <button type="button" onClick={logout} className="focus-house group hidden items-center gap-2 rounded-full border border-white/10 px-3.5 py-2 text-xs font-medium text-zinc-300 transition-colors duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300 sm:flex" data-testid="button-header-logout">
-                <PiSignOutDuotone className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
-                Sign out
+              {/* Icon at rest; the word slides out of it on hover or keyboard
+                  focus, so the header stays quiet and the way out is still
+                  spelled out the moment you reach for it. The label is clipped
+                  rather than removed, so it always names the button. */}
+              <button
+                type="button"
+                onClick={logout}
+                aria-label="Sign out"
+                className="focus-house group hidden items-center rounded-full border border-white/10 p-2.5 text-xs font-medium text-zinc-300 transition-colors duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300 sm:flex"
+                data-testid="button-header-logout"
+              >
+                <PiSignOutDuotone className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
+                <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:max-w-[5.5rem] group-hover:pl-2 group-hover:opacity-100 group-focus-visible:max-w-[5.5rem] group-focus-visible:pl-2 group-focus-visible:opacity-100">
+                  Sign out
+                </span>
               </button>
-              <button type="button" onClick={() => setMenuOpen((open) => !open)} className="focus-house rounded-lg border border-white/10 p-2 md:hidden" aria-label="Open menu" data-testid="button-mobile-profile-menu">
+              <button type="button" onClick={() => setMenuOpen((open) => !open)} className="focus-house rounded-lg border border-white/10 p-2.5 md:hidden" aria-label="Open menu" data-testid="button-mobile-profile-menu">
                 {menuOpen ? <PiXDuotone className="h-4 w-4" /> : <PiListDuotone className="h-4 w-4" />}
               </button>
             </div>
