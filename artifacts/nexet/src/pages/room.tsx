@@ -41,8 +41,7 @@ export default function RoomPage() {
             <div className="absolute -inset-5 rounded-[2rem] border border-dashed border-white/10" />
             <div className="relative rounded-[2rem] border border-white/10 bg-[#0d0d0d] p-4 shadow-[0_0_60px_-15px_rgba(59,130,246,0.2)] sm:p-6">
               <div className="relative rounded-[1.25rem] border border-[#8b5cf6]/30 bg-gradient-to-br from-[#8b5cf6]/15 to-transparent px-6 py-12 text-center sm:px-10 sm:py-16">
-                <div className="flex items-start justify-between">
-                  <span className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-zinc-500">Blueprint / {room.slug}</span>
+                <div className="flex items-start justify-end">
                   <span className="icon-chip h-8 w-8 text-zinc-400"><PiLockKeyDuotone className="h-4 w-4" /></span>
                 </div>
                 <div className="flex min-h-[240px] flex-col items-center justify-center text-center sm:min-h-[300px]">

@@ -56,11 +56,7 @@ export default function AuthorsPage() {
         </div>
 
         <div className="mt-8">
-          <div className="flex items-center gap-4">
-            <span className="font-mono-ui text-[10px] uppercase tracking-[0.2em] text-[#3b82f6]">The writing room</span>
-            <div className="h-px flex-1 bg-white/10" />
-          </div>
-          <p className="mt-2 font-display text-2xl italic text-white">Five seats. One manuscript.</p>
+          <p className="font-display text-2xl italic text-white">Five seats. One manuscript.</p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
             {SEATS.map((seat) => {
@@ -89,11 +85,6 @@ export default function AuthorsPage() {
       {/* The collaboration doorway — writers can audition for open writing roles
           straight from the category page. */}
       <div className="mt-8">
-        <div className="flex items-center gap-4">
-          <span className="font-mono-ui text-[10px] uppercase tracking-[0.2em] text-[#a78bfa]">Beyond your desk</span>
-          <div className="h-px flex-1 bg-white/10" />
-        </div>
-
         <a
           href="/authors-den/?arena=1"
           className="focus-house soft-lift mt-4 flex flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] border border-[#a78bfa]/40 bg-gradient-to-br from-[#a78bfa]/15 to-transparent p-7 sm:flex-row sm:items-center"

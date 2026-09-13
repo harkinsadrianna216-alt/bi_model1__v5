@@ -124,7 +124,6 @@ export default function InboxPage() {
       <section aria-label="Notices" className="reveal reveal-1 mt-12">
         <SectionHead
           icon={PiTrayDuotone}
-          kicker="Both dens"
           title="Notices"
           note={`${notices.length} total`}
         />

@@ -135,7 +135,6 @@ export default function ActivityPage() {
         ) : (
           <EmptyPanel
             icon={PiChartLineUpDuotone}
-            kicker="Nothing logged yet"
             title="Nothing has moved yet."
             body="Publish a seed, answer a seed, or open a room and your trail will gather here — every publish, submission, selection, contract lock, and approved pass."
             action={

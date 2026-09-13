@@ -404,8 +404,7 @@ function PassCoupon({ slug, name, onPurchased }: { slug: 'authors' | 'content-cr
               <PiTicketDuotone className="h-5 w-5" />
             </span>
             <div className="min-w-0">
-              <p className="font-mono-ui text-[10px] uppercase tracking-[0.22em] text-[#60a5fa]">Nexet access pass</p>
-              <h2 className="mt-1 truncate font-display text-2xl font-extrabold tracking-[-0.04em] text-white">{name}</h2>
+              <h2 className="truncate font-display text-2xl font-extrabold tracking-[-0.04em] text-white">{name}</h2>
             </div>
           </div>
 

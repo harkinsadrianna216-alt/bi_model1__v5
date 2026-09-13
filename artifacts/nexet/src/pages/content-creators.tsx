@@ -72,11 +72,7 @@ export default function ContentCreatorsPage() {
         </div>
 
         <div className="mt-8">
-          <div className="flex items-center gap-4">
-            <span className="font-mono-ui text-[10px] uppercase tracking-[0.2em] text-[#3b82f6]">The relay</span>
-            <div className="h-px flex-1 bg-white/10" />
-          </div>
-          <p className="mt-2 font-display text-2xl italic text-white">Four roles. One locked timeline.</p>
+          <p className="font-display text-2xl italic text-white">Four roles. One locked timeline.</p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {LEGS.map((leg) => {
@@ -105,11 +101,6 @@ export default function ContentCreatorsPage() {
       {/* The collaboration doorway — creators can audition for open roles on
           channels straight from the category page. */}
       <div className="mt-8">
-        <div className="flex items-center gap-4">
-          <span className="font-mono-ui text-[10px] uppercase tracking-[0.2em] text-[#a78bfa]">Beyond your den</span>
-          <div className="h-px flex-1 bg-white/10" />
-        </div>
-
         <a
           href="/creators-den/arena"
           className="focus-house soft-lift mt-4 flex flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] border border-[#a78bfa]/40 bg-gradient-to-br from-[#a78bfa]/15 to-transparent p-7 sm:flex-row sm:items-center"

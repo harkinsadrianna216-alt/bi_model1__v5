@@ -85,8 +85,7 @@ export default function ProfilePage() {
               )}
             </div>
             <div>
-              <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Signed in as</p>
-              <h2 className="mt-2 font-brand text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
+              <h2 className="font-brand text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
               <p className="mt-2 flex items-center gap-2 text-sm text-zinc-400"><PiEnvelopeDuotone className="h-4 w-4 text-zinc-500" />{email}</p>
               <div className="mt-5 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-zinc-400">
@@ -104,8 +103,7 @@ export default function ProfilePage() {
         </div>
         <div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-8">
           <div className="card-surface rounded-2xl p-6 sm:col-span-2">
-            <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Launch lists</p>
-            <h3 className="mt-2 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
+            <h3 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
             {isLoadingWaitlist ? (
               <p className="mt-4 text-sm text-zinc-500">Checking the house plan...</p>
             ) : joinedCategories.length > 0 ? (
@@ -129,15 +127,13 @@ export default function ProfilePage() {
           </div>
           <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-6">
             <span className="icon-chip h-11 w-11 text-[#3b82f6]"><PiGearSixDuotone className="h-5 w-5" /></span>
-            <p className="mt-6 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Preferences</p>
-            <p className="mt-2 font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Settings are being set.</p>
+            <p className="mt-6 font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Settings are being set.</p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">Notification controls and account preferences arrive with the next room.</p>
           </div>
           <button type="button" onClick={() => clerk.signOut({ redirectUrl: '/' })} className="focus-house group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left transition-colors hover:border-red-500/30 hover:bg-red-500/5" data-testid="button-profile-logout">
             <PiSignOutDuotone className="mt-0.5 h-5 w-5 shrink-0 text-red-400 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
             <span>
-              <span className="block font-mono-ui text-[10px] uppercase tracking-[0.18em] text-red-400">Session</span>
-              <span className="mt-2 block font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Sign out</span>
+              <span className="block font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Sign out</span>
               <span className="mt-2 block text-sm leading-relaxed text-zinc-500">Sign out of this Nexet session.</span>
             </span>
           </button>

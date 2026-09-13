@@ -72,8 +72,7 @@ export default function Dashboard() {
               <PiCompassRoseDuotone className="h-6 w-6 animate-spin-slow" />
             </span>
             <div>
-              <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">A blueprint for a new kind of making</p>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
+              <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
                 The Engine is being built first — the other doors are already on the blueprint, waiting for their first lights. Every room starts with two.
               </p>
             </div>

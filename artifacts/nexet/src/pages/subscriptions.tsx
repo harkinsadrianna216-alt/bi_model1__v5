@@ -388,7 +388,6 @@ export default function SubscriptionsPage() {
             >
               <SectionHead
                 icon={Icon}
-                kicker={`0${index + 1} / Plans`}
                 title={meta.label}
                 note={`${groupPlans.length} ${groupPlans.length === 1 ? 'plan' : 'plans'}`}
               />
@@ -474,7 +473,6 @@ export default function SubscriptionsPage() {
       <section className="reveal mt-14">
         <SectionHead
           icon={PiCreditCardDuotone}
-          kicker="Billing history"
           title="Every subscription on this account"
           note={`${(data?.current ?? []).length} total`}
         />

@@ -84,18 +84,17 @@ export function CardDecor() {
 }
 
 /**
- * A section heading in the house's own grammar: a lit icon tile, a mono kicker
- * over a Space Grotesk line, and a hairline running out to an optional counter.
+ * A section heading in the house's own grammar: a lit icon tile, a Space Grotesk
+ * line, and a hairline running out to an optional counter. No eyebrow above it —
+ * the line says what the section is.
  */
 export function SectionHead({
   icon: Icon,
-  kicker,
   title,
   note,
   className = '',
 }: {
   icon?: IconType;
-  kicker: string;
   title: string;
   note?: string;
   className?: string;
@@ -108,8 +107,7 @@ export function SectionHead({
         </span>
       ) : null}
       <div className="min-w-0">
-        <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">{kicker}</p>
-        <h2 className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{title}</h2>
+        <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{title}</h2>
       </div>
       <span className="h-px flex-1 bg-white/5" />
       {note ? (
@@ -173,19 +171,17 @@ export function GhostLink({
 }
 
 /**
- * The front page's "nothing here yet" card: a lit tile, a mono kicker, a
- * display line, a quiet paragraph, and a way out.
+ * The front page's "nothing here yet" card: a lit tile, a display line, a quiet
+ * paragraph, and a way out.
  */
 export function EmptyPanel({
   icon: Icon,
-  kicker,
   title,
   body,
   action,
   className = '',
 }: {
   icon: IconType;
-  kicker?: string;
   title: string;
   body: ReactNode;
   action?: ReactNode;
@@ -196,10 +192,7 @@ export function EmptyPanel({
       <span className="icon-chip h-16 w-16 text-[#3b82f6]">
         <Icon className="h-7 w-7" />
       </span>
-      {kicker ? (
-        <p className="mt-8 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">{kicker}</p>
-      ) : null}
-      <p className="mt-3 font-brand text-4xl font-bold leading-[.95] tracking-[-0.04em] text-zinc-100">{title}</p>
+      <p className="mt-8 font-brand text-4xl font-bold leading-[.95] tracking-[-0.04em] text-zinc-100">{title}</p>
       <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">{body}</p>
       {action ? <div className="mt-8 flex flex-wrap items-center gap-3">{action}</div> : null}
     </div>
