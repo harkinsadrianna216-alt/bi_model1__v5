@@ -1,4 +1,4 @@
-import { PiArrowUpRightDuotone, PiEyeDuotone, PiMagicWandDuotone, PiSparkleDuotone, PiStackDuotone } from 'react-icons/pi';
+import { PiArrowUpRightDuotone, PiEyeDuotone, PiMagicWandDuotone, PiSparkleDuotone } from 'react-icons/pi';
 import { Link } from 'wouter';
 import { HouseNav, NexetLogo } from '@/components/nexet-house';
 import { nexetCategories, nexetUpcomingCategories } from '@/data/categories';
@@ -8,11 +8,8 @@ function PlatformDiagram() {
     <div className="relative mx-auto w-full max-w-[510px] rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 shadow-[0_0_60px_-15px_rgba(59,130,246,0.2)] sm:p-5">
       <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-white/5 to-transparent" />
       <div className="relative grid h-full grid-cols-2 grid-rows-3 gap-2 sm:gap-3">
-        <div className="col-span-2 flex items-center justify-between rounded-xl border border-[#3b82f6]/30 bg-gradient-to-br from-[#3b82f6]/15 to-transparent p-4 sm:p-6">
-          <p className="max-w-[13rem] text-[2rem] font-semibold leading-[.9] text-white sm:text-[2.8rem]">Two Halves</p>
-          <span className="icon-chip h-11 w-11 animate-float-slow text-[#60a5fa] sm:h-14 sm:w-14">
-            <PiStackDuotone className="h-5 w-5 sm:h-6 sm:w-6" />
-          </span>
+        <div className="col-span-2 flex items-center rounded-xl border border-[#3b82f6]/30 bg-gradient-to-br from-[#3b82f6]/15 to-transparent p-4 sm:p-6">
+          <p className="text-[2rem] font-semibold leading-[.9] text-white sm:text-[2.8rem]">Together</p>
         </div>
         <div className="card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
           <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Write</span>
@@ -24,7 +21,7 @@ function PlatformDiagram() {
           <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Match</span>
         </div>
         <div className="relative card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
-          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Reveal</span>
+          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Approve</span>
           <span className="absolute bottom-3 right-3 h-5 w-5 animate-breathe rounded-full border border-[#8b5cf6]/40 shadow-[0_0_14px_-2px_rgba(139,92,246,0.5)] sm:bottom-5 sm:right-5 sm:h-8 sm:w-8" />
         </div>
       </div>
@@ -59,11 +56,11 @@ export default function Home() {
       <section className="relative mx-auto max-w-[1400px] px-4 pb-20 pt-12 sm:px-5 sm:pt-20 lg:px-6 lg:pb-32 lg:pt-24">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
           <div className="reveal max-w-[670px]">
-            <h1 className="mt-7 max-w-[12ch] text-[4rem] font-bold leading-[.94] tracking-[-0.05em] text-white sm:text-[5.8rem] lg:text-[7rem]">
+            <h1 className="mt-7 max-w-[12ch] text-[3.6rem] font-bold leading-[.96] tracking-[-0.05em] text-white sm:text-[5.2rem] lg:text-[6.2rem]">
               What if the missing piece is <span className="text-gradient-accent">the one you bring?</span>
             </h1>
             <p className="reveal reveal-1 mt-8 max-w-[31rem] text-base leading-[1.7] text-zinc-400 sm:text-lg">
-              Nexet is a collaboration platform for writers and video creators. In the Authors Den or the Creators Den, you bring your half without seeing theirs — then reveal what neither of you could have made alone.
+              Nexet is a creative collaboration platform where unfinished ideas find their missing half. Add your part without seeing theirs, get matched with the right collaborator, and come away with something neither of you could have made alone.
             </p>
             <div className="reveal reveal-2 mt-9 flex flex-wrap items-center gap-4">
               <Link href="/sign-up" className="group inline-flex items-center gap-3 rounded-full bg-[#3b82f6] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)]" data-testid="link-home-signup">
@@ -163,10 +160,8 @@ export default function Home() {
 
       <section id="upcoming" className="border-t border-white/5 bg-[#0d0d0d]">
         <div className="mx-auto max-w-[1400px] px-4 py-20 sm:px-5 lg:px-6 lg:py-28">
-          <div className="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
-            <div>
-              <h2 className="mt-5 text-5xl font-bold leading-[.92] tracking-[-0.04em] text-white sm:text-6xl">The rest of the house is still being built.</h2>
-            </div>
+          <div className="flex flex-col gap-4">
+            <h2 className="mt-5 text-[clamp(1.7rem,3.9vw,3.4rem)] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:whitespace-nowrap">The rest of the house is still being built.</h2>
             <p className="max-w-[22rem] text-sm leading-relaxed text-zinc-400">Upcoming features, already on the blueprint. Leave your email on any room and we&apos;ll light it up the day it opens.</p>
           </div>
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -208,7 +203,7 @@ export default function Home() {
       <section className="border-t border-white/5 bg-[#0d0d0d]">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-4 py-20 sm:px-5 lg:grid-cols-[1fr_.8fr] lg:items-end lg:px-6 lg:py-28">
           <div>
-            <blockquote className="text-5xl font-semibold leading-[.94] text-white sm:text-6xl">"One page. One reel.<br />Neither made alone."</blockquote>
+            <blockquote className="text-4xl font-semibold leading-[1.05] text-white sm:text-5xl">Bring your half.<br />Leave with something whole.</blockquote>
           </div>
           <div className="border-l border-white/10 pl-6 sm:pl-8">
             <p className="text-sm leading-[1.8] text-zinc-400">Nexet keeps a clear line back to every hand in the room. No synthetic substitute for a person. No erasing the strange, specific route an idea took to arrive.</p>
