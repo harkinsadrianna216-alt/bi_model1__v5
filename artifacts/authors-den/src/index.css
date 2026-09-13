@@ -1615,9 +1615,10 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
    and foreground tokens rather than the sidebar's. */
 .topnav-brand { display: flex; align-items: center; gap: 10px; margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 9px; background: transparent; color: hsl(var(--foreground)); text-align: left; white-space: nowrap; transition: background .18s ease; }
 .topnav-brand:hover { background: hsl(var(--foreground) / .05); }
-.topnav-brand-mark { width: 30px; height: 30px; flex: 0 0 30px; border: 1px solid hsl(var(--accent)); color: hsl(var(--accent)); border-radius: 50%; display: grid; place-items: center; overflow: hidden; transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s ease, border-color .2s ease; }
-.topnav-brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.topnav-brand:hover .topnav-brand-mark { transform: translateY(-1px); box-shadow: 0 4px 14px hsl(var(--accent) / .3); }
+/* The mark is shown whole: no ring, radius or frame around it. */
+.topnav-brand-mark { width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; transition: transform .2s cubic-bezier(.22, 1, .36, 1); }
+.topnav-brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.topnav-brand:hover .topnav-brand-mark { transform: translateY(-1px); }
 .topnav-brand-copy { display: flex; flex-direction: column; min-width: 0; }
 .topnav-brand-name { font: 700 16px var(--app-font-serif); letter-spacing: -.04em; }
 .topnav-brand-sub { color: hsl(var(--muted-foreground)); font: 9px var(--app-font-mono); letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }

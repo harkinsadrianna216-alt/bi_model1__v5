@@ -514,7 +514,8 @@ function DeniedScreen({ sessionError, onRetry }: { sessionError: boolean; onRetr
 function Brand({ light = false }: { light?: boolean }) {
   return (
     <div data-testid="brand-oracle-admin" className="flex items-center gap-3">
-      <img src={nexetLogoUrl} alt="" className={`h-9 w-9 rounded-full border object-cover ${light ? 'border-sidebar-border' : 'border-border'}`} />
+      {/* The mark is shown whole — no ring, frame or rounded clipping. */}
+      <img src={nexetLogoUrl} alt="" className="h-9 w-9 object-contain" />
       <div>
         <p className={`text-sm font-extrabold tracking-[-0.03em] ${light ? 'text-sidebar-foreground' : 'text-foreground'}`}>Story Oracle</p>
         <p className={`font-mono text-[9px] uppercase tracking-[0.2em] ${light ? 'text-sidebar-foreground/50' : 'text-muted-foreground'}`}>private admin</p>

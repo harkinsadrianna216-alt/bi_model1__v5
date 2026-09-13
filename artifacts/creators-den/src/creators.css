@@ -1301,7 +1301,8 @@ select optgroup {
 }
 .cd-brand:hover { background: hsl(var(--foreground) / .05); }
 .cd-brand .brand-mark { transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s ease, border-color .2s ease; }
-.cd-brand:hover .brand-mark { transform: translateY(-1px); border-color: hsl(var(--accent)); box-shadow: var(--accent-ring), 0 4px 14px hsl(var(--accent) / .3); }
+.cd-brand:hover .brand-mark { transform: translateY(-1px); }
+.cd-brand:hover .brand-mark.has-avatar { border-color: hsl(var(--accent)); box-shadow: var(--accent-ring), 0 4px 14px hsl(var(--accent) / .3); }
 .cd-brand .brand-sub { transition: color .18s ease; }
 .cd-brand:hover .brand-sub { color: hsl(var(--muted-foreground)); }
 
@@ -6031,13 +6032,18 @@ select optgroup {
    ============================================================================ */
 
 /* ---- Brand frame: inside a channel the mark becomes its profile image --- */
+/* The mark is shown whole: no ring, radius or frame around it. The channel
+   avatar is the one case that still wants a circular crop. */
 .cd-brand .brand-mark {
   display: grid; place-items: center;
+}
+.cd-brand .brand-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.cd-brand .brand-mark.has-avatar {
   border-radius: 50%; overflow: hidden;
   background: hsl(var(--secondary));
   box-shadow: 0 0 0 1px hsl(var(--foreground) / .14), 0 4px 14px rgba(0, 0, 0, .35);
 }
-.cd-brand .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cd-brand .brand-mark.has-avatar img { object-fit: cover; }
 
 /* ---- Notice feed (CMS): red unread indicators + per-channel attribution - */
 .cd-inbox-head .cd-inbox-unread-pill {
