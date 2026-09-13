@@ -2,7 +2,7 @@ import { PiArrowUpRightDuotone, PiCompassRoseDuotone } from 'react-icons/pi';
 import { useUser } from '@clerk/react';
 import { Link } from 'wouter';
 import { CardDecor, PageHeader } from '@/components/protected-shell';
-import { nexetDashboardCategories } from '@/data/categories';
+import { nexetDashboardCategories, nexetRoomMarks } from '@/data/categories';
 
 // Premium dark theme — Resend/Framer inspired. The open rooms are told apart by
 // a lit border, a rail and a live dot — not by a glow, which pooled into a haze
@@ -65,9 +65,15 @@ export default function Dashboard() {
                 className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] transition-opacity duration-300 ${doorRail[category.accent] ?? doorRail.ink} ${available ? '' : 'opacity-45 group-hover:opacity-80'}`}
               />
               <div className="relative flex items-start justify-between gap-4">
-                <span className={`icon-chip h-14 w-14 ${available ? 'text-[#60a5fa]' : doorIconTone[category.accent] ?? 'text-zinc-300'}`}>
-                  <Icon className="h-7 w-7" />
-                </span>
+                {nexetRoomMarks[category.slug] ? (
+                  // The den's own mark, shown whole — no chip, ring or frame, the
+                  // same way the front page's room cards wear it.
+                  <img src={nexetRoomMarks[category.slug]} alt="" className="h-14 w-14 object-contain" />
+                ) : (
+                  <span className={`icon-chip h-14 w-14 ${available ? 'text-[#60a5fa]' : doorIconTone[category.accent] ?? 'text-zinc-300'}`}>
+                    <Icon className="h-7 w-7" />
+                  </span>
+                )}
                 <span className="pt-1 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">
                   {String(index + 1).padStart(2, '0')} / {String(nexetDashboardCategories.length).padStart(2, '0')}
                 </span>

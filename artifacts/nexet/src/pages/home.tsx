@@ -1,7 +1,7 @@
 import { PiArrowUpRightDuotone, PiEyeDuotone, PiLinkDuotone, PiMagicWandDuotone, PiSparkleDuotone } from 'react-icons/pi';
 import { Link } from 'wouter';
 import { HouseNav, NexetLogo } from '@/components/nexet-house';
-import { nexetCategories, nexetUpcomingCategories } from '@/data/categories';
+import { nexetCategories, nexetRoomMarks, nexetUpcomingCategories } from '@/data/categories';
 
 function PlatformDiagram() {
   return (
@@ -35,15 +35,6 @@ function PlatformDiagram() {
  * Content Creators. Everything else is still on the blueprint and lives behind
  * the waitlist page, so it gets no card here. */
 const openRooms = nexetCategories.filter((category) => category.status === 'Available');
-
-/** Each open room shows the mark of the den it opens into — the Authors Den's
- * mark for writers, the Creators Den's mark for video — so the card wears the
- * same face as the room behind it. Rooms without a den keep their category
- * icon. */
-const roomMarks: Record<string, string> = {
-  authors: `${import.meta.env.BASE_URL}nexet-author-den-logo.png`,
-  'content-creators': `${import.meta.env.BASE_URL}nexet-agent-logo.png`,
-};
 
 /** The rooms still being built. They used to sit among the open doors; they now
  * live in their own "Upcoming features" row so visitors can see the whole house
@@ -161,9 +152,9 @@ export default function Home() {
                 <span className="absolute -right-10 -top-12 h-36 w-36 rounded-full border border-white/5 opacity-20 transition-transform duration-500 group-hover:scale-125" />
                 <div className="relative flex h-full flex-col justify-between">
                   <div>
-                    {roomMarks[room.slug] ? (
+                    {nexetRoomMarks[room.slug] ? (
                       // The den's own mark, shown whole — no chip, ring or frame.
-                      <img src={roomMarks[room.slug]} alt="" className="h-14 w-14 object-contain" />
+                      <img src={nexetRoomMarks[room.slug]} alt="" className="h-14 w-14 object-contain" />
                     ) : (
                       <span className="icon-chip h-14 w-14 text-[#60a5fa]">
                         <Icon className="h-7 w-7" />

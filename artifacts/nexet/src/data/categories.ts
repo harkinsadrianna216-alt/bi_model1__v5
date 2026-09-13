@@ -102,6 +102,18 @@ export const nexetUpcomingCategories = nexetCategories.filter(
   (category) => category.status === 'Coming Soon' && category.slug !== 'explore',
 );
 
+/**
+ * Each open room wears the mark of the den it opens into — the Authors Den's for
+ * writers, the Creators Den's (the desktop agent's) for video — so a card shows
+ * the same face as the room behind it. Rooms without a den keep their category
+ * icon. Live in one place: the front page's room cards and the atrium's cards
+ * both read from here.
+ */
+export const nexetRoomMarks: Record<string, string> = {
+  authors: `${import.meta.env.BASE_URL}nexet-author-den-logo.png`,
+  'content-creators': `${import.meta.env.BASE_URL}nexet-agent-logo.png`,
+};
+
 export function getNexetCategory(slug?: string) {
   return nexetCategories.find((category) => category.slug === slug);
 }
