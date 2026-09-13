@@ -37,8 +37,6 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
-        icon={PiUserCircleDuotone}
-        kicker="Your account"
         title="Your place in"
         accent="the house."
       />

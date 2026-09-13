@@ -120,8 +120,6 @@ export default function InboxPage() {
   return (
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
-        icon={PiTrayDuotone}
-        kicker="Across your dens"
         title="Your inbox."
         aside={
           <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">

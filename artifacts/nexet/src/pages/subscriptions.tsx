@@ -299,8 +299,6 @@ export default function SubscriptionsPage() {
   return (
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
-        icon={PiTicketDuotone}
-        kicker={'Plans & passes'}
         title="Yours at a glance."
         description={
           <>

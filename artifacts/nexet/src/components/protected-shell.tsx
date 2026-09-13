@@ -38,20 +38,16 @@ const mobileNav = [
 
 /**
  * The header every page behind the sign-in wall opens with. It mirrors the
- * public page anatomy — a mono kicker under a duotone icon, a Space Grotesk
- * display line, an optional supporting column on the right — so walking from
- * the front page into the atrium never feels like changing products.
+ * front page's section anatomy — a Space Grotesk display line and an optional
+ * supporting column, nothing above the title — so walking from the front page
+ * into the atrium never feels like changing products.
  */
 export function PageHeader({
-  kicker,
-  icon: KickerIcon,
   title,
   accent,
   description,
   aside,
 }: {
-  kicker: string;
-  icon?: IconType;
   title: string;
   accent?: string;
   description?: ReactNode;
@@ -60,11 +56,7 @@ export function PageHeader({
   return (
     <header className="reveal flex flex-col justify-between gap-7 border-b border-white/5 pb-10 md:flex-row md:items-end">
       <div className="min-w-0">
-        <span className="inline-flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">
-          {KickerIcon ? <KickerIcon className="h-4 w-4" /> : null}
-          {kicker}
-        </span>
-        <h1 className="mt-5 font-brand text-[clamp(2.3rem,4.4vw,3.9rem)] font-bold leading-[.92] tracking-[-0.05em] text-white">
+        <h1 className="font-brand text-[clamp(2.3rem,4.4vw,3.9rem)] font-bold leading-[.92] tracking-[-0.05em] text-white">
           {title}
           {accent ? (
             <>

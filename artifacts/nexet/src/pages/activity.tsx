@@ -61,8 +61,6 @@ export default function ActivityPage() {
   return (
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
-        icon={PiChartLineUpDuotone}
-        kicker="Your record"
         title="A clear record."
         aside={
           <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">

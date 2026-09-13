@@ -1,4 +1,4 @@
-import { PiArrowUpRightDuotone, PiCompassRoseDuotone, PiSquaresFourDuotone } from 'react-icons/pi';
+import { PiArrowUpRightDuotone, PiCompassRoseDuotone } from 'react-icons/pi';
 import { useUser } from '@clerk/react';
 import { Link } from 'wouter';
 import { CardDecor, PageHeader } from '@/components/protected-shell';
@@ -31,8 +31,6 @@ export default function Dashboard() {
   return (
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
-        icon={PiSquaresFourDuotone}
-        kicker="Your atrium"
         title="Welcome,"
         accent={`${name}.`}
         aside={
