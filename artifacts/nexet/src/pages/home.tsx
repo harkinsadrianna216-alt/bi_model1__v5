@@ -56,9 +56,9 @@ export default function Home() {
       <div className="hero-glow absolute inset-x-0 top-0 h-[600px]" />
       <HouseNav />
       <section className="relative mx-auto max-w-[1400px] px-4 pb-20 pt-12 sm:px-5 sm:pt-20 lg:px-6 lg:pb-32 lg:pt-24">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
-          <div className="reveal max-w-[670px]">
-            <h1 className="mt-7 font-brand text-[3.6rem] font-bold leading-[.96] tracking-[-0.05em] text-white sm:text-[5.2rem] lg:text-[6.2rem]">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.22fr_.78fr] lg:gap-10">
+          <div className="reveal">
+            <h1 className="mt-7 font-brand text-[clamp(2rem,8.5vw,4.2rem)] font-bold leading-[.96] tracking-[-0.05em] text-white lg:text-[clamp(3rem,5.9vw,5.5rem)]">
               What if the
               <br />
               missing piece is
@@ -92,7 +92,7 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="reveal reveal-2 lg:pl-7">
+          <div className="reveal reveal-2">
             <PlatformDiagram />
           </div>
         </div>
