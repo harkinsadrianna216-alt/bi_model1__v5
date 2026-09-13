@@ -27,8 +27,11 @@ const BUBBLE_HEIGHT = 56;
 const POLL_INTERVAL_MS = 3000;
 const HOTKEY = "CommandOrControl+Alt+T";
 
-/** 16x16 red dot with a white "T" — generated, no asset file needed. */
-const TRAY_ICON_DATA_URL =
+/** The agent's app logo, at tray size. `dist/renderer/nexet-agent-tray.png` is
+ *  copied there at compile time (see the `compile` script), so the packaged app
+ *  and `pnpm dev` both find it. The inline dot is only a last-resort fallback. */
+const TRAY_ICON_PATH = path.join(__dirname, "..", "renderer", "nexet-agent-tray.png");
+const TRAY_ICON_FALLBACK_DATA_URL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAS0lEQVR4nGNgoBX4jwZI1vhcXB4FE2UQuq24AE7NyDbhAjA1OA3A5mxs4gQ14zMAw5BhYADFgUgVA/B5hSjN6KmRrKSMzSCSNZIKAM8QtADsAICfAAAAAElFTkSuQmCC";
 
 export interface WidgetControllerOptions {
@@ -255,7 +258,10 @@ export class WidgetController {
   // Tray
   // ---------------------------------------------------------------------------
   private createTray(): void {
-    const icon = nativeImage.createFromDataURL(TRAY_ICON_DATA_URL);
+    const logo = nativeImage.createFromPath(TRAY_ICON_PATH);
+    const icon = logo.isEmpty()
+      ? nativeImage.createFromDataURL(TRAY_ICON_FALLBACK_DATA_URL)
+      : logo.resize({ width: 16, height: 16 });
     const tray = new Tray(icon);
     tray.setToolTip("Nexet Desktop Agent");
     tray.on("click", () => this.opts.openMainWindow());

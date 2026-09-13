@@ -48,6 +48,11 @@ import { ArenaPreviewBanner } from '@/components/arena-preview-banner';
 import { denRouteInfo, projectUrl } from '@/lib/den-urls';
 import { matchesCreatorQuery, matchesProjectQuery } from '@/lib/explore-search';
 
+// The Nexet mark sits in the brand slot (Vite rewrites BASE_URL/this asset for
+// the /creators-den base path). Inside a channel the slot shows that channel's
+// own avatar instead — see the brand lockup in the top nav.
+const nexetLogoUrl = `${import.meta.env.BASE_URL}nexet-logo.png`;
+
 export function SectionEyebrow({ children }: { children: ReactNode }) {
   return <span className="eyebrow">{children}</span>;
 }
@@ -445,7 +450,10 @@ export function CreatorsShell({ children }: { children: ReactNode }) {
             {/* Inside a channel the frame carries that channel's profile image;
                 the "C" mark is kept only where "Creators Den" is written. */}
             <span className={`brand-mark ${channelId && channelData?.youtubeAvatarUrl ? 'has-avatar' : ''}`} aria-hidden>
-              {channelId && channelData?.youtubeAvatarUrl ? <img src={channelData.youtubeAvatarUrl} alt="" /> : 'C'}
+              <img
+                src={channelId && channelData?.youtubeAvatarUrl ? channelData.youtubeAvatarUrl : nexetLogoUrl}
+                alt=""
+              />
             </span>
             <span className="brand-copy">
               <span className="block brand-name">{brandTitle}</span>

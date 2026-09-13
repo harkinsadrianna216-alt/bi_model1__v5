@@ -6033,14 +6033,11 @@ select optgroup {
 /* ---- Brand frame: inside a channel the mark becomes its profile image --- */
 .cd-brand .brand-mark {
   display: grid; place-items: center;
-  font: italic 700 15px var(--app-font-serif);
-}
-.cd-brand .brand-mark.has-avatar {
   border-radius: 50%; overflow: hidden;
   background: hsl(var(--secondary));
   box-shadow: 0 0 0 1px hsl(var(--foreground) / .14), 0 4px 14px rgba(0, 0, 0, .35);
 }
-.cd-brand .brand-mark.has-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cd-brand .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ---- Notice feed (CMS): red unread indicators + per-channel attribution - */
 .cd-inbox-head .cd-inbox-unread-pill {

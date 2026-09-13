@@ -94,6 +94,9 @@ function createWindow(): void {
     minWidth: 860,
     minHeight: 600,
     title: "Nexet Desktop Agent",
+    // Window/taskbar icon: the agent's app logo, copied into dist/renderer at
+    // compile time (electron-builder bakes the same file into the installer).
+    icon: path.join(__dirname, "..", "renderer", "nexet-agent-logo.png"),
     // The agent has no File/Edit/View/Window/Help chrome — those menus belong
     // to document editors, not to this app, and only confuse users.
     autoHideMenuBar: true,

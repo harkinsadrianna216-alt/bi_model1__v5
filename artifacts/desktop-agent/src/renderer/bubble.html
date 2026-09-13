@@ -24,41 +24,22 @@
         cursor: default;
       }
 
-      /* The sphere itself. Layered gradients fake a compact glossy orb: a
-         small highlight, the brand red body fading darker toward the rim,
-         and a tight drop shadow — sized for the smaller 56px bubble. */
-      .bubble::after {
-        content: "";
-        position: absolute; inset: 2px;
-        border-radius: 50%;
-        background:
-          radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.38), transparent 26%),
-          radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent) 52%, var(--accent-deep) 98%);
-        box-shadow:
-          0 4px 12px rgba(230, 21, 10, 0.4),
-          0 1px 3px rgba(0, 0, 0, 0.3),
-          inset 0 1px 1px rgba(255, 255, 255, 0.35),
-          inset 0 -1px 3px rgba(0, 0, 0, 0.18);
-        transition: transform 0.14s ease, filter 0.14s ease;
-      }
-      .bubble:hover::after { transform: scale(1.06); filter: brightness(1.07); }
-      .bubble:active::after { transform: scale(0.96); }
-
-      /* Clickable core — marked no-drag so clicks reach it. */
+      /* The agent's app logo IS the bubble. Marked no-drag so a click opens
+         the agent instead of starting a drag. */
       .core {
         -webkit-app-region: no-drag;
         position: relative; z-index: 2;
-        width: 24px; height: 24px; border-radius: 50%;
-        display: grid; place-items: center;
-        color: #fff; cursor: pointer;
-        font: italic 700 13px/1 "Inter", system-ui, -apple-system, sans-serif;
-        text-shadow:
-          0 1px 1px rgba(60, 0, 0, 0.6),
-          0 0 8px rgba(255, 255, 255, 0.2);
-        transition: transform 0.1s ease;
+        width: 50px; height: 50px;
+        border-radius: 50%; object-fit: cover; display: block;
+        cursor: pointer;
+        box-shadow:
+          0 4px 12px rgba(230, 21, 10, 0.4),
+          0 1px 3px rgba(0, 0, 0, 0.3),
+          inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        transition: transform 0.14s ease, filter 0.14s ease;
       }
-      .core:hover { transform: scale(1.08); }
-      .core:active { transform: scale(0.92); }
+      .core:hover { transform: scale(1.06); filter: brightness(1.07); }
+      .core:active { transform: scale(0.96); }
 
       /* Close affordance, revealed (and animated in) on hover. Small enough
          to sit on the rim of the compact orb without covering it. */
@@ -85,7 +66,7 @@
   </head>
   <body>
     <div class="bubble" id="bubble">
-      <div class="core" id="core" title="Open Nexet Desktop Agent">T</div>
+      <img class="core" id="core" src="./nexet-agent-logo.png" alt="" draggable="false" title="Open Nexet Desktop Agent" />
       <button class="close" id="close" title="Hide widget" aria-label="Hide widget">✕</button>
     </div>
     <script src="./bubble.js"></script>

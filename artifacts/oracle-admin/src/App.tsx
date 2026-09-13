@@ -26,7 +26,6 @@ import {
   Save,
   ShieldCheck,
   SlidersHorizontal,
-  Sparkles,
   TerminalSquare,
   Ticket,
   Users,
@@ -63,6 +62,9 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 
 const queryClient = new QueryClient();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+// The Nexet mark, served from this app's public dir (BASE_URL handles the
+// /oracle-admin base path).
+const nexetLogoUrl = `${import.meta.env.BASE_URL}nexet-logo.png`;
 const clerkPubKey = publishableKeyFromHost(
   window.location.hostname,
   import.meta.env.CLERK_PUBLISHABLE_KEY,
@@ -512,7 +514,7 @@ function DeniedScreen({ sessionError, onRetry }: { sessionError: boolean; onRetr
 function Brand({ light = false }: { light?: boolean }) {
   return (
     <div data-testid="brand-oracle-admin" className="flex items-center gap-3">
-      <div className={`grid h-9 w-9 place-items-center rounded-xl ${light ? 'bg-sidebar-primary text-sidebar-primary-foreground' : 'bg-primary text-primary-foreground'}`}><Sparkles className="h-4 w-4" /></div>
+      <img src={nexetLogoUrl} alt="" className={`h-9 w-9 rounded-full border object-cover ${light ? 'border-sidebar-border' : 'border-border'}`} />
       <div>
         <p className={`text-sm font-extrabold tracking-[-0.03em] ${light ? 'text-sidebar-foreground' : 'text-foreground'}`}>Story Oracle</p>
         <p className={`font-mono text-[9px] uppercase tracking-[0.2em] ${light ? 'text-sidebar-foreground/50' : 'text-muted-foreground'}`}>private admin</p>
