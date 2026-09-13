@@ -16,22 +16,16 @@ const toneClasses: Record<Room['tone'], string> = {
 // correct under a non-root base path in dev and in production builds.
 export const nexetLogoUrl = `${import.meta.env.BASE_URL}nexet-logo.png`;
 
-export function NexetLogo({ light = false }: { light?: boolean }) {
+export function NexetLogo() {
   return (
     <Link
       href="/"
       className="group inline-flex items-center gap-3"
       data-testid="link-nexet-logo"
     >
-      <img
-        src={nexetLogoUrl}
-        alt=""
-        className={`h-9 w-9 rounded-full border object-cover shadow-[0_0_22px_-6px_rgba(59,130,246,0.65)] ${light ? 'border-white/20' : 'border-white/10'}`}
-        data-testid="img-nexet-logo"
-      />
-      <span className={`text-[1.15rem] font-bold tracking-[-0.04em] ${light ? 'text-white' : 'text-white'}`}>
-        nexet
-      </span>
+      {/* The mark is used whole — no ring, frame or rounded clipping. */}
+      <img src={nexetLogoUrl} alt="" className="h-9 w-9 object-contain" data-testid="img-nexet-logo" />
+      <span className="text-[1.15rem] font-bold tracking-[-0.04em] text-white">nexet</span>
     </Link>
   );
 }
