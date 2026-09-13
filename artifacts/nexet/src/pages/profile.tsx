@@ -87,44 +87,66 @@ export default function ProfilePage() {
               )}
             </div>
             <div>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Signed in as</p>
               <h2 className="mt-2 font-brand text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
               <p className="mt-2 flex items-center gap-2 text-sm text-zinc-400"><PiEnvelopeDuotone className="h-4 w-4 text-zinc-500" />{email}</p>
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-zinc-400">
+                  <PiUserCircleDuotone className="h-3.5 w-3.5 text-[#3b82f6]" /> Nexet member
+                </span>
+                {joinedCategories.length > 0 && (
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[#60a5fa]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#3b82f6] glow-dot" />
+                    Waiting on {joinedCategories.length} {joinedCategories.length === 1 ? 'room' : 'rooms'}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
         <div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-8">
           <div className="card-surface rounded-2xl p-6 sm:col-span-2">
-            <h3 className="mt-3 font-brand text-xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
+            <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Launch lists</p>
+            <h3 className="mt-2 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Rooms you're waiting for</h3>
             {isLoadingWaitlist ? (
-              <p className="mt-3 text-sm text-zinc-500">Checking the house plan...</p>
+              <p className="mt-4 text-sm text-zinc-500">Checking the house plan...</p>
             ) : joinedCategories.length > 0 ? (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {joinedCategories.map((category) => (
-                  <span key={category.slug} className="rounded-full border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-3 py-1.5 text-xs font-semibold text-[#60a5fa]">
-                    {category.shortName}
-                  </span>
-                ))}
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {joinedCategories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <div key={category.slug} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4" data-testid={`waitlist-${category.slug}`}>
+                      <span className="icon-chip h-11 w-11 shrink-0 text-[#60a5fa]"><Icon className="h-5 w-5" /></span>
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-semibold text-zinc-100">{category.shortName}</span>
+                        <span className="mt-0.5 block font-mono-ui text-[9px] uppercase tracking-[0.14em] text-zinc-500">On the launch list</span>
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
-              <p className="mt-3 text-sm leading-relaxed text-zinc-500">You haven't joined a launch list yet. Leave a light on when a room calls to you.</p>
+              <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">You haven't joined a launch list yet. Leave a light on when a room calls to you.</p>
             )}
           </div>
-          <div className="group rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-6">
+          <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-6">
             <span className="icon-chip h-11 w-11 text-[#3b82f6]"><PiGearSixDuotone className="h-5 w-5" /></span>
-            <p className="mt-6 font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Settings are being set.</p>
+            <p className="mt-6 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">Preferences</p>
+            <p className="mt-2 font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Settings are being set.</p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">Notification controls and account preferences arrive with the next room.</p>
           </div>
           <button type="button" onClick={() => clerk.signOut({ redirectUrl: '/' })} className="focus-house group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left transition-colors hover:border-red-500/30 hover:bg-red-500/5" data-testid="button-profile-logout">
-            <PiSignOutDuotone className="mt-0.5 h-5 w-5 text-red-400 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
+            <PiSignOutDuotone className="mt-0.5 h-5 w-5 shrink-0 text-red-400 transition-transform group-hover:-translate-x-0.5 group-hover:translate-y-0.5" />
             <span>
-              <span className="block font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Sign out</span>
+              <span className="block font-mono-ui text-[10px] uppercase tracking-[0.18em] text-red-400">Session</span>
+              <span className="mt-2 block font-brand text-lg font-bold tracking-[-0.03em] text-zinc-100">Sign out</span>
               <span className="mt-2 block text-sm leading-relaxed text-zinc-500">Sign out of this Nexet session.</span>
             </span>
           </button>
         </div>
       </div>
-      <div className="reveal reveal-2 mt-7 flex items-center gap-3 text-xs text-zinc-500">
-        <PiUserCircleDuotone className="h-4 w-4 text-[#3b82f6]" />
+      <div className="reveal reveal-2 mt-8 flex items-center gap-3 border-t border-white/5 pt-7 text-xs text-zinc-500">
+        <PiUserCircleDuotone className="h-4 w-4 shrink-0 text-[#3b82f6]" />
         <span>Your identity is managed securely by Nexet authentication.</span>
       </div>
     </div>

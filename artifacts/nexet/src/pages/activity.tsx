@@ -1,5 +1,4 @@
 import {
-  PiArrowRightDuotone,
   PiBookOpenDuotone,
   PiChartLineUpDuotone,
   PiChatCircleDotsDuotone,
@@ -18,9 +17,12 @@ import {
   PiXCircleDuotone,
 } from 'react-icons/pi';
 import type { IconType } from 'react-icons';
-import { Link } from 'wouter';
-import { PageHeader } from '@/components/protected-shell';
+import { EmptyPanel, PageHeader, PrimaryLink } from '@/components/protected-shell';
 import { useListAccountActivity } from '@workspace/api-client-react';
+
+// Entrance stagger for the day panels, capped so a long trail doesn't leave the
+// last entry waiting on the page load.
+const stagger = ['reveal-1', 'reveal-2', 'reveal-3', 'reveal-4', 'reveal-5'];
 
 // Each entry in the record gets its own mark and its own colour, so a glance
 // at the trail tells you what kind of event it was before you read a word.
@@ -77,11 +79,13 @@ export default function ActivityPage() {
             ))}
           </div>
         ) : q.isError ? (
-          <div className="rounded-2xl border border-red-500/30 bg-red-500/5 p-8">
-            <PiWarningCircleDuotone className="h-6 w-6 text-red-400" />
-            <p className="mt-4 font-brand text-3xl font-bold tracking-[-0.03em] text-zinc-100">The record could not be opened.</p>
-            <p className="mt-2 text-sm text-zinc-500">Your work is safe. Try again in a moment.</p>
-            <button onClick={() => q.refetch()} className="focus-house mt-5 rounded-full bg-[#3b82f6] px-5 py-3 text-sm font-semibold text-white">
+          <div className="relative overflow-hidden rounded-2xl border border-red-500/30 bg-red-500/5 p-8 sm:p-10">
+            <span className="icon-chip h-16 w-16 text-red-400">
+              <PiWarningCircleDuotone className="h-7 w-7" />
+            </span>
+            <p className="mt-8 font-brand text-4xl font-bold leading-[.95] tracking-[-0.04em] text-zinc-100">The record could not be opened.</p>
+            <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">Your work is safe. Try again in a moment.</p>
+            <button onClick={() => q.refetch()} className="focus-house mt-8 inline-flex items-center gap-2 rounded-full bg-[#3b82f6] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)]">
               Try again
             </button>
           </div>
@@ -94,20 +98,36 @@ export default function ActivityPage() {
               list.push(event);
               groups.set(day, list);
             }
-            return <div className="space-y-10">{[...groups.entries()].map(([day, dayEvents]) => (
-              <section key={day} aria-label={day}>
-                <div className="flex items-center gap-4"><h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{day}</h2><span className="h-px flex-1 bg-white/5" /></div>
-                <div className="mt-5 space-y-3">{dayEvents.map((event) => {
+            // One panel per day, the way the front page bands its sections: the
+            // day is the panel's own header, and the entries inside are rows.
+            return <div className="space-y-6">{[...groups.entries()].map(([day, dayEvents], groupIndex) => (
+              <section
+                key={day}
+                aria-label={day}
+                className={`reveal ${stagger[Math.min(groupIndex, stagger.length - 1)]} card-surface relative overflow-hidden rounded-2xl`}
+              >
+                <div className="flex items-center gap-4 border-b border-white/5 px-6 py-5">
+                  <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{day}</h2>
+                  <span className="h-px flex-1 bg-white/5" />
+                  <span className="shrink-0 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                    {dayEvents.length} {dayEvents.length === 1 ? 'entry' : 'entries'}
+                  </span>
+                </div>
+                <ul className="divide-y divide-white/5">{dayEvents.map((event) => {
                   const accent = eventAccent[event.eventType] ?? 'text-zinc-300';
                   const EventIcon = eventIcon[event.eventType] ?? PiClockCountdownDuotone;
                   return (
-                    <div key={event.id} data-testid={`account-activity-${event.id}`} className="soft-lift card-surface flex items-start gap-4 rounded-2xl p-5 sm:p-6">
-                      <span className={`icon-chip mt-0.5 h-11 w-11 shrink-0 ${accent}`}>
+                    <li
+                      key={event.id}
+                      data-testid={`account-activity-${event.id}`}
+                      className="flex items-start gap-5 px-6 py-5 transition-colors hover:bg-white/[0.025]"
+                    >
+                      <span className={`icon-chip h-11 w-11 shrink-0 ${accent}`}>
                         <EventIcon className="h-5 w-5" />
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold leading-relaxed text-zinc-100">{event.summary}</p>
-                        <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-zinc-500">
+                        <span className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-zinc-500">
                           <span>{event.eventType.replaceAll('_', ' ')}</span>
                           <span className="inline-flex items-center gap-1.5">
                             <PiClockDuotone className="h-3 w-3 text-zinc-600" />
@@ -115,30 +135,28 @@ export default function ActivityPage() {
                           </span>
                         </span>
                       </div>
-                    </div>
+                    </li>
                   );
-                })}</div>
+                })}</ul>
               </section>
             ))}</div>;
           })()
         ) : (
-          <div className="card-surface overflow-hidden rounded-2xl p-8 sm:p-10">
-            <div className="icon-chip h-16 w-16 text-[#3b82f6]">
-              <PiChartLineUpDuotone className="h-7 w-7" />
-            </div>
-            <p className="mt-9 font-brand text-4xl font-bold tracking-[-0.04em] text-zinc-100">Nothing has moved yet.</p>
-            <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">
-              Publish a seed, answer a seed, or open a room and your trail will gather here — every publish, submission, selection, contract lock, and approved pass.
-            </p>
-            <Link href="/authors/pitch-board" className="focus-house group mt-8 inline-flex items-center gap-2 rounded-full bg-[#3b82f6] px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)]" data-testid="link-activity-dashboard">
-              Visit the pitch board
-              <PiArrowRightDuotone className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </div>
+          <EmptyPanel
+            icon={PiChartLineUpDuotone}
+            kicker="Nothing logged yet"
+            title="Nothing has moved yet."
+            body="Publish a seed, answer a seed, or open a room and your trail will gather here — every publish, submission, selection, contract lock, and approved pass."
+            action={
+              <PrimaryLink href="/authors/pitch-board" testId="link-activity-dashboard">
+                Visit the pitch board
+              </PrimaryLink>
+            }
+          />
         )}
       </div>
-      <div className="mt-7 flex items-center gap-3 text-xs text-zinc-500">
-        <PiSparkleDuotone className="h-4 w-4 animate-pulse-soft text-[#3b82f6]" />
+      <div className="reveal reveal-2 mt-8 flex items-center gap-3 border-t border-white/5 pt-7 text-xs text-zinc-500">
+        <PiSparkleDuotone className="h-4 w-4 shrink-0 animate-pulse-soft text-[#3b82f6]" />
         <span>Activity reflects your rooms only — private by design.</span>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { PiArrowLeftDuotone, PiCheckCircleDuotone, PiCheckDuotone, PiCircleNotchDuotone, PiCreditCardDuotone, PiFolderOpenDuotone, PiHardDrivesDuotone, PiLockKeyDuotone, PiSparkleDuotone, PiTicketDuotone, PiWarningCircleDuotone, PiXDuotone } from 'react-icons/pi';
 import type { IconType } from 'react-icons';
 import { Link } from 'wouter';
-import { PageHeader } from '@/components/protected-shell';
+import { CardDecor, PageHeader, SectionHead } from '@/components/protected-shell';
 import { PaymentLoadingOverlay } from '@/components/payment-loading';
 import { SuccessCheck } from '@/components/success-check';
 import {
@@ -318,15 +318,16 @@ export default function SubscriptionsPage() {
       {/* Current usage — the live account state. */}
       <div className="reveal reveal-1 mt-12 grid gap-6 lg:grid-cols-3">
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
-          <span className="card-spot" />
-          <div className="flex items-center justify-between gap-3">
+          <CardDecor />
+          <div className="relative flex items-center justify-between gap-3">
             <div>
-              <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Passes</p>
+              <p className="font-mono-ui text-[9px] uppercase tracking-[.18em] text-zinc-500">Nexet · category passes</p>
+              <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Access</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#3b82f6]"><PiTicketDuotone className="h-5 w-5" /></span>
           </div>
-          <p className="mt-4 text-sm text-zinc-500">{activeByPlan.size} active</p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <p className="relative mt-4 text-sm text-zinc-500">{activeByPlan.size} active</p>
+          <div className="relative mt-3 flex flex-wrap gap-2">
             {data?.current.filter((s) => s.active).length === 0 && (
               <span className="rounded-full bg-white/5 px-3 py-1 font-mono-ui text-[10px] uppercase tracking-[.14em] text-zinc-500">No active pass</span>
             )}
@@ -340,41 +341,41 @@ export default function SubscriptionsPage() {
         </div>
 
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
-          <span className="card-spot" />
-          <div className="flex items-center justify-between gap-3">
+          <CardDecor />
+          <div className="relative flex items-center justify-between gap-3">
             <div>
               <p className="font-mono-ui text-[9px] uppercase tracking-[.18em] text-zinc-500">Creator Den · workspace</p>
               <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Storage</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#34d399]"><PiHardDrivesDuotone className="h-5 w-5" /></span>
           </div>
-          <div className="mt-4 flex items-baseline gap-2 text-sm">
-            <span className="text-lg font-bold text-zinc-100">{formatBytes(storageUsed)}</span>
+          <div className="relative mt-4 flex items-baseline gap-2 text-sm">
+            <span className="font-brand text-lg font-bold tracking-[-0.02em] text-zinc-100">{formatBytes(storageUsed)}</span>
             <span className="text-zinc-500">of {formatBytes(storageTotal)}</span>
           </div>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/5">
+          <div className="relative mt-3 h-2 w-full overflow-hidden rounded-full bg-white/5">
             <div className="h-full rounded-full bg-[#34d399] shadow-[0_0_12px_rgba(52,211,153,0.5)]" style={{ width: `${barPercent(storageUsed, storageTotal)}%` }} />
           </div>
-          <p className="mt-2 text-xs text-zinc-500">{formatBytes(Math.max(0, storageTotal - storageUsed))} left</p>
+          <p className="relative mt-2 text-xs text-zinc-500">{formatBytes(Math.max(0, storageTotal - storageUsed))} left</p>
         </div>
 
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
-          <span className="card-spot" />
-          <div className="flex items-center justify-between gap-3">
+          <CardDecor />
+          <div className="relative flex items-center justify-between gap-3">
             <div>
               <p className="font-mono-ui text-[9px] uppercase tracking-[.18em] text-zinc-500">Author Den · work projects</p>
               <p className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Projects</p>
             </div>
             <span className="icon-chip h-11 w-11 text-[#fbbf24]"><PiFolderOpenDuotone className="h-5 w-5" /></span>
           </div>
-          <div className="mt-4 flex items-baseline gap-2 text-sm">
-            <span className="text-lg font-bold text-zinc-100">{projectsUsed}</span>
+          <div className="relative mt-4 flex items-baseline gap-2 text-sm">
+            <span className="font-brand text-lg font-bold tracking-[-0.02em] text-zinc-100">{projectsUsed}</span>
             <span className="text-zinc-500">of {projectsTotal}</span>
           </div>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/5">
+          <div className="relative mt-3 h-2 w-full overflow-hidden rounded-full bg-white/5">
             <div className="h-full rounded-full bg-[#3b82f6] shadow-[0_0_12px_rgba(59,130,246,0.5)]" style={{ width: `${barPercent(projectsUsed, projectsTotal)}%` }} />
           </div>
-          <p className="mt-2 text-xs text-zinc-500">{Math.max(0, projectsTotal - projectsUsed)} left</p>
+          <p className="relative mt-2 text-xs text-zinc-500">{Math.max(0, projectsTotal - projectsUsed)} left</p>
         </div>
       </div>
 
@@ -392,14 +393,12 @@ export default function SubscriptionsPage() {
               id={kind ? `plans-${kind}` : undefined}
               className={`reveal mt-12 ${focusedKind === kind ? 'plan-focus-ring' : ''}`}
             >
-              <div className="flex items-center gap-4">
-                <span className="icon-chip h-11 w-11 text-[#3b82f6]"><Icon className="h-5 w-5" /></span>
-                <div>
-                  <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{meta.label}</h2>
-                </div>
-                <div className="h-px flex-1 bg-white/5" />
-                <span className="font-mono-ui text-[10px] uppercase tracking-[.18em] text-zinc-600">0{index + 1}</span>
-              </div>
+              <SectionHead
+                icon={Icon}
+                kicker={`0${index + 1} / Plans`}
+                title={meta.label}
+                note={`${groupPlans.length} ${groupPlans.length === 1 ? 'plan' : 'plans'}`}
+              />
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {groupPlans.map((plan, planIndex) => {
                   const activeSub = activeByPlan.get(`${plan.kind}:${plan.planId}`);
@@ -411,8 +410,7 @@ export default function SubscriptionsPage() {
                       className={`soft-lift group relative flex flex-col overflow-hidden rounded-2xl p-7 ${popular ? 'card-raised glow-accent border border-[#3b82f6]/40' : 'card-surface border border-white/10'}`}
                       data-testid={`plan-${plan.kind}-${plan.planId}`}
                     >
-                      <span className="card-spot" />
-                      <span className="card-shine" />
+                      <CardDecor />
                       {popular && (
                         <span className="absolute right-5 top-5 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] px-3 py-1 font-mono-ui text-[9px] font-semibold uppercase tracking-[.14em] text-white shadow-[0_8px_20px_-8px_rgba(99,102,241,0.9)]" data-testid={`plan-popular-${plan.planId}`}>
                           <PiSparkleDuotone className="h-3 w-3" /> Most popular
@@ -420,27 +418,27 @@ export default function SubscriptionsPage() {
                       )}
 
                       {/* Plan name + billing rhythm */}
-                      <div className="flex items-center gap-3 pr-24">
+                      <div className="relative flex items-center gap-3 pr-24">
                         <span className={`icon-chip h-10 w-10 ${popular ? 'text-[#60a5fa]' : 'text-zinc-300'}`}>
                           <Icon className="h-5 w-5" />
                         </span>
                         <div className="min-w-0">
-                          <h3 className="truncate text-lg font-bold tracking-[-0.02em] text-white">{plan.planLabel}</h3>
+                          <h3 className="truncate font-brand text-lg font-bold tracking-[-0.02em] text-white">{plan.planLabel}</h3>
                           <p className="font-mono-ui text-[9px] uppercase tracking-[.16em] text-zinc-500">{plan.intervalLabel}</p>
                         </div>
                       </div>
 
                       {/* Price — the focal point, Resend style */}
-                      <div className="mt-7 flex items-baseline gap-1.5">
+                      <div className="relative mt-7 flex items-baseline gap-1.5">
                         <span className={`font-brand text-[3rem] font-extrabold leading-none tracking-[-0.05em] ${popular ? 'text-gradient-accent' : 'text-white'}`}>{price(plan.priceUsd)}</span>
                         <span className="text-sm text-zinc-500">/ {plan.intervalLabel}</span>
                       </div>
-                      <p className="mt-2 min-h-[2.5rem] text-xs leading-relaxed text-zinc-500">{plan.detail}</p>
+                      <p className="relative mt-2 min-h-[2.5rem] text-xs leading-relaxed text-zinc-500">{plan.detail}</p>
 
-                      <div className="card-divider my-6" />
+                      <div className="card-divider relative my-6" />
 
                       {/* What you get — Resend-style checklist */}
-                      <ul className="space-y-3">
+                      <ul className="relative space-y-3">
                         {planFeatures(plan).map((feature) => (
                           <li key={feature} className="flex items-start gap-2.5 text-sm leading-snug text-zinc-300">
                             <PiCheckCircleDuotone className={`mt-0.5 h-4 w-4 shrink-0 ${popular ? 'text-[#60a5fa]' : 'text-[#34d399]'}`} />
@@ -452,8 +450,8 @@ export default function SubscriptionsPage() {
                       {/* CTA pinned to the bottom so cards stay equal height */}
                       <div className="mt-auto pt-7">
                         {activeSub ? (
-                          <div className="space-y-3">
-                            <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#34d399]/25 bg-[#34d399]/10 px-4 py-3.5 text-center text-xs font-semibold text-[#34d399]" data-testid={`plan-active-${plan.planId}`}>
+                          <div className="relative space-y-3">
+                            <span className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#34d399]/25 bg-[#34d399]/10 px-4 py-3.5 text-center text-xs font-semibold text-[#34d399]" data-testid={`plan-active-${plan.planId}`}>
                               <PiCheckDuotone className="h-3.5 w-3.5" />
                               Active until {formatDate(activeSub.periodEnd)} · {remainingLabel(activeSub.periodEnd)}
                             </span>
@@ -463,7 +461,7 @@ export default function SubscriptionsPage() {
                           <button
                             type="button"
                             onClick={() => setPaying(plan)}
-                            className={`focus-house w-full rounded-xl py-3.5 text-center text-xs font-bold transition-all ${popular ? 'bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] text-white shadow-[0_12px_28px_-12px_rgba(59,130,246,0.8)] hover:brightness-110 hover:shadow-[0_16px_36px_-12px_rgba(139,92,246,0.9)]' : 'border border-white/10 bg-white/5 text-zinc-100 hover:border-white/25 hover:bg-white/10'}`}
+                            className={`focus-house relative w-full rounded-full py-3.5 text-center text-xs font-bold transition-all ${popular ? 'bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] text-white shadow-[0_12px_28px_-12px_rgba(59,130,246,0.8)] hover:brightness-110 hover:shadow-[0_16px_36px_-12px_rgba(139,92,246,0.9)]' : 'border border-white/10 bg-white/5 text-zinc-100 hover:border-white/25 hover:bg-white/10'}`}
                             data-testid={`plan-buy-${plan.planId}`}
                           >
                             Subscribe
@@ -481,11 +479,13 @@ export default function SubscriptionsPage() {
 
       {/* Subscription history */}
       <section className="reveal mt-14">
-        <div className="flex items-center gap-4">
-          <h2 className="font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">Every subscription on this account</h2>
-          <div className="h-px flex-1 bg-white/5" />
-        </div>
-        <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
+        <SectionHead
+          icon={PiCreditCardDuotone}
+          kicker="Billing history"
+          title="Every subscription on this account"
+          note={`${(data?.current ?? []).length} total`}
+        />
+        <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 card-surface">
           {((data?.current ?? []).length === 0) ? (
             <div className="p-8 text-center text-sm text-zinc-500" data-testid="subscriptions-history-empty">
               No subscriptions yet — every pass and extension you buy lands here.

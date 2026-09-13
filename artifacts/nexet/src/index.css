@@ -464,7 +464,7 @@
    keeps room under the sticky header and rings once on arrival. */
 section[id^="plans-"] { scroll-margin-top: 110px; }
 .plan-focus-ring {
-  border-radius: 28px;
+  border-radius: 1rem;
   animation: planFocusGlow 2.6s ease 1;
 }
 @media (prefers-reduced-motion: reduce) {

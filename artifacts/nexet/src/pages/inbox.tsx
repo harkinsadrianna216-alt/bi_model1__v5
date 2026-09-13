@@ -10,7 +10,7 @@ import {
   useMarkVideoNotificationRead,
 } from '@workspace/api-client-react';
 import type { VideoNotification } from '@workspace/api-client-react';
-import { PageHeader } from '@/components/protected-shell';
+import { EmptyPanel, GhostLink, PageHeader, SectionHead } from '@/components/protected-shell';
 import {
   denPageCtaLabel,
   metaFor,
@@ -132,31 +132,55 @@ export default function InboxPage() {
         }
       />
 
-      <section aria-labelledby="notes-heading" className="reveal reveal-1 mt-10">
-        <div className="flex items-center justify-between gap-4">
-          <h2 id="notes-heading" className="flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[.18em] text-[#3b82f6]">
-            <PiTrayDuotone className="h-4 w-4" /> Notices
-          </h2>
-          <span className="font-mono-ui text-[10px] uppercase tracking-[.12em] text-zinc-500">
-            {unreadByWorld('authors') > 0 && <span className="mr-2 text-[#93c5fd]">{unreadByWorld('authors')} author</span>}
-            {unreadByWorld('creators') > 0 && <span className="mr-2 text-red-400">{unreadByWorld('creators')} creator</span>}
-            {notices.length} total
+      <section aria-label="Notices" className="reveal reveal-1 mt-12">
+        <SectionHead
+          icon={PiTrayDuotone}
+          kicker="Both dens"
+          title="Notices"
+          note={`${notices.length} total`}
+        />
+        {/* Where the tray stands, in the front page's pill grammar. */}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-zinc-400">
+            <PiPenNibDuotone className="h-3.5 w-3.5 text-[#93c5fd]" />
+            Authors
+            <span className={unreadByWorld('authors') > 0 ? 'text-[#93c5fd]' : 'text-zinc-500'}>
+              {unreadByWorld('authors') > 0 ? `${unreadByWorld('authors')} new` : 'clear'}
+            </span>
           </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-zinc-400">
+            <PiVideoCameraDuotone className="h-3.5 w-3.5 text-red-400" />
+            Creators
+            <span className={unreadByWorld('creators') > 0 ? 'text-red-400' : 'text-zinc-500'}>
+              {unreadByWorld('creators') > 0 ? `${unreadByWorld('creators')} new` : 'clear'}
+            </span>
+          </span>
+          {unreadCount > 0 && (
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#fbbf24]/30 bg-[#fbbf24]/10 px-3.5 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[#fbbf24]">
+              <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-[#fbbf24]" />
+              {unreadCount} unread
+            </span>
+          )}
         </div>
-        <div className="mt-5 space-y-3">
+        <div className="mt-6 space-y-3">
           {inboxQ.isLoading || videoQ.isLoading ? (
             <div className="space-y-3">{[0, 1].map((i) => <div key={i} className="h-24 animate-pulse rounded-2xl bg-white/5" />)}</div>
           ) : notices.length ? notices.map((n) => (
-            <div key={n.key} data-testid={`inbox-note-${n.key}`} onClick={() => openNotice(n)}
-              className={`focus-house group soft-lift relative flex w-full cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border p-4 pl-5 text-left transition-colors ${n.unread ? (n.world === 'creators' ? 'border-red-500/50 bg-red-500/[0.06] hover:bg-red-500/[0.09]' : 'border-[#3b82f6]/50 bg-[#3b82f6]/[0.06] hover:bg-[#3b82f6]/[0.09]') : 'card-surface hover:border-white/15'}`}>
+            <button
+              key={n.key}
+              type="button"
+              data-testid={`inbox-note-${n.key}`}
+              onClick={() => openNotice(n)}
+              className={`focus-house group soft-lift relative flex w-full cursor-pointer items-start gap-5 overflow-hidden rounded-2xl border p-5 text-left transition-colors ${n.unread ? (n.world === 'creators' ? 'border-red-500/50 bg-red-500/[0.06] hover:bg-red-500/[0.09]' : 'border-[#3b82f6]/50 bg-[#3b82f6]/[0.06] hover:bg-[#3b82f6]/[0.09]') : 'card-surface hover:border-white/15'}`}
+            >
               <span className="card-spot" />
               {n.unread && (
-                <span className={`pointer-events-none absolute inset-y-2.5 left-0 w-[3px] rounded-full ${n.world === 'creators' ? 'bg-red-500 shadow-[0_0_12px_1px_rgba(239,68,68,0.55)]' : 'bg-[#3b82f6] shadow-[0_0_12px_1px_rgba(59,130,246,0.55)]'}`} />
+                <span className={`pointer-events-none absolute inset-y-3 left-0 w-[3px] rounded-full ${n.world === 'creators' ? 'bg-red-500 shadow-[0_0_12px_1px_rgba(239,68,68,0.55)]' : 'bg-[#3b82f6] shadow-[0_0_12px_1px_rgba(59,130,246,0.55)]'}`} />
               )}
-              <span className={`icon-chip h-10 w-10 shrink-0 ${n.world === 'creators' ? 'text-red-400' : 'text-[#93c5fd]'}`}>
-                {n.world === 'creators' ? <PiVideoCameraDuotone className="h-4 w-4" /> : <PiPenNibDuotone className="h-4 w-4" />}
+              <span className={`icon-chip h-12 w-12 shrink-0 ${n.world === 'creators' ? 'text-red-400' : 'text-[#93c5fd]'}`}>
+                {n.world === 'creators' ? <PiVideoCameraDuotone className="h-5 w-5" /> : <PiPenNibDuotone className="h-5 w-5" />}
               </span>
-              <span className="min-w-0 flex-1">
+              <span className="relative min-w-0 flex-1">
                 <span className="flex flex-wrap items-center gap-2">
                   <span className={`rounded-full px-2.5 py-1 font-mono-ui text-[8.5px] uppercase tracking-[.14em] ${WORLD_CHIP[n.world]}`}>
                     {WORLD_LABEL[n.world]}
@@ -164,8 +188,8 @@ export default function InboxPage() {
                   <span className={`rounded-full px-2.5 py-1 font-mono-ui text-[8.5px] uppercase tracking-[.14em] ${TONE_TEXT[n.tone] ?? TONE_TEXT.muted}`}>{n.label}</span>
                   {n.unread && <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-[#fbbf24] shadow-[0_0_10px_2px_rgba(251,191,36,0.45)]" />}
                 </span>
-                <span className={`mt-2 block text-sm leading-snug ${n.unread ? 'font-semibold text-white' : 'font-medium text-zinc-200'}`}>{n.title}</span>
-                <span className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-zinc-500">
+                <span className={`mt-2.5 block text-sm leading-snug ${n.unread ? 'font-semibold text-white' : 'font-medium text-zinc-200'}`}>{n.title}</span>
+                <span className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-zinc-500">
                   <span className="inline-flex items-center gap-1.5">
                     <PiClockDuotone className="h-3 w-3 text-zinc-600" /> {new Date(n.createdAt).toLocaleDateString()}
                   </span>
@@ -174,13 +198,13 @@ export default function InboxPage() {
                   </span>
                 </span>
               </span>
-            </div>
+            </button>
           )) : (
-            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8">
-              <span className="icon-chip h-14 w-14 text-[#3b82f6]"><PiTrayDuotone className="h-6 w-6" /></span>
-              <p className="mt-7 font-brand text-3xl font-bold tracking-[-0.03em] text-zinc-100">Both dens are quiet.</p>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500">Notices from Author Den (submissions, contracts, your-turn passes) and Creators Den (uploads for review, approvals, invites) will appear here when they need you — opening one takes you to its full page in that den.</p>
-            </div>
+            <EmptyPanel
+              icon={PiTrayDuotone}
+              title="Both dens are quiet."
+              body="Notices from Author Den (submissions, contracts, your-turn passes) and Creators Den (uploads for review, approvals, invites) will appear here when they need you — opening one takes you to its full page in that den."
+            />
           )}
         </div>
       </section>
@@ -188,10 +212,9 @@ export default function InboxPage() {
       <div className="reveal reveal-2 mt-12 flex flex-wrap items-center gap-3 border-t border-white/5 pt-7 text-sm text-zinc-500">
         <PiUsersDuotone className="h-4 w-4 shrink-0 text-[#3b82f6]" />
         <span>Everything here is private to you — notices are brief here; urgent work and conversations live on the Author Den notifications page, and each row opens it.</span>
-        <Link href="/categories/authors" className="focus-house group ml-auto inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:text-white" data-testid="link-inbox-authors-room">
+        <GhostLink href="/categories/authors" testId="link-inbox-authors-room" className="ml-auto">
           Authors room
-          <PiArrowRightDuotone className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-        </Link>
+        </GhostLink>
       </div>
     </div>
   );
