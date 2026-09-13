@@ -12,6 +12,10 @@ const toneClasses: Record<Room['tone'], string> = {
   plum: 'bg-[#161025] text-[#e2e8f0] border-[#8b5cf6]/25',
 };
 
+// The Nexet mark, served from the app's public dir. BASE_URL keeps the URL
+// correct under a non-root base path in dev and in production builds.
+export const nexetLogoUrl = `${import.meta.env.BASE_URL}nexet-logo.png`;
+
 export function NexetLogo({ light = false }: { light?: boolean }) {
   return (
     <Link
@@ -19,12 +23,12 @@ export function NexetLogo({ light = false }: { light?: boolean }) {
       className="group inline-flex items-center gap-3"
       data-testid="link-nexet-logo"
     >
-      <span
-        className={`relative flex h-9 w-9 items-center justify-center rounded-full border ${light ? 'border-white/20' : 'border-white/10'}`}
-      >
-        <span className="h-2.5 w-2.5 rounded-full bg-[#3b82f6] glow-dot" />
-        <span className="absolute h-2.5 w-2.5 translate-x-2.5 rounded-full bg-[#8b5cf6]/70" />
-      </span>
+      <img
+        src={nexetLogoUrl}
+        alt=""
+        className={`h-9 w-9 rounded-full border object-cover shadow-[0_0_22px_-6px_rgba(59,130,246,0.65)] ${light ? 'border-white/20' : 'border-white/10'}`}
+        data-testid="img-nexet-logo"
+      />
       <span className={`text-[1.15rem] font-bold tracking-[-0.04em] ${light ? 'text-white' : 'text-white'}`}>
         nexet
       </span>

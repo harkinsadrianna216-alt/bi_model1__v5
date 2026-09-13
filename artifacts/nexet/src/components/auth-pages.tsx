@@ -12,7 +12,7 @@ export const clerkAppearance = {
   options: {
     logoPlacement: 'inside' as const,
     logoLinkUrl: basePath || '/',
-    logoImageUrl: `${window.location.origin}${basePath}/logo.svg`,
+    logoImageUrl: `${window.location.origin}${basePath}/nexet-logo.png`,
     socialButtonsPlacement: 'top' as const,
     socialButtonsVariant: 'blockButton' as const,
   },
@@ -32,6 +32,10 @@ export const clerkAppearance = {
     cardBox: 'bg-[#111111] border border-white/10 rounded-2xl w-[440px] max-w-full overflow-hidden shadow-2xl',
     card: '!shadow-none !border-0 !bg-transparent !rounded-none',
     footer: '!shadow-none !border-0 !bg-transparent !rounded-none',
+    // The Nexet mark sits above the card's heading (it was hidden while the
+    // AuthFrame lockup carried the brand; the card owns it now).
+    logoBox: 'mb-1 flex justify-center',
+    logoImage: 'h-12 w-12 rounded-full shadow-[0_0_28px_-6px_rgba(59,130,246,0.65)]',
     headerTitle: 'text-white font-bold tracking-[-0.04em]',
     headerSubtitle: 'text-zinc-500',
     socialButtonsBlockButtonText: 'text-white font-semibold',
@@ -39,7 +43,6 @@ export const clerkAppearance = {
     footerActionLink: 'text-[#3b82f6] font-semibold',
     footerActionText: 'text-zinc-500',
     dividerText: 'text-zinc-500',
-    logoBox: 'hidden',
     socialButtonsBlockButton: 'border border-white/10 bg-[#111111] hover:bg-[#161616]',
     formButtonPrimary: 'bg-[#3b82f6] text-white hover:bg-[#2563eb] font-semibold',
     formFieldInput: 'border border-white/10 bg-[#111111] text-white focus:border-[#3b82f6]',
