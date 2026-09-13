@@ -58,8 +58,10 @@ export default function Home() {
       <section className="relative mx-auto max-w-[1400px] px-4 pb-20 pt-12 sm:px-5 sm:pt-20 lg:px-6 lg:pb-32 lg:pt-24">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
           <div className="reveal max-w-[670px]">
-            <h1 className="mt-7 font-brand text-[clamp(1.75rem,2.8vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.04em] text-white">
-              What if the missing piece is
+            <h1 className="mt-7 font-brand text-[3.6rem] font-bold leading-[.96] tracking-[-0.05em] text-white sm:text-[5.2rem] lg:text-[6.2rem]">
+              What if the
+              <br />
+              missing piece is
               <br />
               <span className="text-gradient-accent">the one you bring?</span>
             </h1>
