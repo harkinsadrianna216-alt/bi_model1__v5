@@ -244,35 +244,39 @@
       0 0 0 1px rgba(255, 255, 255, 0.04),
       0 12px 32px -12px rgba(0, 0, 0, 0.7);
   }
-  /* A dark pill with a blue→violet comet travelling around its outline. What
-     animates is the gradient's own angle (see the registered
-     `--brand-ring-angle` below), not a rotated box — so the colour itself goes
-     round the border and there is nothing to clip. The wrapper's 1.5px padding
-     is the visible ring; the button's dark face fills the middle and hides the
-     gradient everywhere else. */
+  /* A dark pill with a blue→violet comet travelling around its outline. The
+     comet is a conic gradient painted on a square layer larger than the pill
+     that simply *rotates* — a plain transform animation, which every engine
+     runs and repaints reliably. The wrapper clips that layer to the pill's
+     radius and its 1.5px padding is the only strip of it left showing; the
+     button's own dark face fills the middle and hides the rest. */
   .brand-ring {
     position: relative;
     display: inline-flex;
     padding: 1.5px;
     border-radius: 9999px;
+    overflow: hidden;
     isolation: isolate;
   }
   .brand-ring::before {
     content: '';
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 50%;
     z-index: 0;
-    border-radius: inherit;
+    width: 200%;
+    aspect-ratio: 1;
     background: conic-gradient(
-      from var(--brand-ring-angle, 0deg),
-      rgba(59, 130, 246, 0.25) 0deg,
-      rgba(96, 165, 250, 0.85) 45deg,
-      rgba(196, 181, 253, 1) 105deg,
-      rgba(139, 92, 246, 0.95) 155deg,
-      rgba(59, 130, 246, 0.7) 230deg,
-      rgba(59, 130, 246, 0.25) 315deg,
-      rgba(59, 130, 246, 0.25) 360deg
+      rgba(59, 130, 246, 0.2) 0deg,
+      rgba(96, 165, 250, 0.95) 38deg,
+      rgba(196, 181, 253, 1) 88deg,
+      rgba(139, 92, 246, 0.95) 140deg,
+      rgba(59, 130, 246, 0.6) 215deg,
+      rgba(59, 130, 246, 0.2) 295deg,
+      rgba(59, 130, 246, 0.2) 360deg
     );
+    translate: -50% -50%;
+    rotate: 0deg;
     animation: brandRingSpin 2.8s linear infinite;
   }
   /* Fill this in: the button's own dark face, which hides the sweep's middle. */
@@ -467,15 +471,8 @@
 @keyframes payLoaderSpin {
   to { transform: rotate(360deg); }
 }
-/* Registered so the brand ring's conic angle interpolates instead of jumping —
-   a custom property is not animatable unless it has a syntax. */
-@property --brand-ring-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
 @keyframes brandRingSpin {
-  to { --brand-ring-angle: 360deg; }
+  to { rotate: 360deg; }
 }
 @keyframes reveal {
   from { opacity: 0; transform: translateY(16px); }
