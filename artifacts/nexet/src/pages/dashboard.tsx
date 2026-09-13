@@ -30,17 +30,7 @@ export default function Dashboard() {
 
   return (
     <div className="mx-auto max-w-[1320px]">
-      <PageHeader
-        title="Welcome,"
-        accent={`${name}.`}
-        aside={
-          /* The footer-card treatment, moved up beside the welcome line. */
-          <div className="grid max-w-md gap-5 sm:grid-cols-[auto_1fr] sm:items-center">
-            <PiCompassRoseDuotone className="h-7 w-7 animate-spin-slow text-[#3b82f6]" />
-            <p className="text-sm leading-[1.8] text-zinc-500">Every room starts with two. Nexet keeps the contribution visible, the connection human, and the strange route an idea took intact.</p>
-          </div>
-        }
-      />
+      <PageHeader title="Welcome," accent={`${name}.`} />
 
       {/* The doors, in the front page's room-card anatomy: numbered, marked,
           and closed with the one line that says whether you can walk in. */}

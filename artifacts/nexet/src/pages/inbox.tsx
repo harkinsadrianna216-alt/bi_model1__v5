@@ -119,16 +119,7 @@ export default function InboxPage() {
 
   return (
     <div className="mx-auto max-w-[1320px]">
-      <PageHeader
-        title="Your inbox."
-        aside={
-          <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">
-            {unreadCount > 0
-              ? `${unreadCount} unread ${unreadCount === 1 ? 'item' : 'items'} need your attention across your rooms and workspaces.`
-              : 'Everything here is read and resting. Notices from both dens gather below — each one opens its full page inside the den it came from.'}
-          </p>
-        }
-      />
+      <PageHeader title="Your inbox." />
 
       <section aria-label="Notices" className="reveal reveal-1 mt-12">
         <SectionHead

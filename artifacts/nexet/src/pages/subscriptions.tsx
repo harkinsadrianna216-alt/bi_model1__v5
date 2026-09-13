@@ -300,11 +300,6 @@ export default function SubscriptionsPage() {
     <div className="mx-auto max-w-[1320px]">
       <PageHeader
         title="Yours at a glance."
-        description={
-          <>
-            Every subscription on your account — category passes, Creators Den storage, and Author&nbsp;Den projects — in one place. Subscribe here, or on the den itself; your plan follows your account.
-          </>
-        }
         aside={
           <Link href="/dashboard" className="focus-house group inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-xs font-semibold text-zinc-300 transition-colors hover:border-white/20 hover:text-white" data-testid="link-subscriptions-back">
             <PiArrowLeftDuotone className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />

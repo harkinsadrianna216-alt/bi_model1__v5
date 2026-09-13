@@ -60,14 +60,7 @@ export default function ActivityPage() {
 
   return (
     <div className="mx-auto max-w-[1320px]">
-      <PageHeader
-        title="A clear record."
-        aside={
-          <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-[1.8] text-zinc-400">
-            Every room you are part of — seeds you published, continuations you received or sent, contracts locked, passes approved. Summaries only; hidden prose never enters this log.
-          </p>
-        }
-      />
+      <PageHeader title="A clear record." />
 
       <div className="mt-12">
         {q.isLoading ? (

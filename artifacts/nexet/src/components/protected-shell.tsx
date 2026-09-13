@@ -37,20 +37,17 @@ const mobileNav = [
 ];
 
 /**
- * The header every page behind the sign-in wall opens with. It mirrors the
- * front page's section anatomy — a Space Grotesk display line and an optional
- * supporting column, nothing above the title — so walking from the front page
- * into the atrium never feels like changing products.
+ * The header every page behind the sign-in wall opens with: the display line
+ * and, when a page has one, a control on the right. Nothing above the title and
+ * no paragraph explaining the page underneath it — the page says what it is.
  */
 export function PageHeader({
   title,
   accent,
-  description,
   aside,
 }: {
   title: string;
   accent?: string;
-  description?: ReactNode;
   aside?: ReactNode;
 }) {
   return (
@@ -65,9 +62,6 @@ export function PageHeader({
             </>
           ) : null}
         </h1>
-        {description ? (
-          <p className="mt-5 max-w-[34rem] text-sm leading-[1.8] text-zinc-400">{description}</p>
-        ) : null}
       </div>
       {aside ? <div className="shrink-0">{aside}</div> : null}
     </header>
