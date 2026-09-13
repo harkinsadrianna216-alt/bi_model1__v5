@@ -4,8 +4,10 @@ import { Link } from 'wouter';
 import { CardDecor, PageHeader } from '@/components/protected-shell';
 import { nexetDashboardCategories } from '@/data/categories';
 
-// Premium dark theme — Resend/Framer inspired
-const openDoorClass = 'border-[#3b82f6]/40 bg-gradient-to-br from-[#3b82f6]/15 to-transparent';
+// Premium dark theme — Resend/Framer inspired. The open rooms are told apart by
+// a lit border, a rail and a live dot — not by a glow, which pooled into a haze
+// over half the grid and made the cards look out of focus.
+const openDoorClass = 'card-surface border-[#3b82f6]/40';
 const doorClass: Record<string, string> = {
   teal: 'card-surface border-teal-400/20',
   gold: 'card-surface border-amber-400/25',
@@ -22,15 +24,17 @@ const doorIconTone: Record<string, string> = {
   blue: 'text-sky-300',
   coral: 'text-rose-300',
 };
-// Each room's own hue, blurred up behind its mark, so a card carries a
-// temperature instead of reading as the same grey box six times.
-const doorGlow: Record<string, string> = {
-  teal: 'bg-teal-400/25',
-  gold: 'bg-amber-400/25',
-  ink: 'bg-white/10',
-  plum: 'bg-purple-400/25',
-  blue: 'bg-sky-400/25',
-  coral: 'bg-rose-400/25',
+// Each room's hue, as a crisp rail along the card's top edge — a stripe that
+// stops, so a card carries its own temperature without bleeding into the next
+// one. An open room's rail sits at full strength; a planned room's is dimmed
+// until you reach for it.
+const doorRail: Record<string, string> = {
+  teal: 'bg-gradient-to-r from-teal-400/90 via-teal-400/30 to-transparent',
+  gold: 'bg-gradient-to-r from-amber-400/90 via-amber-400/30 to-transparent',
+  ink: 'bg-gradient-to-r from-white/40 via-white/10 to-transparent',
+  plum: 'bg-gradient-to-r from-purple-400/90 via-purple-400/30 to-transparent',
+  blue: 'bg-gradient-to-r from-sky-400/90 via-sky-400/30 to-transparent',
+  coral: 'bg-gradient-to-r from-rose-400/90 via-rose-400/30 to-transparent',
 };
 const doorCardTitleClass = 'max-w-[13ch] font-brand text-3xl font-bold leading-[.98] tracking-[-0.04em] text-zinc-100';
 
@@ -52,13 +56,13 @@ export default function Dashboard() {
             <Link
               key={category.slug}
               href={`/categories/${category.slug}`}
-              className={`soft-lift focus-house group relative flex min-h-[330px] flex-col overflow-hidden rounded-2xl border p-7 ${available ? openDoorClass + ' glow-accent' : doorClass[category.accent] ?? doorClass.ink}`}
+              className={`soft-lift focus-house group relative flex min-h-[336px] flex-col overflow-hidden rounded-2xl border p-7 ${available ? openDoorClass : doorClass[category.accent] ?? doorClass.ink}`}
               data-testid={`card-category-${category.slug}`}
             >
               <CardDecor />
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute -left-9 -top-9 h-48 w-48 rounded-full blur-3xl ${available ? 'bg-[#3b82f6]/30' : doorGlow[category.accent] ?? doorGlow.ink}`}
+                className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] transition-opacity duration-300 ${doorRail[category.accent] ?? doorRail.ink} ${available ? '' : 'opacity-45 group-hover:opacity-80'}`}
               />
               <div className="relative flex items-start justify-between gap-4">
                 <span className={`icon-chip h-14 w-14 ${available ? 'text-[#60a5fa]' : doorIconTone[category.accent] ?? 'text-zinc-300'}`}>
@@ -77,7 +81,11 @@ export default function Dashboard() {
               <div className="relative mt-auto pt-9">
                 <div className="card-divider mb-5" />
                 <div className="flex items-center justify-between gap-4">
-                  <span className={`text-sm font-semibold ${available ? 'text-[#60a5fa]' : 'text-zinc-500'}`}>
+                  <span className={`inline-flex items-center gap-2.5 text-sm font-semibold ${available ? 'text-[#60a5fa]' : 'text-zinc-500'}`}>
+                    <span
+                      aria-hidden="true"
+                      className={`h-1.5 w-1.5 shrink-0 rounded-full ${available ? 'bg-[#3b82f6] shadow-[0_0_8px_1px_rgba(59,130,246,0.55)]' : 'bg-zinc-700'}`}
+                    />
                     {available ? 'Open the room' : 'Coming soon'}
                   </span>
                   <span
@@ -97,7 +105,11 @@ export default function Dashboard() {
       </div>
 
       {/* Footer card — a quiet closing note with the way into the foundation. */}
-      <div className="reveal reveal-2 group relative mt-16 overflow-hidden rounded-2xl border border-[#3b82f6]/25 bg-gradient-to-br from-[#3b82f6]/10 to-transparent p-7 sm:p-9">
+      <div className="reveal reveal-2 group card-surface relative mt-16 overflow-hidden rounded-2xl border border-[#3b82f6]/25 p-7 sm:p-9">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6]/40 to-transparent"
+        />
         <span className="card-spot card-spot-visible" />
         <div className="relative flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
           <div className="flex items-start gap-5">
