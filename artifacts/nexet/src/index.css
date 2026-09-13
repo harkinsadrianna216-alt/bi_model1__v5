@@ -244,6 +244,45 @@
       0 0 0 1px rgba(255, 255, 255, 0.04),
       0 12px 32px -12px rgba(0, 0, 0, 0.7);
   }
+  /* A dark pill with a blue sweep travelling around its outline. The wrapper is
+     clipped to the pill's own radius, and the conic sweep is parked behind the
+     button's dark face — so the gradient is only ever visible in the 1.5px
+     border, never across the middle. Fill it with the button's own content, and
+     keep that content above the sweep. */
+  .brand-ring {
+    position: relative;
+    display: inline-flex;
+    padding: 1.5px;
+    border-radius: 9999px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .brand-ring::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: 190%;
+    aspect-ratio: 1 / 1;
+    translate: -50% -50%;
+    background: conic-gradient(
+      from 0deg,
+      rgba(59, 130, 246, 0) 0deg,
+      rgba(96, 165, 250, 0.85) 55deg,
+      rgba(139, 92, 246, 0.95) 120deg,
+      rgba(59, 130, 246, 0.7) 190deg,
+      rgba(59, 130, 246, 0) 275deg,
+      rgba(59, 130, 246, 0) 360deg
+    );
+    animation: brandRingSpin 3.8s linear infinite;
+  }
+  /* Fill this in: the button's own dark face, which hides the sweep's middle. */
+  .brand-ring > * {
+    position: relative;
+    z-index: 1;
+  }
+  .brand-ring:hover::before { animation-duration: 1.6s; }
 }
 
 @layer utilities {
@@ -430,6 +469,9 @@
 @keyframes payLoaderSpin {
   to { transform: rotate(360deg); }
 }
+@keyframes brandRingSpin {
+  to { transform: rotate(360deg); }
+}
 @keyframes reveal {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
@@ -479,6 +521,9 @@ section[id^="plans-"] { scroll-margin-top: 110px; }
     animation: none !important;
     transition: none !important;
   }
+  /* The sweep stops, but the ring stays lit so the button still reads as the
+     primary action. */
+  .brand-ring::before { animation: none !important; }
   /* The desktop-agent download loop is intentionally NOT disabled here —
      the Creator Den vault billboard keeps its live download icon animating
      too, so the two buttons stay in step. */
