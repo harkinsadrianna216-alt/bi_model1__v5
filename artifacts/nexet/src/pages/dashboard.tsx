@@ -22,6 +22,16 @@ const doorIconTone: Record<string, string> = {
   blue: 'text-sky-300',
   coral: 'text-rose-300',
 };
+// Each room's own hue, blurred up behind its mark, so a card carries a
+// temperature instead of reading as the same grey box six times.
+const doorGlow: Record<string, string> = {
+  teal: 'bg-teal-400/25',
+  gold: 'bg-amber-400/25',
+  ink: 'bg-white/10',
+  plum: 'bg-purple-400/25',
+  blue: 'bg-sky-400/25',
+  coral: 'bg-rose-400/25',
+};
 const doorCardTitleClass = 'max-w-[13ch] font-brand text-3xl font-bold leading-[.98] tracking-[-0.04em] text-zinc-100';
 
 export default function Dashboard() {
@@ -46,18 +56,41 @@ export default function Dashboard() {
               data-testid={`card-category-${category.slug}`}
             >
               <CardDecor />
-              <span className="absolute right-7 top-7 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-500">{String(index + 1).padStart(2, '0')} / {String(nexetDashboardCategories.length).padStart(2, '0')}</span>
-              <span className={`icon-chip h-14 w-14 ${available ? 'text-[#60a5fa]' : doorIconTone[category.accent] ?? 'text-zinc-300'}`}>
-                <Icon className="h-7 w-7" />
-              </span>
-              <div className="relative mt-12">
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute -left-9 -top-9 h-48 w-48 rounded-full blur-3xl ${available ? 'bg-[#3b82f6]/30' : doorGlow[category.accent] ?? doorGlow.ink}`}
+              />
+              <div className="relative flex items-start justify-between gap-4">
+                <span className={`icon-chip h-14 w-14 ${available ? 'text-[#60a5fa]' : doorIconTone[category.accent] ?? 'text-zinc-300'}`}>
+                  <Icon className="h-7 w-7" />
+                </span>
+                <span className="pt-1 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">
+                  {String(index + 1).padStart(2, '0')} / {String(nexetDashboardCategories.length).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="relative mt-10">
                 <h2 className={doorCardTitleClass}>{category.name}</h2>
                 <p className="mt-4 max-w-[19rem] text-sm leading-relaxed text-zinc-400">{category.description}</p>
               </div>
-              <span className={`relative mt-auto inline-flex items-center gap-3 pt-9 text-sm font-semibold ${available ? 'text-[#60a5fa]' : 'text-zinc-500'}`}>
-                {available ? 'Open the room' : 'Coming soon'}
-                <PiArrowUpRightDuotone className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </span>
+              {/* Whether you can walk in, on its own shelf — with the handle
+                  beside it instead of an arrow lost in the line. */}
+              <div className="relative mt-auto pt-9">
+                <div className="card-divider mb-5" />
+                <div className="flex items-center justify-between gap-4">
+                  <span className={`text-sm font-semibold ${available ? 'text-[#60a5fa]' : 'text-zinc-500'}`}>
+                    {available ? 'Open the room' : 'Coming soon'}
+                  </span>
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                      available
+                        ? 'border-[#3b82f6]/40 text-[#60a5fa] group-hover:rotate-45 group-hover:border-[#60a5fa]/70 group-hover:bg-[#3b82f6]/15'
+                        : 'border-white/10 text-zinc-600'
+                    }`}
+                  >
+                    <PiArrowUpRightDuotone className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
             </Link>
           );
         })}
