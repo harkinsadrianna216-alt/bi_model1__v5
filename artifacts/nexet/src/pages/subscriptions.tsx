@@ -43,12 +43,28 @@ function apiErrorMessage(e: unknown): string {
   return err?.response?.data?.error || err?.message || 'Something went wrong. Please try again.';
 }
 
-// Each product keeps one tone across the page, so the meters at the top and the
-// price cards below them read as the same three things.
-const KIND_META: Record<string, { icon: IconType; label: string; tone: string }> = {
-  pass: { icon: PiTicketDuotone, label: 'Category passes', tone: 'text-[#60a5fa]' },
-  storage: { icon: PiHardDrivesDuotone, label: 'Creator Den · workspace storage', tone: 'text-[#34d399]' },
-  projects: { icon: PiFolderOpenDuotone, label: 'Author Den · work projects', tone: 'text-[#fbbf24]' },
+// Each product keeps one tone across the page — in its mark and in the rail
+// along the top of every card it appears on — so the three meters and the three
+// price shelves read as the same three things.
+const KIND_META: Record<string, { icon: IconType; label: string; tone: string; rail: string }> = {
+  pass: {
+    icon: PiTicketDuotone,
+    label: 'Category passes',
+    tone: 'text-[#60a5fa]',
+    rail: 'bg-gradient-to-r from-[#60a5fa] via-[#8b5cf6]/40 to-transparent',
+  },
+  storage: {
+    icon: PiHardDrivesDuotone,
+    label: 'Creator Den · workspace storage',
+    tone: 'text-[#34d399]',
+    rail: 'bg-gradient-to-r from-[#34d399] via-[#34d399]/30 to-transparent',
+  },
+  projects: {
+    icon: PiFolderOpenDuotone,
+    label: 'Author Den · work projects',
+    tone: 'text-[#fbbf24]',
+    rail: 'bg-gradient-to-r from-[#fbbf24] via-[#fbbf24]/30 to-transparent',
+  },
 };
 
 function barPercent(used: number, total: number): number {
@@ -314,6 +330,7 @@ export default function SubscriptionsPage() {
       <div className="reveal reveal-1 mt-12 grid gap-6 lg:grid-cols-3">
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <CardDecor />
+          <span aria-hidden="true" className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] ${KIND_META.pass.rail}`} />
           <div className="relative flex items-start justify-between gap-3">
             <span className="icon-chip h-11 w-11 text-[#60a5fa]"><PiTicketDuotone className="h-5 w-5" /></span>
             <span className="pt-1.5 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">{activeByPlan.size} active</span>
@@ -334,6 +351,7 @@ export default function SubscriptionsPage() {
 
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <CardDecor />
+          <span aria-hidden="true" className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] ${KIND_META.storage.rail}`} />
           <div className="relative flex items-start justify-between gap-3">
             <span className="icon-chip h-11 w-11 text-[#34d399]"><PiHardDrivesDuotone className="h-5 w-5" /></span>
             <span className="pt-1.5 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">{Math.round(barPercent(storageUsed, storageTotal))}% used</span>
@@ -351,6 +369,7 @@ export default function SubscriptionsPage() {
 
         <div className="soft-lift group card-surface relative overflow-hidden rounded-2xl p-6">
           <CardDecor />
+          <span aria-hidden="true" className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] ${KIND_META.projects.rail}`} />
           <div className="relative flex items-start justify-between gap-3">
             <span className="icon-chip h-11 w-11 text-[#fbbf24]"><PiFolderOpenDuotone className="h-5 w-5" /></span>
             <span className="pt-1.5 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">{Math.round(barPercent(projectsUsed, projectsTotal))}% used</span>
@@ -373,7 +392,7 @@ export default function SubscriptionsPage() {
       ) : (
         groups.map((groupPlans, index) => {
           const kind = groupPlans[0]?.kind as keyof typeof KIND_META;
-          const meta = KIND_META[kind] ?? { icon: PiTicketDuotone, label: 'Plans', tone: 'text-zinc-300' };
+          const meta = KIND_META[kind] ?? { icon: PiTicketDuotone, label: 'Plans', tone: 'text-zinc-300', rail: 'bg-gradient-to-r from-white/40 via-white/10 to-transparent' };
           const Icon = meta.icon;
           return (
             <section
@@ -394,15 +413,15 @@ export default function SubscriptionsPage() {
                   return (
                     <div
                       key={`${plan.kind}:${plan.planId}`}
-                      className={`soft-lift group relative flex flex-col overflow-hidden rounded-2xl p-7 ${popular ? 'card-raised glow-accent border border-[#3b82f6]/40' : 'card-surface border border-white/10'}`}
+                      className={`soft-lift group relative flex flex-col overflow-hidden rounded-2xl p-7 ${popular ? 'card-raised border border-[#3b82f6]/40' : 'card-surface border border-white/10'}`}
                       data-testid={`plan-${plan.kind}-${plan.planId}`}
                     >
                       <CardDecor />
-                      {/* A lit top edge: the flagship card's is the accent, the
-                          rest keep a quiet hairline so the shelf stays level. */}
+                      {/* The same rail the product's meter wears, so a price card
+                          and the meter above it read as one thing. */}
                       <span
                         aria-hidden="true"
-                        className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${popular ? 'from-transparent via-[#60a5fa] to-transparent' : 'from-transparent via-white/20 to-transparent'}`}
+                        className={`pointer-events-none absolute inset-x-0 top-0 h-[3px] ${popular ? 'bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6]/40 to-transparent' : meta.rail}`}
                       />
                       {popular && (
                         <span className="absolute right-5 top-5 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] px-3 py-1 font-mono-ui text-[9px] font-semibold uppercase tracking-[.14em] text-white shadow-[0_8px_20px_-8px_rgba(99,102,241,0.9)]" data-testid={`plan-popular-${plan.planId}`}>
