@@ -65,18 +65,15 @@ export function HouseNav() {
         <div className="relative flex h-[72px] items-center justify-between rounded-2xl border border-white/10 bg-[#0d0d0d]/85 px-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_40px_-16px_rgba(0,0,0,0.9),0_0_50px_-20px_rgba(59,130,246,0.45)] backdrop-blur-xl sm:px-5">
           <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#3b82f6]/40 to-transparent" />
           <NexetLogo />
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
-            <button type="button" onClick={goToRooms} className="group relative rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors duration-200 hover:bg-white/5 hover:text-white" data-testid="button-nav-rooms">
+          <nav className="hidden items-center gap-0.5 rounded-full bg-white/5 p-1 md:flex" aria-label="Primary navigation">
+            <button type="button" onClick={goToRooms} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-rooms">
               Explore rooms
-              <span className="absolute inset-x-4 bottom-1 h-px bg-gradient-to-r from-[#3b82f6]/80 to-[#8b5cf6]/80 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
             </button>
-            <button type="button" onClick={goToMethod} className="group relative rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors duration-200 hover:bg-white/5 hover:text-white" data-testid="button-nav-method">
+            <button type="button" onClick={goToMethod} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-method">
               The method
-              <span className="absolute inset-x-4 bottom-1 h-px bg-gradient-to-r from-[#3b82f6]/80 to-[#8b5cf6]/80 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
             </button>
-            <button type="button" onClick={goToUpcoming} className="group relative rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors duration-200 hover:bg-white/5 hover:text-white" data-testid="button-nav-upcoming">
+            <button type="button" onClick={goToUpcoming} className="focus-house rounded-full px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors duration-200 hover:bg-white/10 hover:text-white" data-testid="button-nav-upcoming">
               Upcoming
-              <span className="absolute inset-x-4 bottom-1 h-px bg-gradient-to-r from-[#3b82f6]/80 to-[#8b5cf6]/80 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
             </button>
           </nav>
           <div className="hidden items-center gap-2 md:flex">
@@ -85,7 +82,7 @@ export function HouseNav() {
               <span className="h-1 w-1 rounded-full bg-[#8b5cf6]/80" />
             </span>
             <Show when="signed-out">
-              <Link href="/sign-in" className="rounded-full px-3.5 py-2 text-sm font-medium text-zinc-400 transition-colors duration-200 hover:bg-white/5 hover:text-white" data-testid="link-nav-login">
+              <Link href="/sign-in" className="focus-house rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-zinc-200 transition-colors duration-200 hover:border-white/30 hover:bg-white/5 hover:text-white" data-testid="link-nav-login">
                 Log in
               </Link>
               <Link href="/sign-up" className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-zinc-900 shadow-[0_0_20px_-8px_rgba(255,255,255,0.4)] transition-all duration-200 hover:bg-zinc-100" data-testid="link-nav-signup">
