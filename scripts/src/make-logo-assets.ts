@@ -34,6 +34,17 @@ const WEB_APPS: { app: string; master: string; served: string; og?: boolean }[] 
   { app: "oracle-admin", master: "nexet-logo.png", served: "nexet-logo.png" },
 ];
 
+/**
+ * Marks an app serves for use inside its own interface rather than as its icon.
+ * The Nexet front page wears each den's mark on the matching room card, so it
+ * needs those files in its public dir beside its own `nexet-logo.png` — without
+ * taking over its favicon / apple-touch icon.
+ */
+const APP_MARKS: { app: string; master: string; served: string }[] = [
+  { app: "nexet", master: AGENT_MASTER, served: "nexet-agent-logo.png" },
+  { app: "nexet", master: "nexet-author-den-logo.png", served: "nexet-author-den-logo.png" },
+];
+
 interface Raster {
   width: number;
   height: number;
@@ -378,6 +389,12 @@ function main(): void {
     if (target.og) {
       writePng(path.join(dir, "og-logo.png"), resize(art, OG_IMAGE));
     }
+  }
+
+  // In-app marks (room cards, etc.) — sized like a header mark, no icon variants.
+  for (const target of APP_MARKS) {
+    const dir = path.join(ROOT, "artifacts", target.app, "public");
+    writePng(path.join(dir, target.served), resize(mark(target.master), WEB_LOGO));
   }
 
   const agentDir = path.join(ROOT, "artifacts", "desktop-agent", "assets");
