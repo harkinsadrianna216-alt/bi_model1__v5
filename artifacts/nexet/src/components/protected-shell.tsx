@@ -6,6 +6,7 @@ import {
   useListVideoNotifications,
 } from '@workspace/api-client-react';
 import {
+  PiArrowUpRightDuotone,
   PiChartLineUpDuotone,
   PiListDuotone,
   PiSignOutDuotone,
@@ -78,6 +79,144 @@ export function PageHeader({
       </div>
       {aside ? <div className="shrink-0">{aside}</div> : null}
     </header>
+  );
+}
+
+/**
+ * The decorative trio the front page puts inside its cards: a spotlight that
+ * fades in on hover, a shine that sweeps across, and a faint ring in the
+ * corner. The card using it must be `group relative overflow-hidden`.
+ */
+export function CardDecor() {
+  return (
+    <>
+      <span className="card-spot" />
+      <span className="card-shine" />
+      <span className="absolute -right-10 -top-12 h-36 w-36 rounded-full border border-white/5 opacity-20 transition-transform duration-500 group-hover:scale-125" />
+    </>
+  );
+}
+
+/**
+ * A section heading in the house's own grammar: a lit icon tile, a mono kicker
+ * over a Space Grotesk line, and a hairline running out to an optional counter.
+ */
+export function SectionHead({
+  icon: Icon,
+  kicker,
+  title,
+  note,
+  className = '',
+}: {
+  icon?: IconType;
+  kicker: string;
+  title: string;
+  note?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`flex items-center gap-4 ${className}`}>
+      {Icon ? (
+        <span className="icon-chip h-11 w-11 shrink-0 text-[#3b82f6]">
+          <Icon className="h-5 w-5" />
+        </span>
+      ) : null}
+      <div className="min-w-0">
+        <p className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">{kicker}</p>
+        <h2 className="mt-1 font-brand text-2xl font-bold tracking-[-0.03em] text-zinc-100">{title}</h2>
+      </div>
+      <span className="h-px flex-1 bg-white/5" />
+      {note ? (
+        <span className="shrink-0 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-zinc-600">{note}</span>
+      ) : null}
+    </div>
+  );
+}
+
+/** The front page's primary pill — solid blue, lifts and glows, arrow nudges. */
+export function PrimaryLink({
+  href,
+  children,
+  testId,
+  onClick,
+  className = '',
+}: {
+  href: string;
+  children: ReactNode;
+  testId?: string;
+  onClick?: () => void;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`focus-house group inline-flex items-center gap-2 rounded-full bg-[#3b82f6] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] ${className}`}
+      data-testid={testId}
+    >
+      {children}
+      <PiArrowUpRightDuotone className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
+/** The front page's quiet pill — a hairline and a hover lift, nothing more. */
+export function GhostLink({
+  href,
+  children,
+  testId,
+  onClick,
+  className = '',
+}: {
+  href: string;
+  children: ReactNode;
+  testId?: string;
+  onClick?: () => void;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`focus-house inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3.5 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:text-white ${className}`}
+      data-testid={testId}
+    >
+      {children}
+    </Link>
+  );
+}
+
+/**
+ * The front page's "nothing here yet" card: a lit tile, a mono kicker, a
+ * display line, a quiet paragraph, and a way out.
+ */
+export function EmptyPanel({
+  icon: Icon,
+  kicker,
+  title,
+  body,
+  action,
+  className = '',
+}: {
+  icon: IconType;
+  kicker?: string;
+  title: string;
+  body: ReactNode;
+  action?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`card-surface relative overflow-hidden rounded-2xl p-8 sm:p-10 ${className}`}>
+      <span className="icon-chip h-16 w-16 text-[#3b82f6]">
+        <Icon className="h-7 w-7" />
+      </span>
+      {kicker ? (
+        <p className="mt-8 font-mono-ui text-[10px] uppercase tracking-[0.18em] text-[#3b82f6]">{kicker}</p>
+      ) : null}
+      <p className="mt-3 font-brand text-4xl font-bold leading-[.95] tracking-[-0.04em] text-zinc-100">{title}</p>
+      <p className="mt-4 max-w-xl text-sm leading-[1.8] text-zinc-500">{body}</p>
+      {action ? <div className="mt-8 flex flex-wrap items-center gap-3">{action}</div> : null}
+    </div>
   );
 }
 
