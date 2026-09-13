@@ -188,11 +188,7 @@ export default function InboxPage() {
               </span>
             </button>
           )) : (
-            <EmptyPanel
-              icon={PiTrayDuotone}
-              title="Both dens are quiet."
-              body="Notices from Author Den (submissions, contracts, your-turn passes) and Creators Den (uploads for review, approvals, invites) will appear here when they need you — opening one takes you to its full page in that den."
-            />
+            <EmptyPanel icon={PiTrayDuotone} title="Both dens are quiet." />
           )}
         </div>
       </section>

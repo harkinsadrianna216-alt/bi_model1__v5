@@ -17,7 +17,7 @@ import {
   PiXCircleDuotone,
 } from 'react-icons/pi';
 import type { IconType } from 'react-icons';
-import { EmptyPanel, PageHeader, PrimaryLink } from '@/components/protected-shell';
+import { EmptyPanel, PageHeader } from '@/components/protected-shell';
 import { useListAccountActivity } from '@workspace/api-client-react';
 
 // Entrance stagger for the day panels, capped so a long trail doesn't leave the
@@ -133,16 +133,7 @@ export default function ActivityPage() {
             ))}</div>;
           })()
         ) : (
-          <EmptyPanel
-            icon={PiChartLineUpDuotone}
-            title="Nothing has moved yet."
-            body="Publish a seed, answer a seed, or open a room and your trail will gather here — every publish, submission, selection, contract lock, and approved pass."
-            action={
-              <PrimaryLink href="/authors/pitch-board" testId="link-activity-dashboard">
-                Visit the pitch board
-              </PrimaryLink>
-            }
-          />
+          <EmptyPanel icon={PiChartLineUpDuotone} title="Nothing has moved yet." />
         )}
       </div>
       <div className="reveal reveal-2 mt-8 flex items-center gap-3 border-t border-white/5 pt-7 text-xs text-zinc-500">

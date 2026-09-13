@@ -4,10 +4,10 @@ import { Link, Redirect, useLocation, useParams } from 'wouter';
 import { useUser } from '@clerk/react';
 import {
   getGetCollaborationProjectQueryKey, getGetCollaborationSeedQueryKey, getGetContinuationAdvisoryQueryKey, getGetContinuationQueryKey, getGetContinuationThreadQueryKey, getGetContinuationWriterProfileQueryKey, getGetCollaborationThreadQueryKey, getGetSeedApplicationQueryKey,
-  getGetSeedSelectionQueryKey, getListCollaborationActivityQueryKey, getListCollaborationGenealogyQueryKey, getListCollaborationSeedsQueryKey, getListCollaborationStoryBibleQueryKey, getListCollaborationWorkBlocksQueryKey, getListContinuationAnnotationsQueryKey, getListContinuationsQueryKey,
+  getGetSeedSelectionQueryKey, getListCollaborationActivityQueryKey, getListCollaborationGenealogyQueryKey, getListCollaborationStoryBibleQueryKey, getListCollaborationWorkBlocksQueryKey, getListContinuationAnnotationsQueryKey, getListContinuationsQueryKey,
   useApproveCollaborationContract, useApproveCollaborationWorkBlock, useCreateApplicationAdvisory, useCreateCollaborationSeed, useCreateCollaborationStoryBibleEntry, useCreateCollaborationWorkBlock, useCreateSeedApplication, useDeclineContinuation, useGetCollaborationInbox,
   useGetCollaborationProject, useGetCollaborationSeed, useGetContinuation, useGetSeedApplication, useGetSeedSelection, useListCollaborationActivity, useListCollaborationGenealogy, useListCollaborationProjects,
-  useGetContinuationAdvisory, useGetContinuationThread, useGetContinuationWriterProfile, useGetCollaborationThread, useListCollaborationSeeds, useListCollaborationStoryBible, useListCollaborationWorkBlocks, useListContinuationAnnotations, useListContinuations, useCreateContinuationAnnotation, useMarkCollaborationNotificationRead, useSaveCollaborationWorkBlockDraft, useSaveSeedApplicationDraft,
+  useGetContinuationAdvisory, useGetContinuationThread, useGetContinuationWriterProfile, useGetCollaborationThread, useListCollaborationStoryBible, useListCollaborationWorkBlocks, useListContinuationAnnotations, useListContinuations, useCreateContinuationAnnotation, useMarkCollaborationNotificationRead, useSaveCollaborationWorkBlockDraft, useSaveSeedApplicationDraft,
   useSelectContinuation, useSendCollaborationMessage, useStartContinuationThread, useSubmitCollaborationWorkBlock, useSubmitSeedApplication,
 } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -29,7 +29,6 @@ function DenRedirect({ to }: { to: string }) {
 function ErrorState({ retry }: { retry?: () => void }) { return <div className="mt-10 rounded-[1.5rem] border-2 border-[#3b82f6]/40 bg-[#111111] p-8"><PiWarningCircleDuotone className="h-6 w-6 text-[#3b82f6]" /><p className="mt-4 font-display text-3xl italic">The room is having trouble opening.</p><p className="mt-2 text-sm text-zinc-500">Your work is safe. Try the door again in a moment.</p>{retry && <button onClick={retry} className="focus-house mt-5 rounded-full bg-[#111111] px-5 py-3 text-sm font-bold text-zinc-100">Try again</button>}</div>; }
 function Empty({ title, body, href, action }: { title: string; body: string; href?: string; action?: string }) { return <div className="mt-10 rounded-[1.75rem] card-surface p-8 sm:p-10"><PiSparkleDuotone className="h-7 w-7 animate-pulse-soft text-[#3b82f6]" /><p className="mt-7 font-display text-4xl italic">{title}</p><p className="mt-3 max-w-xl text-sm leading-[1.8] text-zinc-500">{body}</p>{href && <Link href={href} className="focus-house mt-7 inline-flex items-center gap-2 rounded-full bg-[#111111] px-5 py-3 text-sm font-bold text-zinc-100">{action}<PiArrowRightDuotone className="h-4 w-4" /></Link>}</div>; }
 function Pill({ children }: { children: ReactNode }) { return <span className="rounded-full border border-white/10 bg-[#111111] px-2.5 py-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-zinc-400">{children}</span>; }
-function SeedCard({ seed, isOwn }: { seed: any; isOwn?: boolean }) { return <Link href={`/authors/pitch-board/seed/${seed.id}`} className="soft-lift focus-house group block overflow-hidden rounded-3xl card-surface p-7"><span className="card-spot" /><span className="card-shine" /><div className="relative flex items-start justify-between gap-4"><Pill>{seed.genre || 'Open brief'}</Pill><span className="font-mono-ui text-[10px] text-zinc-600">{seed.respondentCount}/{seed.respondentLimit || '∞'} voices</span></div><h2 className="mt-8 font-display text-3xl italic leading-none">{seed.sourceProjectTitle}</h2><p className="mt-4 line-clamp-3 text-sm leading-[1.8] text-zinc-400">{seed.seedText}</p><div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-zinc-500">{isOwn ? <span className="rounded-full bg-[#3b82f6] px-2.5 py-1 font-mono-ui text-[9px] uppercase tracking-[.12em] text-white">Your seed</span> : <span>{seed.creatorName} · {seed.tone}</span>}<PiArrowUpRightDuotone className="h-4 w-4 text-[#3b82f6] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></div></Link>; }
 function CreateSeed() {
   const [, setLocation] = useLocation();
   const create = useCreateCollaborationSeed();
@@ -88,51 +87,6 @@ function CreateSeed() {
         <button onClick={publish} disabled={create.isPending || !form.sourceProjectTitle.trim() || !form.seedText.trim()} className="focus-house mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#111111] px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{create.isPending ? 'Publishing…' : 'Publish to the pitch board'} <PiArrowUpRightDuotone className="h-4 w-4" /></button>
       </aside>
     </div>
-  </Frame>;
-}
-type SeedFilters = { genre: string; unit: string; language: string; protocol: string };
-function Board() {
-  const { user } = useUser();
-  const [location] = useLocation();
-  const [filters, setFilters] = useState<SeedFilters>(() => {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      genre: params.get('genre') ?? '',
-      unit: params.get('unit') ?? '',
-      language: params.get('language') ?? '',
-      protocol: params.get('protocol') ?? '',
-    };
-  });
-  const params = {
-    genre: filters.genre || undefined,
-    unit: filters.unit || undefined,
-    language: filters.language || undefined,
-    protocol: filters.protocol || undefined,
-  };
-  const q = useListCollaborationSeeds(params, { query: { queryKey: getListCollaborationSeedsQueryKey(params) } });
-  const seeds = q.data || [];
-  const setFilter = (key: keyof SeedFilters, next: string) => {
-    const updated = { ...filters, [key]: next };
-    setFilters(updated);
-    const search = new URLSearchParams();
-    Object.entries(updated).forEach(([name, value]) => { if (value) search.set(name, value); });
-    const nextUrl = `${location.split('?')[0]}${search.toString() ? `?${search.toString()}` : ''}`;
-    window.history.replaceState({}, '', nextUrl);
-  };
-  return <Frame title="The pitch board" intro="Frozen seeds from writers making room for another mind. Filter gently; the right opening is often a quiet one.">
-    <div className="mt-8 flex flex-wrap gap-3">
-      <label className="sr-only" htmlFor="filter-genre">Filter by genre</label>
-      <select id="filter-genre" data-testid="select-filter-genre" value={filters.genre} onChange={e => setFilter('genre', e.target.value)} className="rounded-full border-2 border-white/10 bg-[#111111] px-4 py-3 text-sm"><option value="">All genres</option><option>Literary</option><option>Speculative</option><option>Romance</option><option>Crime</option></select>
-      <label className="sr-only" htmlFor="filter-unit">Filter by unit</label>
-      <select id="filter-unit" data-testid="select-filter-unit" value={filters.unit} onChange={e => setFilter('unit', e.target.value)} className="rounded-full border-2 border-white/10 bg-[#111111] px-4 py-3 text-sm"><option value="">Any unit</option><option value="paragraph">Paragraph</option><option value="scene">Scene</option><option value="chapter">Chapter</option><option value="opening">Opening</option><option value="ending">Ending</option><option value="POV">POV</option></select>
-      <label className="sr-only" htmlFor="filter-language">Filter by language</label>
-      <select id="filter-language" data-testid="select-filter-language" value={filters.language} onChange={e => setFilter('language', e.target.value)} className="rounded-full border-2 border-white/10 bg-[#111111] px-4 py-3 text-sm"><option value="">Any language</option><option>English</option><option>Yoruba</option><option>French</option><option>Spanish</option></select>
-      <label className="sr-only" htmlFor="filter-protocol">Filter by protocol</label>
-      <select id="filter-protocol" data-testid="select-filter-protocol" value={filters.protocol} onChange={e => setFilter('protocol', e.target.value)} className="rounded-full border-2 border-white/10 bg-[#111111] px-4 py-3 text-sm"><option value="">Any protocol</option><option value="Continue from the final line">Continue from the final line</option><option value="Write the next scene">Write the next scene</option></select>
-      <button onClick={() => { window.location.href = '/authors-den/?publish=1'; }} className="focus-house inline-flex items-center gap-2 rounded-full bg-[#3b82f6] px-4 py-3 text-sm font-bold text-zinc-100"><PiPenDuotone className="h-4 w-4" />Publish a seed</button>
-      <Link href="/categories/authors" className="focus-house group inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-bold text-zinc-500"><PiArrowLeftDuotone className="h-4 w-4 transition-transform group-hover:-translate-x-1" />Authors room</Link>
-    </div>
-    {q.isLoading ? <Loading /> : q.isError ? <ErrorState retry={q.refetch} /> : seeds.length ? <div className="mt-8 grid gap-5 md:grid-cols-2">{seeds.map(seed => <SeedCard key={seed.id} seed={seed} isOwn={seed.creatorId === user?.id} />)}</div> : <div className="mt-10 rounded-[1.75rem] card-surface p-8 sm:p-10"><PiSparkleDuotone className="h-7 w-7 animate-pulse-soft text-[#3b82f6]" /><p className="mt-7 font-display text-4xl italic">The board is between offerings.</p><p className="mt-3 max-w-xl text-sm leading-[1.8] text-zinc-500">No open seeds match those filters yet. Clear a filter or open your Author Den and publish the first seed from a project.</p><button onClick={() => { window.location.href = '/authors-den/?publish=1'; }} className="focus-house mt-7 inline-flex items-center gap-2 rounded-full bg-[#111111] px-5 py-3 text-sm font-bold text-zinc-100">Publish the first seed<PiArrowRightDuotone className="h-4 w-4" /></button></div>}
   </Frame>;
 }
 function SeedDetail() {
@@ -480,7 +434,6 @@ function ProjectActivityPage() {
 export default function CollaborationPage() {
   const [location] = useLocation();
   if (location === '/authors/pitch-board/new') return <DenRedirect to="/authors-den/?publish=1" />;
-  if (location === '/authors/pitch-board') return <Board />;
   if (location.endsWith('/respond')) {
     const segments = location.split('/').filter(Boolean);
     return <DenRedirect to={`/authors-den/?answer=${segments[segments.length - 2] ?? ''}`} />;

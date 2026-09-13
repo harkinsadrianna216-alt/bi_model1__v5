@@ -147,7 +147,6 @@ function RouterWithAuth() {
       <Route path="/profile" component={ProfileRoute} />
       <Route path="/subscriptions" component={SubscriptionsRoute} />
       <Route path="/authors/pitch-board/new" component={CollaborationRoute} />
-      <Route path="/authors/pitch-board" component={CollaborationRoute} />
       <Route path="/authors/pitch-board/seed/:seedId" component={CollaborationRoute} />
       <Route path="/authors/pitch-board/seed/:seedId/respond" component={CollaborationRoute} />
       <Route path="/authors/collaborations/continuations" component={CollaborationRoute} />
