@@ -317,7 +317,7 @@ function PrivateShell({ children }: { children: ReactNode }) {
                       aria-current={active ? 'page' : undefined}
                       className={`focus-house group relative flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200 ${
                         active
-                          ? 'bg-[#3b82f6]/15 text-white shadow-[inset_0_0_0_1px_rgba(59,130,246,0.35),inset_0_1px_0_0_rgba(255,255,255,0.1),0_0_24px_-10px_rgba(59,130,246,0.9)]'
+                          ? 'bg-[#3b82f6]/15 text-white shadow-[inset_0_0_0_1px_rgba(59,130,246,0.4),inset_0_1px_0_0_rgba(255,255,255,0.12)]'
                           : 'text-zinc-400 hover:bg-white/[0.07] hover:text-white'
                       }`}
                       data-testid={`link-nav-${item.label.toLowerCase()}`}
