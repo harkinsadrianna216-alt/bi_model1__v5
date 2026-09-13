@@ -1,14 +1,21 @@
-import { PiEnvelopeDuotone, PiGearSixDuotone, PiSignOutDuotone, PiUserCircleDuotone, PiPencil } from 'react-icons/pi';
+import { PiEnvelopeDuotone, PiGearSixDuotone, PiSignOutDuotone, PiPencil, PiUserCircleDuotone } from 'react-icons/pi';
+import { Loader2Icon } from 'lucide-react';
 import { useClerk, useUser } from '@clerk/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import {
+  getGetUserProfileQueryKey,
   getListWaitlistEntriesQueryKey,
+  getUserProfile,
   useListWaitlistEntries,
 } from '@workspace/api-client-react';
 import { nexetCategories } from '@/data/categories';
 
 export default function ProfilePage() {
+  const queryClient = useQueryClient();
   const { user, isLoaded } = useUser();
   const clerk = useClerk();
+  const [uploading, setUploading] = useState(false);
   const name = user?.fullName || user?.username || 'Nexet member';
   const initials = `${user?.firstName?.[0] || ''}${user?.lastName?.[0] || ''}` || name.slice(0, 2);
   const email = user?.primaryEmailAddress?.emailAddress || 'No email on file';
@@ -35,31 +42,45 @@ export default function ProfilePage() {
         <div className="relative border-b border-white/5 bg-gradient-to-br from-[#3b82f6]/10 to-transparent p-7 sm:p-10">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
             <div className="profile-avatar-wrap">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-xl uppercase text-white shadow-[0_0_30px_-6px_rgba(59,130,246,0.8)]">
-                {initials}
-              </div>
-              <label className="avatar-edit-btn" title="Update profile photo">
-                <PiPencil className="h-3.5 w-3.5 text-white drop-shadow" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="sr-only"
-                  onChange={async (event) => {
-                    const file = event.target.files?.[0];
-                    if (!file) return;
-                    try {
-                      const url = URL.createObjectURL(file);
-                      if (clerk.user) {
-                        await (clerk.user as unknown as { update: (params: { imageUrl: string }) => Promise<void> }).update({ imageUrl: url });
+              {user?.imageUrl ? (
+                <img src={user.imageUrl} alt="" className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-xl uppercase text-white shadow-[0_0_30px_-6px_rgba(59,130,246,0.8)]" />
+              ) : (
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] font-mono-ui text-xl uppercase text-white shadow-[0_0_30px_-6px_rgba(59,130,246,0.8)]">
+                  {initials}
+                </div>
+              )}
+              {uploading ? (
+                <span className="avatar-edit-btn" title="Uploading…" aria-label="Uploading profile photo">
+                  <Loader2Icon className="h-3.5 w-3.5 text-white drop-shadow spin" />
+                </span>
+              ) : (
+                <label className="avatar-edit-btn" title="Update profile photo">
+                  <PiPencil className="h-3.5 w-3.5 text-white drop-shadow" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={async (event) => {
+                      const file = event.target.files?.[0];
+                      if (!file) return;
+                      setUploading(true);
+                      try {
+                        await clerk.user?.setProfileImage({ file });
+                        // Propagate the new avatar across the app family so nexet,
+                        // authors-den, creators-den and any other viewer sees it.
+                        if (user?.id) {
+                          void getUserProfile(user.id);
+                          void queryClient.invalidateQueries({ queryKey: getGetUserProfileQueryKey(user.id) });
+                        }
+                      } catch {
+                        // Upload failed — Clerk-side image stays.
                       }
-                      URL.revokeObjectURL(url);
-                    } catch {
-                      // Clerk handles the upload; ignore client-side errors.
-                    }
-                    event.target.value = '';
-                  }}
-                />
-              </label>
+                      setUploading(false);
+                      event.target.value = '';
+                    }}
+                  />
+                </label>
+              )}
             </div>
             <div>
               <h2 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-white">{name}</h2>
