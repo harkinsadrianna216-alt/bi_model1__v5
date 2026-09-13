@@ -9,22 +9,22 @@ function PlatformDiagram() {
       <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-white/5 to-transparent" />
       <div className="relative grid h-full grid-cols-2 grid-rows-3 gap-2 sm:gap-3">
         <div className="col-span-2 flex items-center justify-between rounded-xl border border-[#3b82f6]/30 bg-gradient-to-br from-[#3b82f6]/15 to-transparent p-4 sm:p-6">
-          <p className="max-w-[13rem] text-[2rem] font-semibold leading-[.9] text-white sm:text-[2.8rem]">The Protocol</p>
+          <p className="max-w-[13rem] text-[2rem] font-semibold leading-[.9] text-white sm:text-[2.8rem]">Two Halves</p>
           <span className="icon-chip h-11 w-11 animate-float-slow text-[#60a5fa] sm:h-14 sm:w-14">
             <PiStackDuotone className="h-5 w-5 sm:h-6 sm:w-6" />
           </span>
         </div>
         <div className="card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
-          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Bring</span>
+          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Write</span>
         </div>
         <div className="card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
-          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Meet</span>
+          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Film</span>
         </div>
         <div className="card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
-          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Reveal</span>
+          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Match</span>
         </div>
         <div className="relative card-surface flex flex-col justify-center rounded-xl p-3 sm:p-5">
-          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Belong</span>
+          <span className="text-[1.75rem] font-semibold leading-[.9] text-zinc-100 sm:text-[2.3rem]">Reveal</span>
           <span className="absolute bottom-3 right-3 h-5 w-5 animate-breathe rounded-full border border-[#8b5cf6]/40 shadow-[0_0_14px_-2px_rgba(139,92,246,0.5)] sm:bottom-5 sm:right-5 sm:h-8 sm:w-8" />
         </div>
       </div>
@@ -59,11 +59,11 @@ export default function Home() {
       <section className="relative mx-auto max-w-[1400px] px-4 pb-20 pt-12 sm:px-5 sm:pt-20 lg:px-6 lg:pb-32 lg:pt-24">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
           <div className="reveal max-w-[670px]">
-            <h1 className="mt-7 max-w-[12ch] text-[4.4rem] font-bold leading-[.92] tracking-[-0.05em] text-white sm:text-[6.4rem] lg:text-[7.8rem]">
+            <h1 className="mt-7 max-w-[12ch] text-[4rem] font-bold leading-[.94] tracking-[-0.05em] text-white sm:text-[5.8rem] lg:text-[7rem]">
               What if the missing piece is <span className="text-gradient-accent">the one you bring?</span>
             </h1>
             <p className="reveal reveal-1 mt-8 max-w-[31rem] text-base leading-[1.7] text-zinc-400 sm:text-lg">
-              Nexet is a creative collaboration platform where unfinished ideas find their missing half. Add your half without seeing theirs, get matched, then reveal what neither of you could have made alone.
+              Nexet is a collaboration platform for writers and video creators. In the Authors Den or the Creators Den, you bring your half without seeing theirs — then reveal what neither of you could have made alone.
             </p>
             <div className="reveal reveal-2 mt-9 flex flex-wrap items-center gap-4">
               <Link href="/sign-up" className="group inline-flex items-center gap-3 rounded-full bg-[#3b82f6] px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#2563eb] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)]" data-testid="link-home-signup">
@@ -84,7 +84,7 @@ export default function Home() {
       <section id="how-it-works" className="border-y border-white/5 bg-[#0d0d0d]">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-4 py-20 sm:px-5 lg:grid-cols-[.7fr_1.3fr] lg:px-6 lg:py-28">
           <div>
-            <h2 className="mt-5 max-w-[10ch] text-5xl font-bold leading-[.92] tracking-[-0.04em] text-white sm:text-6xl">A little less knowing. A lot more discovering.</h2>
+            <h2 className="mt-5 text-5xl font-bold leading-[.92] tracking-[-0.04em] text-white sm:text-6xl">A little less knowing,<br />A lot more discovering.</h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             <div className="reveal group card-surface card-surface-hover overflow-hidden rounded-2xl p-7">
@@ -118,7 +118,7 @@ export default function Home() {
       <section id="rooms" className="mx-auto max-w-[1400px] px-4 py-20 sm:px-5 lg:px-6 lg:py-32">
         <div className="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
           <div>
-            <h2 className="mt-5 max-w-[10ch] text-6xl font-bold leading-[.9] tracking-[-0.05em] text-white sm:text-7xl">Every room starts with two.</h2>
+            <h2 className="mt-5 text-6xl font-bold leading-[.9] tracking-[-0.05em] text-white sm:text-7xl">Every room starts with two.</h2>
           </div>
           <p className="max-w-[20rem] text-sm leading-relaxed text-zinc-400">Two doors are open today — one for writers, one for video. The rest of the house is still on the blueprint.</p>
         </div>
@@ -136,7 +136,7 @@ export default function Home() {
                 <span className="card-shine" />
                 <span className="absolute -right-10 -top-12 h-36 w-36 rounded-full border border-white/5 opacity-20 transition-transform duration-500 group-hover:scale-125" />
                 <div className="relative flex h-full flex-col justify-between">
-                  <div className="flex items-center justify-between">
+                  <div>
                     {roomMarks[room.slug] ? (
                       // The den's own mark, shown whole — no chip, ring or frame.
                       <img src={roomMarks[room.slug]} alt="" className="h-14 w-14 object-contain" />
@@ -145,10 +145,6 @@ export default function Home() {
                         <Icon className="h-7 w-7" />
                       </span>
                     )}
-                    <span className="badge-glow inline-flex items-center gap-2 rounded-full border border-[#3b82f6]/40 bg-[#3b82f6]/10 px-3 py-1.5 font-mono-ui text-[9px] uppercase tracking-[0.13em] text-[#60a5fa]">
-                      <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-[#3b82f6] glow-dot" />
-                      Open now
-                    </span>
                   </div>
                   <div className="mt-12">
                     <h3 className="max-w-[13ch] text-4xl font-bold leading-[.98] tracking-[-0.04em] text-white sm:text-5xl">{room.name}</h3>
@@ -169,7 +165,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px] px-4 py-20 sm:px-5 lg:px-6 lg:py-28">
           <div className="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
             <div>
-              <h2 className="mt-5 max-w-[12ch] text-5xl font-bold leading-[.92] tracking-[-0.04em] text-white sm:text-6xl">The rest of the house is still being built.</h2>
+              <h2 className="mt-5 text-5xl font-bold leading-[.92] tracking-[-0.04em] text-white sm:text-6xl">The rest of the house is still being built.</h2>
             </div>
             <p className="max-w-[22rem] text-sm leading-relaxed text-zinc-400">Upcoming features, already on the blueprint. Leave your email on any room and we&apos;ll light it up the day it opens.</p>
           </div>
@@ -212,7 +208,7 @@ export default function Home() {
       <section className="border-t border-white/5 bg-[#0d0d0d]">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-4 py-20 sm:px-5 lg:grid-cols-[1fr_.8fr] lg:items-end lg:px-6 lg:py-28">
           <div>
-            <blockquote className="max-w-[14ch] text-5xl font-semibold leading-[.94] text-white sm:text-7xl">"The work stays human. The machine just holds the door open."</blockquote>
+            <blockquote className="text-5xl font-semibold leading-[.94] text-white sm:text-6xl">"One page. One reel.<br />Neither made alone."</blockquote>
           </div>
           <div className="border-l border-white/10 pl-6 sm:pl-8">
             <p className="text-sm leading-[1.8] text-zinc-400">Nexet keeps a clear line back to every hand in the room. No synthetic substitute for a person. No erasing the strange, specific route an idea took to arrive.</p>
