@@ -1,21 +1,17 @@
 import { PiArrowUpRightDuotone, PiDownloadSimpleDuotone, PiFilmSlateDuotone, PiMegaphoneDuotone, PiMicrophoneStageDuotone, PiPaletteDuotone, PiScissorsDuotone } from 'react-icons/pi';
 import { Link } from 'wouter';
-import { useUser } from '@clerk/react';
 
 // Each relay leg opens the Audition Arena already filtered to the matching
 // content role — Story Architect → Script, Visual Editor → Video, Sound
 // Designer → Audio, and Motion & Color → Thumbnail (the final cover polish).
 const LEGS = [
-  { number: '01', role: 'Story Architect', studio: 'Selects & structure', icon: PiFilmSlateDuotone, arenaRole: 'SCRIPT' },
-  { number: '02', role: 'Visual Editor', studio: 'Precision cutting', icon: PiScissorsDuotone, arenaRole: 'VIDEO' },
-  { number: '03', role: 'Sound Designer', studio: 'Restore & score', icon: PiMicrophoneStageDuotone, arenaRole: 'AUDIO' },
-  { number: '04', role: 'Motion & Color', studio: 'Finish & polish', icon: PiPaletteDuotone, arenaRole: 'THUMBNAIL' },
+  { number: '01', role: 'Story Architect', icon: PiFilmSlateDuotone, arenaRole: 'SCRIPT' },
+  { number: '02', role: 'Visual Editor', icon: PiScissorsDuotone, arenaRole: 'VIDEO' },
+  { number: '03', role: 'Sound Designer', icon: PiMicrophoneStageDuotone, arenaRole: 'AUDIO' },
+  { number: '04', role: 'Motion & Color', icon: PiPaletteDuotone, arenaRole: 'THUMBNAIL' },
 ];
 
 export default function ContentCreatorsPage() {
-  const { user } = useUser();
-  const name = user?.firstName || user?.username || 'maker';
-
   return (
     <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-5 lg:h-[calc(100dvh-170px)]">
       <div>
@@ -29,21 +25,12 @@ export default function ContentCreatorsPage() {
             <h1 className="mt-3 max-w-[10ch] text-5xl font-extrabold leading-[.9] tracking-[-0.07em] text-white sm:text-6xl">
               Your footage has a room.
             </h1>
-            <p className="mt-3 max-w-[30rem] text-sm leading-[1.7] text-zinc-400">
-              Welcome in, {name}. This is where raw footage becomes a publish-ready master — four roles, one relay, and the Lock keeps every frame in the vault until the Captain releases it.
-            </p>
           </div>
 
           <div className="flex items-center">
             <div className="w-full rounded-[1.5rem] border border-[#3b82f6]/40 bg-gradient-to-br from-[#3b82f6]/15 to-transparent p-7" data-testid="card-open-creators-den">
-              <div className="flex items-center justify-between">
-                <span className="icon-chip h-12 w-12 text-[#60a5fa]"><PiFilmSlateDuotone className="h-6 w-6" /></span>
-                <span className="font-mono-ui text-[10px] uppercase tracking-[0.18em] text-zinc-100">Your platform</span>
-              </div>
+              <span className="icon-chip h-12 w-12 text-[#60a5fa]"><PiFilmSlateDuotone className="h-6 w-6" /></span>
               <h2 className="mt-7 max-w-[14ch] text-3xl font-extrabold leading-[.9] tracking-[-0.05em] sm:text-4xl">Open Creators Den</h2>
-              <p className="mt-3 max-w-[24rem] text-sm leading-relaxed text-zinc-100">
-                The locked room for pre-recorded video — selects, cut, sound, and finish studios.
-              </p>
               <a href="/creators-den/" className="focus-house mt-6 inline-flex items-center gap-3 rounded-full border border-white/20 bg-[#111111]/10 px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors hover:bg-[#111111]/20" data-testid="link-open-creators-den">
                 Open Creators Den
                 <PiFilmSlateDuotone className="h-4 w-4" />
@@ -89,8 +76,7 @@ export default function ContentCreatorsPage() {
                     <span className="icon-chip h-11 w-11 text-[#3b82f6]"><Icon className="h-5 w-5" /></span>
                     <span className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-zinc-600">{leg.number} / 04</span>
                   </div>
-                  <p className="mt-5 font-mono-ui text-[9px] uppercase tracking-[0.16em] text-[#3b82f6]">{leg.studio}</p>
-                  <p className="mt-1.5 font-display text-lg italic leading-none">{leg.role}</p>
+                  <p className="mt-5 font-display text-lg italic leading-none">{leg.role}</p>
                 </a>
               );
             })}
@@ -110,10 +96,6 @@ export default function ContentCreatorsPage() {
             <span className="icon-chip h-12 w-12 shrink-0 text-[#c4b5fd]"><PiMegaphoneDuotone className="h-6 w-6" /></span>
             <div>
               <h2 className="max-w-[16ch] text-3xl font-extrabold leading-[.95] tracking-[-0.05em] text-white sm:text-4xl">Audition Arena</h2>
-              <p className="mt-2 max-w-[34rem] text-sm leading-relaxed text-zinc-300">
-                Captains across Creators Den post open seats — video, audio, script, and thumbnails. Apply with your
-                pitch and your work, and preview the project read-only before you commit.
-              </p>
             </div>
           </div>
           <span className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[#a78bfa]/50 bg-[#111111]/20 px-5 py-2.5 text-sm font-bold text-zinc-100 transition-colors hover:bg-[#a78bfa]/20">
