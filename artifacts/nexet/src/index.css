@@ -153,22 +153,22 @@
   ::-webkit-scrollbar-thumb:hover { background: #404040; }
 }
 
-@layer utilities {
-  .font-display { font-family: var(--app-font-sans); letter-spacing: -0.02em; }
-  .font-brand { font-family: var(--app-font-brand); }
-  .font-mono-ui { font-family: var(--app-font-mono); }
-  .nexet-grid {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-  .glow-accent {
-    box-shadow: 0 0 40px -8px rgba(59, 130, 246, 0.25);
-  }
-  .glow-accent-strong {
-    box-shadow: 0 0 60px -10px rgba(59, 130, 246, 0.4);
-  }
+/* ---------------------------------------------------------------------------
+   Component classes.
+
+   These belong in the `components` layer, which the cascade order at the top of
+   this file declares *before* `utilities`. They used to sit in `@layer
+   utilities` alongside the genuine helpers below, and because Tailwind emits
+   its own utilities into that same layer earlier in the stylesheet, every
+   component class won the tie-break against any utility written beside it on
+   the same element. That silently discarded the design's own colour: `icon-chip
+   text-[#60a5fa]` rendered the chip's default #d4d4d8, and `card-surface
+   border-teal-400/20` rendered a plain white hairline.
+
+   Keep component-shaped rules here, and leave single-purpose helpers in
+   `@layer utilities` below.
+   --------------------------------------------------------------------------- */
+@layer components {
   .card-surface {
     position: relative;
     background:
@@ -191,22 +191,9 @@
       inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
       0 24px 48px -24px rgba(0, 0, 0, 0.8);
   }
-  /* Shine sweep overlay — sits inside an overflow-hidden card, runs on hover */
-  .card-shine {
-    pointer-events: none;
-    position: absolute;
-    top: -20%;
-    bottom: -20%;
-    left: 0;
-    width: 46%;
-    background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.11) 50%, rgba(255, 255, 255, 0.06) 55%, transparent 100%);
-    transform: translateX(-160%) skewX(-16deg);
-    transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .group:hover > .card-shine, .group:hover .card-shine {
-    transform: translateX(340%) skewX(-16deg);
-  }
-  /* Premium icon chip: duotone icons sit in a lit, gradient tile */
+  /* Premium icon chip: duotone icons sit in a lit, gradient tile. The default
+     colour is a floor, not a ceiling — a `text-*` utility on the same element
+     (or on the icon inside it) now tints the mark as intended. */
   .icon-chip {
     display: inline-flex;
     align-items: center;
@@ -229,17 +216,6 @@
       inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
       0 0 30px -8px rgba(59, 130, 246, 0.45);
   }
-  .card-surface-hover {
-    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
-  }
-  .card-surface-hover:hover {
-    border-color: rgba(255, 255, 255, 0.18);
-    transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
-      0 0 0 1px rgba(255, 255, 255, 0.04),
-      0 12px 32px -12px rgba(0, 0, 0, 0.7);
-  }
   /* Resend-style icon chip: quiet square with an inner top highlight */
   .card-icon {
     display: inline-flex;
@@ -255,6 +231,53 @@
   .card-divider {
     border-top: 1px solid rgba(255, 255, 255, 0.07);
   }
+  /* A card's hover life: lift, brighten the edge, deepen the shadow. Utilities
+     written beside it (e.g. the home room cards' blue border and glow) now win. */
+  .card-surface-hover {
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+  .card-surface-hover:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 12px 32px -12px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--app-font-sans); letter-spacing: -0.02em; }
+  .font-brand { font-family: var(--app-font-brand); }
+  .font-mono-ui { font-family: var(--app-font-mono); }
+  .nexet-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .glow-accent {
+    box-shadow: 0 0 40px -8px rgba(59, 130, 246, 0.25);
+  }
+  .glow-accent-strong {
+    box-shadow: 0 0 60px -10px rgba(59, 130, 246, 0.4);
+  }
+  /* Shine sweep overlay — sits inside an overflow-hidden card, runs on hover */
+  .card-shine {
+    pointer-events: none;
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: 46%;
+    background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.11) 50%, rgba(255, 255, 255, 0.06) 55%, transparent 100%);
+    transform: translateX(-160%) skewX(-16deg);
+    transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .group:hover > .card-shine, .group:hover .card-shine {
+    transform: translateX(340%) skewX(-16deg);
+  }
+  /* Premium icon chip: duotone icons sit in a lit, gradient tile */
   .text-gradient {
     background: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
     -webkit-background-clip: text;
